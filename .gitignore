@@ -11,3 +11,4 @@ target/
 .idea/
 coverage/
 *.lock
+.vercel
