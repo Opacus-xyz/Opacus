@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html" class="active">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Installation Guide</h1>
+            <p>Complete installation instructions for all Opacus Protocol components across different platforms and environments.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>System Requirements</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">💻</div>
+                    <h3>TypeScript/JavaScript</h3>
+                    <p>Node.js 18+<br>npm 9+ / yarn 3+ / pnpm 8+<br>Modern browser</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🦀</div>
+                    <h3>Rust</h3>
+                    <p>Rust 1.70+<br>cargo<br>Linux/macOS/Windows</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">⛓️</div>
+                    <h3>Blockchain</h3>
+                    <p>0G Chain access<br>Wallet with testnet tokens<br>RPC endpoint</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">💾</div>
+                    <h3>Storage</h3>
+                    <p>500 MB disk space<br>4 GB RAM minimum<br>Stable internet</p>
+                </div>
+            </div>
+            
+            <h2>TypeScript SDK Installation</h2>
+            
+            <h3>Using npm</h3>
+            <pre><code>npm install @opacus/sdk ethers</code></pre>
+            
+            <h3>Using yarn</h3>
+            <pre><code>yarn add @opacus/sdk ethers</code></pre>
+            
+            <h3>Using pnpm</h3>
+            <pre><code>pnpm add @opacus/sdk ethers</code></pre>
+            
+            <h3>Browser (CDN)</h3>
+            <pre><code>&lt;script type="module"&gt;
+  import { OpacusClient } from 'https://esm.sh/@opacus/sdk@1.0.0';
+&lt;/script&gt;</code></pre>
+            
+            <h3>Deno</h3>
+            <pre><code>import { OpacusClient } from "npm:@opacus/sdk@1.0.0";</code></pre>
+            
+            <h3>Verify Installation</h3>
+            <pre><code>import { OpacusClient } from '@opacus/sdk';
+
+console.log('✅ Opacus SDK installed successfully!');
+console.log('Version:', require('@opacus/sdk/package.json').version);</code></pre>
+            
+            <h2>Rust SDK Installation</h2>
+            
+            <h3>Add to Cargo.toml</h3>
+            <pre><code>[dependencies]
+opacus-sdk = "1.0"
+tokio = { version = "1.36", features = ["full"] }
+ed25519-dalek = "2.1"
+x25519-dalek = "2.0"</code></pre>
+            
+            <h3>Install from crates.io</h3>
+            <pre><code>cargo add opacus-sdk tokio</code></pre>
+            
+            <h3>Build from Source</h3>
+            <pre><code>git clone https://github.com/opacus-protocol/opacus-sdk-rust.git
+cd opacus-sdk-rust
+cargo build --release</code></pre>
+            
+            <h3>Verify Installation</h3>
+            <pre><code>cargo check
+
+// Should output:
+// Checking opacus-sdk v1.0.0
+// Finished dev [unoptimized + debuginfo] target(s)</code></pre>
+            
+            <h2>Smart Contracts Setup</h2>
+            
+            <h3>Clone Repository</h3>
+            <pre><code>git clone https://github.com/opacus-protocol/contracts.git
+cd contracts
+npm install</code></pre>
+            
+            <h3>Configure Network</h3>
+            <p>Create <code>.env</code> file:</p>
+            <pre><code>PRIVATE_KEY=your_wallet_private_key
+RPC_URL=https://evmrpc-testnet.0g.ai
+CHAIN_ID=16661</code></pre>
+            
+            <h3>Compile Contracts</h3>
+            <pre><code>npx hardhat compile</code></pre>
+            
+            <h3>Deploy Contracts</h3>
+            <pre><code>npx hardhat run scripts/deploy.ts --network og-testnet</code></pre>
+            
+            <h2>Environment Configuration</h2>
+            
+            <h3>TypeScript Environment</h3>
+            <pre><code># .env
+OPACUS_RPC_URL=https://evmrpc-testnet.0g.ai
+OPACUS_CONTRACT_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
+OPACUS_PRIVATE_KEY=your_private_key
+OPACUS_CHAIN_ID=16661</code></pre>
+            
+            <h3>Rust Environment</h3>
+            <pre><code># config.toml
+[opacus]
+rpc_url = "https://evmrpc-testnet.0g.ai"
+contract_address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+private_key = "your_private_key"
+chain_id = 16661</code></pre>
+            
+            <h2>Get Testnet Tokens</h2>
+            
+            <div class="info-box">
+                <h4>💰 0G Chain Testnet Faucet</h4>
+                <p>To use Opacus Protocol on testnet, you need 0G tokens:</p>
+                <ol>
+                    <li>Visit: <code>https://faucet.0g.ai</code></li>
+                    <li>Connect your wallet (MetaMask recommended)</li>
+                    <li>Request testnet tokens (0.1 0G per request)</li>
+                    <li>Wait ~30 seconds for tokens to arrive</li>
+                </ol>
+            </div>
+            
+            <h2>Platform-Specific Setup</h2>
+            
+            <h3>macOS</h3>
+            <pre><code># Install Homebrew (if not installed)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install Node.js
+brew install node
+
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Install Opacus SDK
+npm install -g @opacus/sdk</code></pre>
+            
+            <h3>Linux (Ubuntu/Debian)</h3>
+            <pre><code># Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install Node.js
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Install build essentials
+sudo apt install -y build-essential pkg-config libssl-dev
+
+# Install Opacus SDK
+npm install -g @opacus/sdk</code></pre>
+            
+            <h3>Windows</h3>
+            <pre><code># Install Node.js from: https://nodejs.org/
+# Download and run installer
+
+# Install Rust from: https://rustup.rs/
+# Download and run rustup-init.exe
+
+# Install Visual Studio Build Tools
+# Download from: https://visualstudio.microsoft.com/downloads/
+
+# Install Opacus SDK
+npm install -g @opacus/sdk</code></pre>
+            
+            <h2>Docker Installation</h2>
+            
+            <h3>Using Docker Image</h3>
+            <pre><code># Pull official image
+docker pull opacus/opacus-sdk:latest
+
+# Run container
+docker run -it --rm \
+  -e OPACUS_RPC_URL=https://evmrpc-testnet.0g.ai \
+  -e OPACUS_PRIVATE_KEY=your_key \
+  opacus/opacus-sdk:latest</code></pre>
+            
+            <h3>Build from Dockerfile</h3>
+            <pre><code># Dockerfile
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+CMD ["npm", "start"]
+
+# Build and run
+docker build -t my-opacus-app .
+docker run -it my-opacus-app</code></pre>
+            
+            <h2>IDE Setup</h2>
+            
+            <h3>VS Code Extensions</h3>
+            <ul>
+                <li><strong>Solidity</strong> - Smart contract development</li>
+                <li><strong>rust-analyzer</strong> - Rust language support</li>
+                <li><strong>ESLint</strong> - JavaScript/TypeScript linting</li>
+                <li><strong>Prettier</strong> - Code formatting</li>
+                <li><strong>Hardhat</strong> - Contract tools</li>
+            </ul>
+            
+            <h3>VS Code Settings</h3>
+            <pre><code>{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "[solidity]": {
+    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+  }
+}</code></pre>
+            
+            <h2>Verification Steps</h2>
+            
+            <h3>1. Check Node.js</h3>
+            <pre><code>node --version  # Should be v18.0.0 or higher
+npm --version   # Should be 9.0.0 or higher</code></pre>
+            
+            <h3>2. Check Rust</h3>
+            <pre><code>rustc --version  # Should be 1.70.0 or higher
+cargo --version  # Should be 1.70.0 or higher</code></pre>
+            
+            <h3>3. Test TypeScript SDK</h3>
+            <pre><code>node -e "console.log(require('@opacus/sdk'))"
+# Should output SDK object</code></pre>
+            
+            <h3>4. Test Rust SDK</h3>
+            <pre><code>cargo run --example client
+# Should compile and run without errors</code></pre>
+            
+            <div class="info-box success">
+                <h4>✅ Installation Complete!</h4>
+                <p>Your development environment is now ready. Proceed to <a href="getting-started.html">Getting Started</a> to build your first application.</p>
+            </div>
+            
+            <h2>Troubleshooting</h2>
+            
+            <h3>Common Issues</h3>
+            
+            <h4>npm install fails</h4>
+            <pre><code># Clear npm cache
+npm cache clean --force
+
+# Delete node_modules and package-lock.json
+rm -rf node_modules package-lock.json
+
+# Reinstall
+npm install</code></pre>
+            
+            <h4>Rust build fails</h4>
+            <pre><code># Update Rust
+rustup update
+
+# Clean build artifacts
+cargo clean
+
+# Rebuild
+cargo build</code></pre>
+            
+            <h4>Permission errors on Linux/macOS</h4>
+            <pre><code># Install packages globally without sudo
+npm config set prefix ~/.npm-global
+export PATH=~/.npm-global/bin:$PATH
+
+# Add to ~/.bashrc or ~/.zshrc for persistence</code></pre>
+            
+            <p>For more help, visit <a href="troubleshooting.html">Troubleshooting Guide</a> or join our <a href="https://discord.gg/opacus">Discord community</a>.</p>
+        </div>
+    </main>
+</body>
+</html>

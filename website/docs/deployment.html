@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Guide - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html" class="active">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Deployment Guide</h1>
+            <p>Deploy Opacus Protocol smart contracts to 0G Chain testnet and mainnet.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Prerequisites</h2>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Node.js:</strong> v18 or higher</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Hardhat:</strong> Installed globally or locally</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>0G Tokens:</strong> For gas fees (testnet or mainnet)</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Private Key:</strong> Deployment wallet with sufficient funds</span>
+                </div>
+            </div>
+            
+            <h2>Setup</h2>
+            
+            <h3>1. Clone Repository</h3>
+            <pre><code>git clone https://github.com/opacus-protocol/opacus.git
+cd opacus/contracts</code></pre>
+            
+            <h3>2. Install Dependencies</h3>
+            <pre><code>npm install</code></pre>
+            
+            <h3>3. Configure Environment</h3>
+            <p>Create a <code>.env</code> file:</p>
+            
+            <pre><code># Deployment wallet private key
+PRIVATE_KEY=your_private_key_here
+
+# 0G Chain RPC URLs
+TESTNET_RPC_URL=https://evmrpc-testnet.0g.ai
+MAINNET_RPC_URL=https://evmrpc.0g.ai
+
+# Etherscan API key (for verification)
+ETHERSCAN_API_KEY=your_etherscan_api_key
+
+# Governance address
+GOVERNANCE_ADDRESS=0x...
+
+# Initial parameters
+PROTOCOL_FEE_BPS=50  # 0.5%
+MIN_STAKE_AMOUNT=1000000000000000000  # 1 0G</code></pre>
+            
+            <div class="info-box warning">
+                <h4>⚠️ Security Warning</h4>
+                <p>Never commit your <code>.env</code> file to version control. Add it to <code>.gitignore</code> immediately.</p>
+            </div>
+            
+            <h2>Hardhat Configuration</h2>
+            
+            <p>Verify your <code>hardhat.config.ts</code>:</p>
+            
+            <pre><code>import { HardhatUserConfig } from "hardhat/config";
+import "@nomicfoundation/hardhat-toolbox";
+import "@nomiclabs/hardhat-etherscan";
+import "dotenv/config";
+
+const config: HardhatUserConfig = {
+  solidity: {
+    version: "0.8.20",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200
+      }
+    }
+  },
+  networks: {
+    testnet: {
+      url: process.env.TESTNET_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY!],
+      chainId: 16600,
+      gasPrice: 1000000000 // 1 gwei
+    },
+    mainnet: {
+      url: process.env.MAINNET_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY!],
+      chainId: 16601,
+      gasPrice: 2000000000 // 2 gwei
+    }
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY
+  }
+};
+
+export default config;</code></pre>
+            
+            <h2>Compilation</h2>
+            
+            <pre><code># Compile all contracts
+npx hardhat compile
+
+# Clean and recompile
+npx hardhat clean && npx hardhat compile
+
+# Check for compilation warnings
+npx hardhat compile --show-stack-traces</code></pre>
+            
+            <h2>Testing</h2>
+            
+            <p>Run comprehensive tests before deployment:</p>
+            
+            <pre><code># Run all tests
+npx hardhat test
+
+# Run specific test file
+npx hardhat test test/OpacusCore.test.ts
+
+# Run with gas reporting
+REPORT_GAS=true npx hardhat test
+
+# Run with coverage
+npx hardhat coverage</code></pre>
+            
+            <div class="info-box success">
+                <h4>✅ Test Coverage Target</h4>
+                <p>Aim for >90% test coverage before deploying to mainnet. All critical paths should be tested.</p>
+            </div>
+            
+            <h2>Deployment Script</h2>
+            
+            <p>Create <code>scripts/deploy.ts</code>:</p>
+            
+            <pre><code>import { ethers } from "hardhat";
+
+async function main() {
+  console.log("🚀 Starting Opacus Protocol deployment...\n");
+  
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying with account:", deployer.address);
+  
+  const balance = await ethers.provider.getBalance(deployer.address);
+  console.log("Account balance:", ethers.formatEther(balance), "0G\n");
+  
+  // 1. Deploy AgentRegistry
+  console.log("📝 Deploying AgentRegistry...");
+  const AgentRegistry = await ethers.getContractFactory("AgentRegistry");
+  const agentRegistry = await AgentRegistry.deploy();
+  await agentRegistry.waitForDeployment();
+  const agentRegistryAddress = await agentRegistry.getAddress();
+  console.log("✅ AgentRegistry deployed:", agentRegistryAddress, "\n");
+  
+  // 2. Deploy DACRegistry
+  console.log("📝 Deploying DACRegistry...");
+  const DACRegistry = await ethers.getContractFactory("DACRegistry");
+  const dacRegistry = await DACRegistry.deploy(agentRegistryAddress);
+  await dacRegistry.waitForDeployment();
+  const dacRegistryAddress = await dacRegistry.getAddress();
+  console.log("✅ DACRegistry deployed:", dacRegistryAddress, "\n");
+  
+  // 3. Deploy DataStream
+  console.log("📝 Deploying DataStream...");
+  const DataStream = await ethers.getContractFactory("DataStream");
+  const dataStream = await DataStream.deploy(agentRegistryAddress);
+  await dataStream.waitForDeployment();
+  const dataStreamAddress = await dataStream.getAddress();
+  console.log("✅ DataStream deployed:", dataStreamAddress, "\n");
+  
+  // 4. Deploy MsgEscrow
+  console.log("📝 Deploying MsgEscrow...");
+  const MsgEscrow = await ethers.getContractFactory("MsgEscrow");
+  const msgEscrow = await MsgEscrow.deploy(agentRegistryAddress);
+  await msgEscrow.waitForDeployment();
+  const msgEscrowAddress = await msgEscrow.getAddress();
+  console.log("✅ MsgEscrow deployed:", msgEscrowAddress, "\n");
+  
+  // 5. Deploy OpacusCore
+  console.log("📝 Deploying OpacusCore...");
+  const OpacusCore = await ethers.getContractFactory("OpacusCore");
+  const opacusCore = await OpacusCore.deploy();
+  await opacusCore.waitForDeployment();
+  const opacusCoreAddress = await opacusCore.getAddress();
+  console.log("✅ OpacusCore deployed:", opacusCoreAddress, "\n");
+  
+  // 6. Initialize OpacusCore
+  console.log("🔧 Initializing OpacusCore...");
+  const governanceAddress = process.env.GOVERNANCE_ADDRESS || deployer.address;
+  const protocolFeeBps = parseInt(process.env.PROTOCOL_FEE_BPS || "50");
+  
+  await opacusCore.initialize(
+    agentRegistryAddress,
+    dacRegistryAddress,
+    dataStreamAddress,
+    msgEscrowAddress,
+    governanceAddress,
+    protocolFeeBps
+  );
+  console.log("✅ OpacusCore initialized\n");
+  
+  // 7. Set OpacusCore in other contracts
+  console.log("🔗 Linking contracts...");
+  await agentRegistry.setOpacusCore(opacusCoreAddress);
+  await dacRegistry.setOpacusCore(opacusCoreAddress);
+  await dataStream.setOpacusCore(opacusCoreAddress);
+  await msgEscrow.setOpacusCore(opacusCoreAddress);
+  console.log("✅ Contracts linked\n");
+  
+  // Print deployment summary
+  console.log("=" .repeat(60));
+  console.log("📋 DEPLOYMENT SUMMARY");
+  console.log("=" .repeat(60));
+  console.log("OpacusCore:    ", opacusCoreAddress);
+  console.log("AgentRegistry: ", agentRegistryAddress);
+  console.log("DACRegistry:   ", dacRegistryAddress);
+  console.log("DataStream:    ", dataStreamAddress);
+  console.log("MsgEscrow:     ", msgEscrowAddress);
+  console.log("=" .repeat(60));
+  console.log("\n✅ Deployment complete!");
+  
+  // Save addresses to file
+  const fs = require("fs");
+  const addresses = {
+    network: (await ethers.provider.getNetwork()).name,
+    chainId: (await ethers.provider.getNetwork()).chainId,
+    deployer: deployer.address,
+    timestamp: new Date().toISOString(),
+    contracts: {
+      OpacusCore: opacusCoreAddress,
+      AgentRegistry: agentRegistryAddress,
+      DACRegistry: dacRegistryAddress,
+      DataStream: dataStreamAddress,
+      MsgEscrow: msgEscrowAddress
+    }
+  };
+  
+  fs.writeFileSync(
+    "deployments.json",
+    JSON.stringify(addresses, null, 2)
+  );
+  console.log("\n💾 Addresses saved to deployments.json");
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });</code></pre>
+            
+            <h2>Deploy to Testnet</h2>
+            
+            <pre><code># Deploy to 0G testnet
+npx hardhat run scripts/deploy.ts --network testnet
+
+# Watch deployment progress
+# Expected output:
+# 🚀 Starting Opacus Protocol deployment...
+# Deploying with account: 0x...
+# Account balance: 10.5 0G
+# 
+# 📝 Deploying AgentRegistry...
+# ✅ AgentRegistry deployed: 0x...
+# ...</code></pre>
+            
+            <div class="info-box">
+                <h4>⏱️ Deployment Time</h4>
+                <p>Full deployment takes approximately 2-3 minutes on testnet. Each contract deployment requires a transaction confirmation.</p>
+            </div>
+            
+            <h2>Verify Contracts</h2>
+            
+            <p>Verify contracts on block explorer:</p>
+            
+            <pre><code># Verify all contracts
+npx hardhat verify --network testnet AGENT_REGISTRY_ADDRESS
+npx hardhat verify --network testnet DAC_REGISTRY_ADDRESS AGENT_REGISTRY_ADDRESS
+npx hardhat verify --network testnet DATA_STREAM_ADDRESS AGENT_REGISTRY_ADDRESS
+npx hardhat verify --network testnet MSG_ESCROW_ADDRESS AGENT_REGISTRY_ADDRESS
+npx hardhat verify --network testnet OPACUS_CORE_ADDRESS
+
+# Or use verification script
+npx hardhat run scripts/verify.ts --network testnet</code></pre>
+            
+            <h2>Deploy to Mainnet</h2>
+            
+            <div class="info-box warning">
+                <h4>⚠️ Mainnet Deployment Checklist</h4>
+                <ul>
+                    <li>✅ All tests passing with >90% coverage</li>
+                    <li>✅ Contracts audited by professional security firm</li>
+                    <li>✅ Testnet deployment tested extensively</li>
+                    <li>✅ Governance addresses configured correctly</li>
+                    <li>✅ Sufficient 0G tokens for deployment gas</li>
+                    <li>✅ Backup private key stored securely</li>
+                    <li>✅ Emergency pause mechanism tested</li>
+                </ul>
+            </div>
+            
+            <pre><code># Deploy to mainnet
+npx hardhat run scripts/deploy.ts --network mainnet
+
+# Verify on mainnet
+npx hardhat run scripts/verify.ts --network mainnet</code></pre>
+            
+            <h2>Post-Deployment</h2>
+            
+            <h3>1. Verify Deployment</h3>
+            <pre><code># Run post-deployment tests
+npx hardhat run scripts/post-deploy-check.ts --network testnet
+
+# Check contract states
+npx hardhat console --network testnet
+> const opacusCore = await ethers.getContractAt("OpacusCore", "0x...")
+> await opacusCore.paused()
+false
+> await opacusCore.governance()
+"0x..."</code></pre>
+            
+            <h3>2. Update SDK Configuration</h3>
+            <p>Update <code>sdk/src/config.ts</code> with new addresses:</p>
+            
+            <pre><code>export const CONTRACT_ADDRESSES = {
+  testnet: {
+    opacusCore: '0x...',
+    agentRegistry: '0x...',
+    dacRegistry: '0x...',
+    dataStream: '0x...',
+    msgEscrow: '0x...'
+  },
+  mainnet: {
+    opacusCore: '0x...',
+    agentRegistry: '0x...',
+    dacRegistry: '0x...',
+    dataStream: '0x...',
+    msgEscrow: '0x...'
+  }
+};</code></pre>
+            
+            <h3>3. Update Documentation</h3>
+            <ul>
+                <li>Update contract addresses in documentation</li>
+                <li>Update API reference with new addresses</li>
+                <li>Publish deployment announcement</li>
+            </ul>
+            
+            <h3>4. Monitor Deployment</h3>
+            <pre><code># Monitor contract activity
+npx hardhat run scripts/monitor.ts --network mainnet
+
+# Set up alerts for:
+# - Contract interactions
+# - Gas usage spikes
+# - Error events
+# - Pause events</code></pre>
+            
+            <h2>Upgrade Process</h2>
+            
+            <p>Opacus contracts use upgradeable proxy pattern:</p>
+            
+            <pre><code># Deploy new implementation
+npx hardhat run scripts/deploy-implementation.ts --network mainnet
+
+# Propose upgrade (via governance)
+npx hardhat run scripts/propose-upgrade.ts --network mainnet \
+  --implementation NEW_IMPL_ADDRESS
+
+# After governance approval, execute upgrade
+npx hardhat run scripts/execute-upgrade.ts --network mainnet</code></pre>
+            
+            <h2>Gas Cost Estimates</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Contract</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Gas Used</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Cost (0G)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>AgentRegistry</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~2,000,000</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~0.002</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>DACRegistry</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~2,500,000</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~0.0025</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>DataStream</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~1,800,000</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~0.0018</td>
+                    </tr>
+                    <tr style="background: #f9f9f9;">
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>MsgEscrow</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~1,500,000</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~0.0015</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;"><code>OpacusCore</code></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~3,000,000</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~0.003</td>
+                    </tr>
+                    <tr style="background: #f0f0f0; font-weight: bold;">
+                        <td style="padding: 12px; border: 1px solid #ddd;">Total</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~10,800,000</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">~0.0108</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p><em>Gas prices: 1 gwei on testnet, 2 gwei on mainnet. Actual costs may vary.</em></p>
+            
+            <h2>Troubleshooting</h2>
+            
+            <h3>Insufficient Gas</h3>
+            <pre><code>Error: insufficient funds for gas * price + value
+
+Solution: Add more 0G tokens to deployment wallet</code></pre>
+            
+            <h3>Nonce Too Low</h3>
+            <pre><code>Error: nonce has already been used
+
+Solution: Clear hardhat cache or reset nonce
+npx hardhat clean</code></pre>
+            
+            <h3>Contract Size Too Large</h3>
+            <pre><code>Error: contract code size exceeds 24576 bytes
+
+Solution: Enable optimizer in hardhat.config.ts:
+optimizer: {
+  enabled: true,
+  runs: 200
+}</code></pre>
+            
+            <h2>Useful Commands</h2>
+            
+            <pre><code># Check contract size
+npx hardhat size-contracts
+
+# Generate ABI
+npx hardhat export-abi
+
+# Flatten contracts (for verification)
+npx hardhat flatten contracts/OpacusCore.sol > flattened.sol
+
+# Run local node (for testing)
+npx hardhat node
+
+# Deploy to local node
+npx hardhat run scripts/deploy.ts --network localhost</code></pre>
+            
+            <div class="info-box success">
+                <h4>🎉 Deployment Complete!</h4>
+                <p>Your Opacus Protocol deployment is live. Next steps:</p>
+                <ul>
+                    <li>Update SDK configuration with contract addresses</li>
+                    <li>Run integration tests against deployed contracts</li>
+                    <li>Monitor contract activity and gas usage</li>
+                    <li>Set up governance and emergency procedures</li>
+                </ul>
+            </div>
+            
+            <h2>Related Documentation</h2>
+            
+            <ul>
+                <li><a href="contracts-overview.html">Contract Overview</a> - Understanding all contracts</li>
+                <li><a href="security.html">Security Model</a> - Security best practices</li>
+                <li><a href="troubleshooting.html">Troubleshooting</a> - Common issues and solutions</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

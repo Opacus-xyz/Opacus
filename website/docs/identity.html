@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identity System - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html" class="active">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Identity System</h1>
+            <p>Decentralized agent identity based on cryptographic keypairs, on-chain registration, and verifiable attestations.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Overview</h2>
+            
+            <p>The Opacus Identity System provides a decentralized, cryptographically secure way for AI agents to establish and prove their identity. Unlike traditional centralized identity systems, agent identities in Opacus are:</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">🔐</span>
+                    <span><strong>Self-Sovereign:</strong> Agents control their own keys and identity - no central authority</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">⛓️</span>
+                    <span><strong>Blockchain-Anchored:</strong> Identities are immutably registered on 0G Chain</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✍️</span>
+                    <span><strong>Cryptographically Verifiable:</strong> Ed25519 signatures prove authenticity without exposing private keys</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">🌐</span>
+                    <span><strong>Globally Unique:</strong> Each agent has a unique ID derived from its public key</span>
+                </div>
+            </div>
+            
+            <h2>Identity Lifecycle</h2>
+            
+            <svg viewBox="0 0 900 600" style="width: 100%; max-width: 900px; height: auto; margin: 32px 0; background: #fafafa; padding: 20px; border-radius: 12px;">
+                <text x="450" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#000">Agent Identity Lifecycle</text>
+                
+                <!-- Step 1: Key Generation -->
+                <rect x="50" y="80" width="200" height="100" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="150" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">1. Key Generation</text>
+                <text x="70" y="140" font-size="13" fill="#333">• Generate Ed25519 (sign)</text>
+                <text x="70" y="160" font-size="13" fill="#333">• Generate X25519 (encrypt)</text>
+                
+                <!-- Arrow 1 -->
+                <path d="M 250 130 L 300 130" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                
+                <!-- Step 2: On-Chain Registration -->
+                <rect x="300" y="80" width="250" height="100" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="425" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">2. On-Chain Registration</text>
+                <text x="320" y="140" font-size="13" fill="#333">• Submit to AgentRegistry</text>
+                <text x="320" y="160" font-size="13" fill="#333">• Store metadata + public keys</text>
+                
+                <!-- Arrow 2 -->
+                <path d="M 550 130 L 600 130" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                
+                <!-- Step 3: Identity Active -->
+                <rect x="600" y="80" width="250" height="100" fill="#fff" stroke="#00FF88" stroke-width="3" rx="8"/>
+                <text x="725" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#00FF88">3. Identity Active</text>
+                <text x="620" y="140" font-size="13" fill="#333">• Agent ID generated</text>
+                <text x="620" y="160" font-size="13" fill="#333">• Ready for communication</text>
+                
+                <!-- Step 4: Attestations -->
+                <rect x="600" y="230" width="250" height="100" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="725" y="260" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">4. Build Reputation</text>
+                <text x="620" y="290" font-size="13" fill="#333">• Receive attestations</text>
+                <text x="620" y="310" font-size="13" fill="#333">• Prove capabilities</text>
+                
+                <!-- Arrow 3 (down) -->
+                <path d="M 725 180 L 725 230" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                
+                <!-- Step 5: Verification -->
+                <rect x="300" y="230" width="250" height="100" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="425" y="260" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">5. Continuous Verification</text>
+                <text x="320" y="290" font-size="13" fill="#333">• Verify signatures</text>
+                <text x="320" y="310" font-size="13" fill="#333">• Check attestations</text>
+                
+                <!-- Arrow 4 (left) -->
+                <path d="M 600 280 L 550 280" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                
+                <!-- Step 6: Update -->
+                <rect x="50" y="230" width="200" height="100" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="150" y="260" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">6. Update Profile</text>
+                <text x="70" y="290" font-size="13" fill="#333">• Update metadata</text>
+                <text x="70" y="310" font-size="13" fill="#333">• Add capabilities</text>
+                
+                <!-- Arrow 5 (left) -->
+                <path d="M 300 280 L 250 280" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                
+                <!-- Arrow 6 (up - cycle) -->
+                <path d="M 150 230 L 150 180" stroke="#00D1FF" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                
+                <!-- Info Boxes -->
+                <rect x="50" y="400" width="380" height="150" fill="#e8f7ff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="240" y="430" text-anchor="middle" font-size="15" font-weight="600" fill="#000">🔑 Key Properties</text>
+                <text x="70" y="460" font-size="13" fill="#333">• Ed25519 Public Key: 32 bytes (authentication)</text>
+                <text x="70" y="480" font-size="13" fill="#333">• X25519 Public Key: 32 bytes (encryption)</text>
+                <text x="70" y="500" font-size="13" fill="#333">• Agent ID: keccak256(edPublicKey + xPublicKey)</text>
+                <text x="70" y="520" font-size="13" fill="#333">• Owner Address: Ethereum wallet address</text>
+                <text x="70" y="540" font-size="13" fill="#333">• Private Keys: Never leave agent's control</text>
+                
+                <rect x="470" y="400" width="380" height="150" fill="#e8ffe8" stroke="#00FF88" stroke-width="2" rx="8"/>
+                <text x="660" y="430" text-anchor="middle" font-size="15" font-weight="600" fill="#000">✅ Security Guarantees</text>
+                <text x="490" y="460" font-size="13" fill="#333">• Identity cannot be forged (Ed25519 security)</text>
+                <text x="490" y="480" font-size="13" fill="#333">• Messages are signed (non-repudiation)</text>
+                <text x="490" y="500" font-size="13" fill="#333">• Keys are separated (auth ≠ encryption)</text>
+                <text x="490" y="520" font-size="13" fill="#333">• On-chain history is immutable</text>
+                <text x="490" y="540" font-size="13" fill="#333">• No single point of failure</text>
+                
+                <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#00D1FF"/>
+                    </marker>
+                </defs>
+            </svg>
+            
+            <h2>Key Generation</h2>
+            
+            <p>Each agent uses two cryptographic keypairs for different purposes:</p>
+            
+            <h3>1. Ed25519 Keypair (Digital Signatures)</h3>
+            
+            <div class="info-box">
+                <h4>🔐 Purpose: Authentication & Message Signing</h4>
+                <p><strong>Ed25519</strong> is a modern elliptic curve signature algorithm that provides:</p>
+                <ul>
+                    <li>High performance: ~60,000 signatures/second</li>
+                    <li>Small keys: 32-byte public keys, 64-byte signatures</li>
+                    <li>Strong security: 128-bit security level (equivalent to RSA-3072)</li>
+                    <li>Deterministic signatures: Same message always produces same signature</li>
+                </ul>
+            </div>
+            
+            <h4>TypeScript Example</h4>
+            <pre><code>import { ed25519 } from '@noble/curves/ed25519';
+
+// Generate Ed25519 keypair
+const privateKey = ed25519.utils.randomPrivateKey();
+const publicKey = ed25519.getPublicKey(privateKey);
+
+console.log('Private key (keep secret!):', Buffer.from(privateKey).toString('hex'));
+console.log('Public key (share freely):', Buffer.from(publicKey).toString('hex'));
+
+// Sign a message
+const message = new TextEncoder().encode('Hello from Agent!');
+const signature = ed25519.sign(message, privateKey);
+
+console.log('Signature:', Buffer.from(signature).toString('hex'));
+
+// Verify signature
+const isValid = ed25519.verify(signature, message, publicKey);
+console.log('Valid:', isValid); // true</code></pre>
+            
+            <h4>Rust Example</h4>
+            <pre><code>use ed25519_dalek::{SigningKey, VerifyingKey, Signature, Signer, Verifier};
+use rand::rngs::OsRng;
+
+// Generate Ed25519 keypair
+let mut csprng = OsRng;
+let signing_key = SigningKey::generate(&mut csprng);
+let verifying_key = signing_key.verifying_key();
+
+println!("Public key: {:?}", verifying_key.to_bytes());
+
+// Sign a message
+let message = b"Hello from Agent!";
+let signature = signing_key.sign(message);
+
+println!("Signature: {:?}", signature.to_bytes());
+
+// Verify signature
+assert!(verifying_key.verify(message, &signature).is_ok());
+println!("Signature verified!");</code></pre>
+            
+            <h3>2. X25519 Keypair (Key Exchange)</h3>
+            
+            <div class="info-box">
+                <h4>🔒 Purpose: Encryption & Secure Communication</h4>
+                <p><strong>X25519</strong> is an elliptic curve Diffie-Hellman (ECDH) key exchange algorithm:</p>
+                <ul>
+                    <li>Derive shared secrets between agents</li>
+                    <li>Enable end-to-end encryption without key exchange</li>
+                    <li>Fast: ~50,000 shared secret computations/second</li>
+                    <li>Same security level as Ed25519 (128-bit)</li>
+                </ul>
+            </div>
+            
+            <h4>TypeScript Example</h4>
+            <pre><code>import { x25519 } from '@noble/curves/ed25519';
+import { hkdf } from '@noble/hashes/hkdf';
+import { sha256 } from '@noble/hashes/sha256';
+
+// Alice generates her keypair
+const alicePrivate = x25519.utils.randomPrivateKey();
+const alicePublic = x25519.getPublicKey(alicePrivate);
+
+// Bob generates his keypair
+const bobPrivate = x25519.utils.randomPrivateKey();
+const bobPublic = x25519.getPublicKey(bobPrivate);
+
+// Alice derives shared secret with Bob's public key
+const sharedAlice = x25519.getSharedSecret(alicePrivate, bobPublic);
+
+// Bob derives the same shared secret with Alice's public key
+const sharedBob = x25519.getSharedSecret(bobPrivate, alicePublic);
+
+// Both shared secrets are identical!
+console.log('Secrets match:', Buffer.from(sharedAlice).equals(Buffer.from(sharedBob)));
+
+// Derive encryption key using HKDF
+const encryptionKey = hkdf(sha256, sharedAlice, undefined, undefined, 32);
+console.log('Encryption key:', Buffer.from(encryptionKey).toString('hex'));</code></pre>
+            
+            <h4>Rust Example</h4>
+            <pre><code>use x25519_dalek::{StaticSecret, PublicKey};
+use rand::rngs::OsRng;
+
+// Alice generates her keypair
+let alice_secret = StaticSecret::random_from_rng(OsRng);
+let alice_public = PublicKey::from(&alice_secret);
+
+// Bob generates his keypair
+let bob_secret = StaticSecret::random_from_rng(OsRng);
+let bob_public = PublicKey::from(&bob_secret);
+
+// Both compute the same shared secret
+let shared_alice = alice_secret.diffie_hellman(&bob_public);
+let shared_bob = bob_secret.diffie_hellman(&alice_public);
+
+assert_eq!(shared_alice.as_bytes(), shared_bob.as_bytes());
+println!("Shared secret established!");</code></pre>
+            
+            <h2>On-Chain Registration</h2>
+            
+            <p>After generating keypairs, agents must register on-chain to obtain a globally unique identity:</p>
+            
+            <h3>Registration Process</h3>
+            
+            <svg viewBox="0 0 900 450" style="width: 100%; max-width: 900px; height: auto; margin: 32px 0; background: #fafafa; padding: 20px; border-radius: 12px;">
+                <text x="450" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#000">On-Chain Registration Flow</text>
+                
+                <!-- Agent -->
+                <rect x="50" y="80" width="180" height="80" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="140" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">AI Agent</text>
+                <text x="70" y="140" font-size="13" fill="#333">Keys generated</text>
+                <text x="70" y="160" font-size="13" fill="#333">Metadata prepared</text>
+                
+                <!-- Arrow 1 -->
+                <path d="M 230 120 L 280 120" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+                <text x="255" y="110" text-anchor="middle" font-size="12" fill="#666">registerAgent()</text>
+                
+                <!-- SDK -->
+                <rect x="280" y="80" width="180" height="80" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="370" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">Opacus SDK</text>
+                <text x="300" y="140" font-size="13" fill="#333">Encode parameters</text>
+                <text x="300" y="160" font-size="13" fill="#333">Sign transaction</text>
+                
+                <!-- Arrow 2 -->
+                <path d="M 460 120 L 510 120" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+                <text x="485" y="110" text-anchor="middle" font-size="12" fill="#666">TX</text>
+                
+                <!-- Blockchain -->
+                <rect x="510" y="80" width="180" height="80" fill="#fff" stroke="#00FF88" stroke-width="3" rx="8"/>
+                <text x="600" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#00FF88">0G Chain</text>
+                <text x="530" y="140" font-size="13" fill="#333">Validate transaction</text>
+                <text x="530" y="160" font-size="13" fill="#333">Include in block</text>
+                
+                <!-- Arrow 3 (down) -->
+                <path d="M 600 160 L 600 210" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+                
+                <!-- AgentRegistry -->
+                <rect x="510" y="210" width="180" height="100" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="600" y="240" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">AgentRegistry</text>
+                <text x="530" y="265" font-size="13" fill="#333">1. Generate agent ID</text>
+                <text x="530" y="285" font-size="13" fill="#333">2. Store public keys</text>
+                <text x="530" y="305" font-size="13" fill="#333">3. Emit event</text>
+                
+                <!-- Arrow 4 (left) -->
+                <path d="M 510 260 L 460 260" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+                <text x="485" y="250" text-anchor="middle" font-size="12" fill="#666">Receipt</text>
+                
+                <!-- SDK Response -->
+                <rect x="280" y="220" width="180" height="80" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="370" y="250" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">SDK Response</text>
+                <text x="300" y="280" font-size="13" fill="#333">Return agent ID</text>
+                <text x="300" y="300" font-size="13" fill="#333">Update local state</text>
+                
+                <!-- Arrow 5 (left) -->
+                <path d="M 280 260 L 230 260" stroke="#00D1FF" stroke-width="2" fill="none" marker-end="url(#arrow2)"/>
+                <text x="255" y="250" text-anchor="middle" font-size="12" fill="#666">agentId</text>
+                
+                <!-- Agent Registered -->
+                <rect x="50" y="220" width="180" height="80" fill="#e8ffe8" stroke="#00FF88" stroke-width="3" rx="8"/>
+                <text x="140" y="250" text-anchor="middle" font-size="16" font-weight="600" fill="#00FF88">✅ Registered!</text>
+                <text x="70" y="280" font-size="13" fill="#333">Identity established</text>
+                <text x="70" y="300" font-size="13" fill="#333">Ready to communicate</text>
+                
+                <!-- Cost Info -->
+                <rect x="50" y="350" width="400" height="70" fill="#e8f7ff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="250" y="380" text-anchor="middle" font-size="15" font-weight="600" fill="#000">💰 Transaction Cost</text>
+                <text x="70" y="405" font-size="13" fill="#333">Gas: ~100,000 units (~0.0001 0G tokens)</text>
+                <text x="70" y="425" font-size="13" fill="#333">Time: ~2-3 seconds (typical block time)</text>
+                
+                <!-- Storage Info -->
+                <rect x="480" y="350" width="400" height="70" fill="#e8f7ff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="680" y="380" text-anchor="middle" font-size="15" font-weight="600" fill="#000">💾 Data Stored On-Chain</text>
+                <text x="500" y="405" font-size="13" fill="#333">• Ed25519 Public Key (32 bytes)</text>
+                <text x="500" y="425" font-size="13" fill="#333">• X25519 Public Key (32 bytes) • Metadata (variable)</text>
+                
+                <defs>
+                    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#00D1FF"/>
+                    </marker>
+                </defs>
+            </svg>
+            
+            <h3>Code Example: Register Agent</h3>
+            
+            <pre><code>import { OpacusClient } from '@opacus/sdk';
+
+const client = new OpacusClient({
+  rpcUrl: 'https://evmrpc-testnet.0g.ai',
+  contractAddress: '0x...',
+  privateKey: process.env.PRIVATE_KEY!
+});
+
+// Register with metadata
+const agentId = await client.registerAgent({
+  name: 'WeatherBot',
+  version: '1.0.0',
+  capabilities: ['weather-forecast', 'climate-analysis'],
+  description: 'AI agent for weather information',
+  endpoint: 'https://weather-bot.example.com'
+});
+
+console.log('✅ Agent registered with ID:', agentId);
+console.log('🔗 View on explorer:', `https://explorer.0g.ai/agent/${agentId}`);</code></pre>
+            
+            <h2>Agent ID Format</h2>
+            
+            <p>The agent ID is deterministically derived from the public keys:</p>
+            
+            <pre><code>agentId = keccak256(edPublicKey || xPublicKey)</code></pre>
+            
+            <p>Where <code>||</code> represents concatenation. This ensures:</p>
+            <ul>
+                <li>✅ <strong>Uniqueness:</strong> Different keypairs always produce different IDs</li>
+                <li>✅ <strong>Determinism:</strong> Same keys always produce the same ID</li>
+                <li>✅ <strong>Collision Resistance:</strong> Keccak256 makes collisions computationally infeasible</li>
+                <li>✅ <strong>No Central Registry:</strong> IDs are self-generated, no coordination needed</li>
+            </ul>
+            
+            <h2>Identity Verification</h2>
+            
+            <p>Other agents can verify an identity by:</p>
+            
+            <ol>
+                <li><strong>Fetch On-Chain Record:</strong> Query AgentRegistry contract for public keys</li>
+                <li><strong>Verify Signature:</strong> Use Ed25519 public key to verify message signatures</li>
+                <li><strong>Check Attestations:</strong> Review third-party attestations for reputation</li>
+                <li><strong>Validate Metadata:</strong> Ensure capabilities match claimed functionality</li>
+            </ol>
+            
+            <h3>Verification Example</h3>
+            
+            <pre><code>// Get agent from blockchain
+const agent = await client.getAgent(agentId);
+
+// Verify a message signature
+const message = Buffer.from('Signed by agent');
+const signature = Buffer.from('...signature bytes...');
+
+const isValid = await ed25519.verify(
+  signature,
+  message,
+  agent.edPublicKey
+);
+
+if (isValid) {
+  console.log('✅ Signature valid - message is from', agent.metadata.name);
+} else {
+  console.log('❌ Invalid signature - possible impersonation attempt!');
+}</code></pre>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">🔑</div>
+                    <h3>Key Security</h3>
+                    <p>Private keys never leave agent<br>
+                    Hardware wallet support<br>
+                    Optional key rotation</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">⛓️</div>
+                    <h3>On-Chain</h3>
+                    <p>Immutable registration<br>
+                    Public key storage<br>
+                    ~0.0001 0G cost</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🌐</div>
+                    <h3>Global Resolution</h3>
+                    <p>Query any agent by ID<br>
+                    No DNS dependencies<br>
+                    Works across networks</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <h3>Trustless</h3>
+                    <p>No identity provider<br>
+                    Math-based security<br>
+                    Cannot be censored</p>
+                </div>
+            </div>
+            
+            <div class="info-box success">
+                <h4>✅ Best Practices</h4>
+                <ul>
+                    <li>🔐 Store private keys securely (hardware wallets, encrypted storage)</li>
+                    <li>🔄 Implement key rotation for long-lived agents</li>
+                    <li>✍️ Always sign important messages to prove authenticity</li>
+                    <li>🔍 Verify signatures before trusting messages from other agents</li>
+                    <li>📝 Keep metadata up-to-date as capabilities evolve</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

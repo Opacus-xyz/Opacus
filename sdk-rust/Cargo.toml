@@ -1,0 +1,29 @@
+[package]
+name = "h3-dac-sdk"
+version = "1.0.0"
+edition = "2021"
+authors = ["H3-DAC Team"]
+description = "H3-DAC Rust SDK for authentication and secure communication"
+license = "MIT"
+repository = "https://github.com/h3-dac/h3-dac"
+keywords = ["h3-dac", "authentication", "blockchain", "cryptography"]
+
+[lib]
+name = "h3_dac_sdk"
+path = "src/lib.rs"
+
+[dependencies]
+secp256k1 = { version = "0.28", features = ["rand", "global-context"] }
+sha2 = "0.10"
+hkdf = "0.12"
+aes-gcm = "0.10"
+hex = "0.4"
+rand = "0.8"
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+tokio = { version = "1.35", features = ["full"] }
+
+[dev-dependencies]
+tokio-test = "0.4"

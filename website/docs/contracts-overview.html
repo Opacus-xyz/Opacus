@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Contracts Overview - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html" class="active">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Smart Contracts Overview</h1>
+            <p>Opacus Protocol consists of 5 specialized smart contracts deployed on 0G Chain, each handling a specific aspect of the decentralized agent ecosystem.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Contract Architecture</h2>
+            
+            <p>The Opacus smart contract suite is designed with modularity and upgradability in mind:</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">🏛️</div>
+                    <h3>OpacusCore</h3>
+                    <p>Central coordinator<br>
+                    Protocol governance<br>
+                    Contract registry</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🆔</div>
+                    <h3>AgentRegistry</h3>
+                    <p>Agent registration<br>
+                    Identity management<br>
+                    Public key storage</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🔐</div>
+                    <h3>DACRegistry</h3>
+                    <p>Access control<br>
+                    Permission management<br>
+                    Role-based security</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">📡</div>
+                    <h3>DataStream</h3>
+                    <p>High-throughput messaging<br>
+                    Stream management<br>
+                    Data channels</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h3>MsgEscrow</h3>
+                    <p>Payment escrow<br>
+                    Service guarantees<br>
+                    Automated settlement</p>
+                </div>
+            </div>
+            
+            <h2>Contract Deployment Info</h2>
+            
+            <div class="info-box">
+                <h4>📍 Deployed Addresses (0G Testnet)</h4>
+                <pre><code>OpacusCore:    0x5FbDB2315678afecb367f032d93F642f64180aa3
+AgentRegistry: 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+DACRegistry:   0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+DataStream:    0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+MsgEscrow:     0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+
+Network:       0G Chain Testnet
+Chain ID:      16661
+RPC URL:       https://evmrpc-testnet.0g.ai</code></pre>
+            </div>
+            
+            <h2>Technology Stack</h2>
+            
+            <ul>
+                <li><strong>Language:</strong> Solidity 0.8.20+</li>
+                <li><strong>Framework:</strong> Hardhat with TypeScript</li>
+                <li><strong>Testing:</strong> Hardhat Test + Chai</li>
+                <li><strong>Security:</strong> OpenZeppelin Contracts</li>
+                <li><strong>Upgradability:</strong> Transparent Proxy Pattern</li>
+            </ul>
+            
+            <h2>Contract Interactions</h2>
+            
+            <h3>1. Agent Registration Flow</h3>
+            <pre><code>// User calls AgentRegistry
+AgentRegistry.registerAgent(
+  metadata,
+  edPublicKey,
+  xPublicKey
+)
+  ↓
+// AgentRegistry validates and stores
+- Generates unique agent ID
+- Stores public keys
+- Emits AgentRegistered event
+  ↓
+// OpacusCore receives notification
+- Updates agent count
+- Adds to global registry</code></pre>
+            
+            <h3>2. Attestation Creation Flow</h3>
+            <pre><code>// Attestor calls DACRegistry
+DACRegistry.createAttestation(
+  agentId,
+  capability,
+  proofData
+)
+  ↓
+// DACRegistry validates
+- Checks attestor permissions
+- Verifies proof signature
+- Stores attestation
+  ↓
+// AgentRegistry updates
+- Increments attestation count
+- Updates reputation score</code></pre>
+            
+            <h3>3. Message Escrow Flow</h3>
+            <pre><code>// Sender creates escrow
+MsgEscrow.createEscrow(
+  recipientAgent,
+  amount,
+  conditions
+)
+  ↓
+// Funds locked in contract
+- Escrow ID generated
+- Timeout starts
+  ↓
+// Service completed
+MsgEscrow.releaseEscrow(escrowId)
+  ↓
+// Funds released to recipient
+- Or refunded if timeout/dispute</code></pre>
+            
+            <h2>Gas Costs</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background: #f5f5f5;">
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Operation</th>
+                        <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Contract</th>
+                        <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Gas Estimate</th>
+                        <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Cost (0G)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Register Agent</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">AgentRegistry</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~100,000</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~0.0001</td>
+                    </tr>
+                    <tr style="background: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd;">Update Metadata</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">AgentRegistry</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~50,000</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~0.00005</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Create Attestation</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">DACRegistry</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~80,000</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~0.00008</td>
+                    </tr>
+                    <tr style="background: #fafafa;">
+                        <td style="padding: 12px; border: 1px solid #ddd;">Send Message</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">DataStream</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~30,000</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~0.00003</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Create Escrow</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">MsgEscrow</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~60,000</td>
+                        <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~0.00006</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>Security Features</h2>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">🔒</span>
+                    <span><strong>Access Control:</strong> OpenZeppelin AccessControl for role-based permissions</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">⏸️</span>
+                    <span><strong>Pausable:</strong> Emergency pause mechanism for all critical functions</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">🔄</span>
+                    <span><strong>Upgradable:</strong> Transparent proxy pattern for seamless upgrades</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Reentrancy Guard:</strong> Protection against reentrancy attacks</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">🛡️</span>
+                    <span><strong>Input Validation:</strong> Comprehensive checks on all user inputs</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">📊</span>
+                    <span><strong>Event Logging:</strong> Detailed events for all state changes</span>
+                </div>
+            </div>
+            
+            <h2>Events</h2>
+            
+            <h3>AgentRegistry Events</h3>
+            <pre><code>event AgentRegistered(
+    bytes32 indexed agentId,
+    address indexed owner,
+    string name
+);
+
+event AgentUpdated(
+    bytes32 indexed agentId,
+    string metadata
+);
+
+event AgentDeactivated(
+    bytes32 indexed agentId
+);</code></pre>
+            
+            <h3>DACRegistry Events</h3>
+            <pre><code>event AttestationCreated(
+    bytes32 indexed attestationId,
+    bytes32 indexed agentId,
+    address indexed attestor,
+    string capability
+);
+
+event AttestationRevoked(
+    bytes32 indexed attestationId
+);</code></pre>
+            
+            <h3>MsgEscrow Events</h3>
+            <pre><code>event EscrowCreated(
+    bytes32 indexed escrowId,
+    address indexed sender,
+    bytes32 indexed recipientAgent,
+    uint256 amount
+);
+
+event EscrowReleased(
+    bytes32 indexed escrowId,
+    address recipient
+);
+
+event EscrowRefunded(
+    bytes32 indexed escrowId,
+    address sender
+);</code></pre>
+            
+            <h2>Querying Contracts</h2>
+            
+            <h3>Using ethers.js</h3>
+            <pre><code>import { ethers } from 'ethers';
+
+const provider = new ethers.JsonRpcProvider('https://evmrpc-testnet.0g.ai');
+
+// Connect to AgentRegistry
+const agentRegistry = new ethers.Contract(
+  AGENT_REGISTRY_ADDRESS,
+  AGENT_REGISTRY_ABI,
+  provider
+);
+
+// Get agent info
+const agent = await agentRegistry.getAgent(agentId);
+console.log('Agent:', {
+  id: agent.id,
+  owner: agent.owner,
+  edPublicKey: agent.edPublicKey,
+  active: agent.active
+});</code></pre>
+            
+            <h3>Using web3.js</h3>
+            <pre><code>import Web3 from 'web3';
+
+const web3 = new Web3('https://evmrpc-testnet.0g.ai');
+
+// Connect to DACRegistry
+const dacRegistry = new web3.eth.Contract(
+  DAC_REGISTRY_ABI,
+  DAC_REGISTRY_ADDRESS
+);
+
+// Get attestations
+const attestations = await dacRegistry.methods
+  .getAgentAttestations(agentId)
+  .call();
+
+console.log('Attestations:', attestations);</code></pre>
+            
+            <h2>Development Tools</h2>
+            
+            <h3>Compile Contracts</h3>
+            <pre><code>cd contracts
+npx hardhat compile</code></pre>
+            
+            <h3>Run Tests</h3>
+            <pre><code>npx hardhat test
+npx hardhat coverage  # Generate coverage report</code></pre>
+            
+            <h3>Deploy to Network</h3>
+            <pre><code>npx hardhat run scripts/deploy.ts --network og-testnet</code></pre>
+            
+            <h3>Verify on Explorer</h3>
+            <pre><code>npx hardhat verify --network og-testnet CONTRACT_ADDRESS</code></pre>
+            
+            <div class="info-box">
+                <h4>📚 Learn More</h4>
+                <p>Dive deeper into each contract:</p>
+                <ul>
+                    <li><a href="opacus-core.html">OpacusCore Contract</a> - Central protocol coordinator</li>
+                    <li><a href="agent-registry.html">AgentRegistry Contract</a> - Agent identity management</li>
+                    <li><a href="dac-registry.html">DACRegistry Contract</a> - Access control and attestations</li>
+                    <li><a href="deployment.html">Deployment Guide</a> - Deploy your own instance</li>
+                </ul>
+            </div>
+            
+            <h2>Contract Source Code</h2>
+            
+            <p>All contracts are open source and available on GitHub:</p>
+            <ul>
+                <li><a href="https://github.com/opacus-protocol/contracts">Main Contracts Repository</a></li>
+                <li><a href="https://github.com/opacus-protocol/contracts/tree/main/contracts">Contract Source Files</a></li>
+                <li><a href="https://github.com/opacus-protocol/contracts/tree/main/test">Test Suite</a></li>
+            </ul>
+            
+            <div class="info-box success">
+                <h4>🔐 Audited & Secure</h4>
+                <p>Opacus smart contracts have undergone comprehensive security audits and follow best practices from OpenZeppelin. All critical functions include access control, input validation, and event logging.</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

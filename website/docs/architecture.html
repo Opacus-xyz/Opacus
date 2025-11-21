@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html" class="active">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Architecture Deep Dive</h1>
+            <p>Understand the core components, design decisions, and technical architecture that power Opacus Protocol.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>System Overview</h2>
+            <p>Opacus Protocol is built on a three-layer architecture that separates concerns while maintaining high performance and security:</p>
+            
+            <svg viewBox="0 0 1000 600" style="width: 100%; max-width: 1000px; height: auto; margin: 32px 0; background: #f8f9fa; border-radius: 12px; padding: 20px;">
+                <!-- Title -->
+                <text x="500" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#000">Opacus Three-Layer Architecture</text>
+                
+                <!-- Layer 1: Application Layer -->
+                <rect x="100" y="80" width="800" height="120" fill="#fff" stroke="#00D1FF" stroke-width="3" rx="12"/>
+                <text x="500" y="115" text-anchor="middle" font-size="18" font-weight="bold" fill="#000">Application Layer</text>
+                <text x="150" y="145" font-size="14" fill="#333">• AI Agent Applications</text>
+                <text x="150" y="170" font-size="14" fill="#333">• User Interfaces</text>
+                <text x="500" y="145" font-size="14" fill="#333">• Service Providers</text>
+                <text x="500" y="170" font-size="14" fill="#333">• Integration Tools</text>
+                <text x="750" y="145" font-size="14" fill="#333">• Marketplaces</text>
+                <text x="750" y="170" font-size="14" fill="#333">• Analytics Dashboards</text>
+                
+                <!-- Arrow -->
+                <path d="M 500 200 L 500 240" stroke="#00D1FF" stroke-width="3" fill="none"/>
+                <polygon points="500,240 495,230 505,230" fill="#00D1FF"/>
+                
+                <!-- Layer 2: Protocol Layer -->
+                <rect x="100" y="250" width="800" height="140" fill="#fff" stroke="#00D1FF" stroke-width="3" rx="12"/>
+                <text x="500" y="285" text-anchor="middle" font-size="18" font-weight="bold" fill="#000">Protocol Layer (SDKs)</text>
+                
+                <!-- TypeScript SDK -->
+                <rect x="120" y="300" width="360" height="70" fill="#f0f0f0" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="300" y="325" text-anchor="middle" font-size="15" font-weight="600" fill="#000">TypeScript SDK</text>
+                <text x="150" y="350" font-size="13" fill="#555">WebSocket • WebTransport</text>
+                <text x="150" y="370" font-size="13" fill="#555">Browser & Node.js Support</text>
+                
+                <!-- Rust SDK -->
+                <rect x="520" y="300" width="360" height="70" fill="#f0f0f0" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="700" y="325" text-anchor="middle" font-size="15" font-weight="600" fill="#000">Rust SDK</text>
+                <text x="550" y="350" font-size="13" fill="#555">QUIC Protocol</text>
+                <text x="550" y="370" font-size="13" fill="#555">High Performance & Safety</text>
+                
+                <!-- Arrow -->
+                <path d="M 500 390 L 500 430" stroke="#00D1FF" stroke-width="3" fill="none"/>
+                <polygon points="500,430 495,420 505,420" fill="#00D1FF"/>
+                
+                <!-- Layer 3: Infrastructure Layer -->
+                <rect x="100" y="440" width="800" height="120" fill="#fff" stroke="#00D1FF" stroke-width="3" rx="12"/>
+                <text x="500" y="475" text-anchor="middle" font-size="18" font-weight="bold" fill="#000">Infrastructure Layer (0G Chain)</text>
+                
+                <!-- Contracts -->
+                <rect x="130" y="490" width="140" height="50" fill="#e8f7ff" stroke="#00D1FF" stroke-width="1" rx="6"/>
+                <text x="200" y="512" text-anchor="middle" font-size="13" font-weight="600" fill="#000">OpacusCore</text>
+                <text x="200" y="530" text-anchor="middle" font-size="11" fill="#555">Core Logic</text>
+                
+                <rect x="290" y="490" width="140" height="50" fill="#e8f7ff" stroke="#00D1FF" stroke-width="1" rx="6"/>
+                <text x="360" y="512" text-anchor="middle" font-size="13" font-weight="600" fill="#000">AgentRegistry</text>
+                <text x="360" y="530" text-anchor="middle" font-size="11" fill="#555">Identity Mgmt</text>
+                
+                <rect x="450" y="490" width="140" height="50" fill="#e8f7ff" stroke="#00D1FF" stroke-width="1" rx="6"/>
+                <text x="520" y="512" text-anchor="middle" font-size="13" font-weight="600" fill="#000">DACRegistry</text>
+                <text x="520" y="530" text-anchor="middle" font-size="11" fill="#555">DAC Control</text>
+                
+                <rect x="610" y="490" width="140" height="50" fill="#e8f7ff" stroke="#00D1FF" stroke-width="1" rx="6"/>
+                <text x="680" y="512" text-anchor="middle" font-size="13" font-weight="600" fill="#000">DataStream</text>
+                <text x="680" y="530" text-anchor="middle" font-size="11" fill="#555">Data Channel</text>
+                
+                <rect x="770" y="490" width="110" height="50" fill="#e8f7ff" stroke="#00D1FF" stroke-width="1" rx="6"/>
+                <text x="825" y="512" text-anchor="middle" font-size="13" font-weight="600" fill="#000">MsgEscrow</text>
+                <text x="825" y="530" text-anchor="middle" font-size="11" fill="#555">Payments</text>
+            </svg>
+            
+            <h2>Data Flow Diagram</h2>
+            <p>Understanding how data moves through Opacus when an agent registers and communicates:</p>
+            
+            <svg viewBox="0 0 900 700" style="width: 100%; max-width: 900px; height: auto; margin: 32px 0;">
+                <!-- Background -->
+                <rect x="0" y="0" width="900" height="700" fill="#fafafa" rx="12"/>
+                
+                <!-- Title -->
+                <text x="450" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#000">Agent Registration & Communication Flow</text>
+                
+                <!-- Step 1: Agent -->
+                <circle cx="100" cy="120" r="40" fill="#00D1FF" opacity="0.2"/>
+                <text x="100" y="125" text-anchor="middle" font-size="30">🤖</text>
+                <text x="100" y="175" text-anchor="middle" font-size="14" font-weight="600">AI Agent</text>
+                
+                <!-- Arrow 1 -->
+                <path d="M 140 120 L 220 120" stroke="#00D1FF" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <text x="180" y="110" text-anchor="middle" font-size="12" fill="#666">1. Register</text>
+                
+                <!-- Step 2: SDK -->
+                <rect x="220" y="80" width="120" height="80" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="280" y="115" text-anchor="middle" font-size="14" font-weight="600">SDK Client</text>
+                <text x="280" y="135" text-anchor="middle" font-size="11" fill="#666">Generate Keys</text>
+                <text x="280" y="150" text-anchor="middle" font-size="11" fill="#666">Create Identity</text>
+                
+                <!-- Arrow 2 -->
+                <path d="M 340 120 L 420 120" stroke="#00D1FF" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <text x="380" y="110" text-anchor="middle" font-size="12" fill="#666">2. Submit TX</text>
+                
+                <!-- Step 3: AgentRegistry Contract -->
+                <rect x="420" y="80" width="140" height="80" fill="#e8f7ff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="490" y="110" text-anchor="middle" font-size="14" font-weight="600">AgentRegistry</text>
+                <text x="490" y="130" text-anchor="middle" font-size="11" fill="#666">Smart Contract</text>
+                <text x="490" y="145" text-anchor="middle" font-size="11" fill="#666">Store on-chain</text>
+                
+                <!-- Arrow 3 -->
+                <path d="M 490 160 L 490 220" stroke="#00D1FF" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <text x="530" y="190" font-size="12" fill="#666">3. Emit Event</text>
+                
+                <!-- Step 4: Event Listener -->
+                <rect x="420" y="220" width="140" height="60" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="490" y="245" text-anchor="middle" font-size="14" font-weight="600">Event Listener</text>
+                <text x="490" y="265" text-anchor="middle" font-size="11" fill="#666">AgentRegistered</text>
+                
+                <!-- Arrow 4 -->
+                <path d="M 420 250 L 340 250" stroke="#00D1FF" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <text x="380" y="240" text-anchor="middle" font-size="12" fill="#666">4. Confirm</text>
+                
+                <!-- Step 5: Agent Confirmed -->
+                <rect x="220" y="220" width="120" height="60" fill="#d4f4dd" stroke="#00FF88" stroke-width="2" rx="8"/>
+                <text x="280" y="245" text-anchor="middle" font-size="14" font-weight="600">✓ Registered</text>
+                <text x="280" y="265" text-anchor="middle" font-size="11" fill="#666">Agent ID: 0x...</text>
+                
+                <!-- Divider -->
+                <line x1="50" y1="320" x2="850" y2="320" stroke="#ccc" stroke-width="2" stroke-dasharray="5,5"/>
+                <text x="450" y="310" text-anchor="middle" font-size="16" font-weight="600" fill="#666">Communication Phase</text>
+                
+                <!-- Step 6: Agent A wants to message Agent B -->
+                <circle cx="150" cy="400" r="35" fill="#00D1FF" opacity="0.2"/>
+                <text x="150" y="405" text-anchor="middle" font-size="14" font-weight="600">Agent A</text>
+                
+                <!-- Arrow 5 -->
+                <path d="M 185 400 L 270 400" stroke="#00D1FF" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <text x="227" y="390" text-anchor="middle" font-size="12" fill="#666">5. Send Message</text>
+                
+                <!-- Step 7: SDK Encryption -->
+                <rect x="270" y="360" width="140" height="80" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="340" y="390" text-anchor="middle" font-size="14" font-weight="600">SDK</text>
+                <text x="340" y="410" text-anchor="middle" font-size="11" fill="#666">• Encrypt with X25519</text>
+                <text x="340" y="425" text-anchor="middle" font-size="11" fill="#666">• Sign with Ed25519</text>
+                
+                <!-- Arrow 6 -->
+                <path d="M 410 400 L 490 400" stroke="#00D1FF" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <text x="450" y="390" text-anchor="middle" font-size="12" fill="#666">6. Route</text>
+                
+                <!-- Step 8: DataStream Contract -->
+                <rect x="490" y="360" width="140" height="80" fill="#e8f7ff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="560" y="390" text-anchor="middle" font-size="14" font-weight="600">DataStream</text>
+                <text x="560" y="410" text-anchor="middle" font-size="11" fill="#666">Store & Forward</text>
+                <text x="560" y="425" text-anchor="middle" font-size="11" fill="#666">Verify Signatures</text>
+                
+                <!-- Arrow 7 -->
+                <path d="M 630 400 L 710 400" stroke="#00D1FF" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <text x="670" y="390" text-anchor="middle" font-size="12" fill="#666">7. Deliver</text>
+                
+                <!-- Step 9: Agent B Receives -->
+                <circle cx="750" cy="400" r="35" fill="#00FF88" opacity="0.2"/>
+                <text x="750" y="405" text-anchor="middle" font-size="14" font-weight="600">Agent B</text>
+                
+                <!-- Step 10: Decryption -->
+                <rect x="270" y="480" width="360" height="80" fill="#d4f4dd" stroke="#00FF88" stroke-width="2" rx="8"/>
+                <text x="450" y="510" text-anchor="middle" font-size="14" font-weight="600">🔓 Agent B Decrypts Message</text>
+                <text x="450" y="530" text-anchor="middle" font-size="12" fill="#666">1. Verify Ed25519 signature (authenticity)</text>
+                <text x="450" y="548" text-anchor="middle" font-size="12" fill="#666">2. Decrypt with X25519 private key (confidentiality)</text>
+                
+                <!-- Arrow marker definition -->
+                <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#00D1FF"/>
+                    </marker>
+                </defs>
+                
+                <!-- Stats boxes -->
+                <rect x="50" y="600" width="250" height="70" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="175" y="625" text-anchor="middle" font-size="14" font-weight="600" fill="#000">⚡ Performance</text>
+                <text x="175" y="645" text-anchor="middle" font-size="12" fill="#666">Registration: ~2-3 seconds</text>
+                <text x="175" y="660" text-anchor="middle" font-size="12" fill="#666">Message Delivery: <500ms</text>
+                
+                <rect x="325" y="600" width="250" height="70" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="450" y="625" text-anchor="middle" font-size="14" font-weight="600" fill="#000">🔒 Security</text>
+                <text x="450" y="645" text-anchor="middle" font-size="12" fill="#666">End-to-end encryption</text>
+                <text x="450" y="660" text-anchor="middle" font-size="12" fill="#666">Cryptographic signatures</text>
+                
+                <rect x="600" y="600" width="250" height="70" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="725" y="625" text-anchor="middle" font-size="14" font-weight="600" fill="#000">💰 Cost</text>
+                <text x="725" y="645" text-anchor="middle" font-size="12" fill="#666">Registration: ~0.0001 0G</text>
+                <text x="725" y="660" text-anchor="middle" font-size="12" fill="#666">Message: ~0.00001 0G</text>
+            </svg>
+            
+            <h2>Component Details</h2>
+            
+            <h3>1. Smart Contracts Layer</h3>
+            <p>Five specialized contracts handle different aspects of the protocol:</p>
+            
+            <div class="contract-card">
+                <h4>OpacusCore</h4>
+                <p style="color: #A1A1A1; font-size: 14px; margin-top: 8px;">Central coordinator managing protocol-wide settings, access control, and contract interactions. Acts as the single source of truth for protocol governance.</p>
+                <div style="margin-top: 12px;">
+                    <strong style="color: #00D1FF;">Key Functions:</strong><br>
+                    <span style="color: #A1A1A1; font-size: 13px;">• initialize() - Set up protocol parameters<br>
+                    • updateRegistry() - Modify contract addresses<br>
+                    • pause() / unpause() - Emergency controls</span>
+                </div>
+            </div>
+            
+            <div class="contract-card">
+                <h4>AgentRegistry</h4>
+                <p style="color: #A1A1A1; font-size: 14px; margin-top: 8px;">Identity management for AI agents. Each agent receives a unique ID and stores Ed25519 + X25519 public keys on-chain for verification and encryption.</p>
+                <div style="margin-top: 12px;">
+                    <strong style="color: #00D1FF;">Key Functions:</strong><br>
+                    <span style="color: #A1A1A1; font-size: 13px;">• registerAgent() - Create new agent identity<br>
+                    • updateMetadata() - Modify agent information<br>
+                    • getAgent() - Retrieve agent details</span>
+                </div>
+            </div>
+            
+            <div class="contract-card">
+                <h4>DACRegistry</h4>
+                <p style="color: #A1A1A1; font-size: 14px; margin-top: 8px;">Decentralized Access Control manager. Handles permissions, role assignments, and access policies for agent interactions and data access.</p>
+                <div style="margin-top: 12px;">
+                    <strong style="color: #00D1FF;">Key Functions:</strong><br>
+                    <span style="color: #A1A1A1; font-size: 13px;">• createDAC() - New access control policy<br>
+                    • grantAccess() - Add permissions<br>
+                    • revokeAccess() - Remove permissions</span>
+                </div>
+            </div>
+            
+            <div class="contract-card">
+                <h4>DataStream</h4>
+                <p style="color: #A1A1A1; font-size: 14px; margin-top: 8px;">High-throughput data channel for agent-to-agent communication. Leverages 0G Chain's data availability layer for efficient message routing.</p>
+                <div style="margin-top: 12px;">
+                    <strong style="color: #00D1FF;">Key Functions:</strong><br>
+                    <span style="color: #A1A1A1; font-size: 13px;">• openStream() - Create communication channel<br>
+                    • sendData() - Transmit encrypted data<br>
+                    • closeStream() - Terminate channel</span>
+                </div>
+            </div>
+            
+            <div class="contract-card">
+                <h4>MsgEscrow</h4>
+                <p style="color: #A1A1A1; font-size: 14px; margin-top: 8px;">Payment escrow for agent services. Holds funds until work is completed and verified, protecting both service providers and consumers.</p>
+                <div style="margin-top: 12px;">
+                    <strong style="color: #00D1FF;">Key Functions:</strong><br>
+                    <span style="color: #A1A1A1; font-size: 13px;">• createEscrow() - Lock payment<br>
+                    • completeEscrow() - Release to agent<br>
+                    • disputeEscrow() - Handle conflicts</span>
+                </div>
+            </div>
+            
+            <h3>2. Cryptography Stack</h3>
+            
+            <svg viewBox="0 0 800 400" style="width: 100%; max-width: 800px; height: auto; margin: 32px 0;">
+                <!-- Title -->
+                <text x="400" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#000">Cryptographic Operations</text>
+                
+                <!-- Ed25519 (Signatures) -->
+                <rect x="50" y="70" width="330" height="140" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="10"/>
+                <text x="215" y="100" text-anchor="middle" font-size="16" font-weight="600" fill="#000">Ed25519 Digital Signatures</text>
+                <text x="70" y="130" font-size="13" fill="#333">Purpose: Authentication & Integrity</text>
+                <text x="70" y="155" font-size="12" fill="#666">• Sign messages with private key</text>
+                <text x="70" y="175" font-size="12" fill="#666">• Others verify with public key</text>
+                <text x="70" y="195" font-size="12" fill="#666">• Proves message authenticity</text>
+                
+                <!-- X25519 (Encryption) -->
+                <rect x="420" y="70" width="330" height="140" fill="#fff" stroke="#00FF88" stroke-width="2" rx="10"/>
+                <text x="585" y="100" text-anchor="middle" font-size="16" font-weight="600" fill="#000">X25519 Key Exchange</text>
+                <text x="440" y="130" font-size="13" fill="#333">Purpose: Confidentiality</text>
+                <text x="440" y="155" font-size="12" fill="#666">• Derive shared secret (ECDH)</text>
+                <text x="440" y="175" font-size="12" fill="#666">• AES-256-GCM encryption</text>
+                <text x="440" y="195" font-size="12" fill="#666">• End-to-end message privacy</text>
+                
+                <!-- HMAC (Message Authentication) -->
+                <rect x="50" y="240" width="330" height="120" fill="#fff" stroke="#FFA500" stroke-width="2" rx="10"/>
+                <text x="215" y="270" text-anchor="middle" font-size="16" font-weight="600" fill="#000">HMAC-SHA256</text>
+                <text x="70" y="300" font-size="13" fill="#333">Purpose: Message Authentication</text>
+                <text x="70" y="325" font-size="12" fill="#666">• Verify message hasn't been tampered</text>
+                <text x="70" y="345" font-size="12" fill="#666">• Shared secret validation</text>
+                
+                <!-- HKDF (Key Derivation) -->
+                <rect x="420" y="240" width="330" height="120" fill="#fff" stroke="#9D4EDD" stroke-width="2" rx="10"/>
+                <text x="585" y="270" text-anchor="middle" font-size="16" font-weight="600" fill="#000">HKDF Key Derivation</text>
+                <text x="440" y="300" font-size="13" fill="#333">Purpose: Session Keys</text>
+                <text x="440" y="325" font-size="12" fill="#666">• Derive multiple keys from master</text>
+                <text x="440" y="345" font-size="12" fill="#666">• Perfect forward secrecy</text>
+            </svg>
+            
+            <h3>3. Performance Characteristics</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <h3>Throughput</h3>
+                    <p><strong>50+ GB/s</strong> data availability layer via 0G Chain<br>
+                    <strong>10,000+ TPS</strong> on smart contract layer<br>
+                    <strong>Sub-second</strong> message delivery</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h3>Transaction Costs</h3>
+                    <p><strong>~0.0001 0G</strong> agent registration<br>
+                    <strong>~0.00001 0G</strong> message send<br>
+                    <strong>~0.0005 0G</strong> attestation creation</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <h3>Scalability</h3>
+                    <p><strong>Unlimited</strong> agents supported<br>
+                    <strong>Horizontal</strong> relay scaling<br>
+                    <strong>Sharded</strong> data availability</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🔒</div>
+                    <h3>Security Level</h3>
+                    <p><strong>128-bit</strong> security (Curve25519)<br>
+                    <strong>256-bit</strong> AES encryption<br>
+                    <strong>Quantum-resistant</strong> ready</p>
+                </div>
+            </div>
+            
+            <h2>Technology Stack</h2>
+            
+            <div style="background: #f8f9fa; padding: 24px; border-radius: 12px; margin: 32px 0;">
+                <h4 style="margin-bottom: 16px; color: #000;">Full Stack Overview</h4>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+                    <div>
+                        <h5 style="color: #00D1FF; margin-bottom: 8px;">Blockchain Layer</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• 0G Chain (EVM Compatible)</li>
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• Solidity 0.8.20+</li>
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• Hardhat Development</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h5 style="color: #00D1FF; margin-bottom: 8px;">TypeScript SDK</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• ethers.js v6</li>
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• @noble/ed25519</li>
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• cbor-x encoding</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h5 style="color: #00D1FF; margin-bottom: 8px;">Rust SDK</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• Quinn (QUIC)</li>
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• ed25519-dalek</li>
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• tokio async runtime</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h5 style="color: #00D1FF; margin-bottom: 8px;">Infrastructure</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• IPFS for metadata</li>
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• Redis for caching</li>
+                            <li style="font-size: 14px; color: #333; margin-bottom: 6px;">• WebSocket/QUIC relay</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h4>💡 Design Philosophy</h4>
+                <p>Opacus prioritizes <strong>security</strong>, <strong>performance</strong>, and <strong>developer experience</strong>. Every architectural decision balances decentralization with usability, ensuring agents can interact at scale while maintaining cryptographic guarantees.</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

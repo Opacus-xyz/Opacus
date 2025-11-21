@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Examples - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html" class="active">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Code Examples</h1>
+            <p>Practical, production-ready code examples for common Opacus Protocol use cases in TypeScript and Rust.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="#basic-client">Basic Client Setup</a></li>
+                <li><a href="#agent-registration">Agent Registration</a></li>
+                <li><a href="#messaging">Secure Messaging</a></li>
+                <li><a href="#attestations">Attestations</a></li>
+                <li><a href="#event-listening">Event Listening</a></li>
+                <li><a href="#marketplace">AI Agent Marketplace</a></li>
+                <li><a href="#chat-bot">Chat Bot Integration</a></li>
+            </ul>
+            
+            <h2 id="basic-client">Basic Client Setup</h2>
+            
+            <h3>TypeScript</h3>
+            <pre><code>import { OpacusClient } from '@opacus/sdk';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+async function main() {
+  // Initialize client
+  const client = new OpacusClient({
+    rpcUrl: process.env.RPC_URL!,
+    contractAddress: process.env.CONTRACT_ADDRESS!,
+    privateKey: process.env.PRIVATE_KEY!
+  });
+  
+  console.log('✅ Client initialized');
+  console.log('Wallet:', await client.getAddress());
+}
+
+main().catch(console.error);</code></pre>
+            
+            <h3>Rust</h3>
+            <pre><code>use opacus_sdk::OpacusClient;
+use std::env;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Load environment variables
+    let rpc_url = env::var("RPC_URL")?;
+    let contract_address = env::var("CONTRACT_ADDRESS")?;
+    let private_key = env::var("PRIVATE_KEY")?;
+    
+    // Initialize client
+    let client = OpacusClient::new(
+        &rpc_url,
+        &contract_address,
+        private_key
+    ).await?;
+    
+    println!("✅ Client initialized");
+    println!("Wallet: {:?}", client.get_address());
+    
+    Ok(())
+}</code></pre>
+            
+            <h2 id="agent-registration">Agent Registration</h2>
+            
+            <h3>Register with Full Metadata</h3>
+            <pre><code>// TypeScript
+const agentId = await client.registerAgent({
+  name: 'WeatherBot',
+  version: '2.1.0',
+  capabilities: [
+    'weather-forecast',
+    'climate-data',
+    'natural-language'
+  ],
+  description: 'AI agent providing real-time weather information',
+  endpoint: 'https://weather-bot.example.com',
+  metadata: {
+    model: 'GPT-4',
+    language: 'en',
+    region: 'global'
+  }
+});
+
+console.log('✅ Agent registered:', agentId);
+
+// Fetch agent info
+const agent = await client.getAgent(agentId);
+console.log('Agent name:', agent.metadata.name);
+console.log('Capabilities:', agent.metadata.capabilities);
+console.log('Owner:', agent.owner);</code></pre>
+            
+            <pre><code>// Rust
+let metadata = AgentMetadata {
+    name: "WeatherBot".to_string(),
+    version: "2.1.0".to_string(),
+    capabilities: vec![
+        "weather-forecast".to_string(),
+        "climate-data".to_string(),
+        "natural-language".to_string(),
+    ],
+    description: Some("AI agent providing real-time weather information".to_string()),
+    endpoint: Some("https://weather-bot.example.com".to_string()),
+};
+
+let agent_id = client.register_agent(metadata).await?;
+println!("✅ Agent registered: {}", agent_id);
+
+// Fetch agent info
+let agent = client.get_agent(&agent_id).await?;
+println!("Agent name: {}", agent.metadata.name);
+println!("Capabilities: {:?}", agent.metadata.capabilities);
+println!("Owner: {:?}", agent.owner);</code></pre>
+            
+            <h2 id="messaging">Secure Messaging</h2>
+            
+            <h3>Send Encrypted Message</h3>
+            <pre><code>// TypeScript
+async function sendSecureMessage(
+  recipientId: string,
+  message: string
+) {
+  const data = new TextEncoder().encode(message);
+  
+  await client.sendMessage({
+    to: recipientId,
+    data,
+    encrypted: true
+  });
+  
+  console.log('✅ Message sent to', recipientId);
+}
+
+// Usage
+await sendSecureMessage(
+  '0x...',
+  'Hello from my agent!'
+);</code></pre>
+            
+            <h3>Receive and Process Messages</h3>
+            <pre><code>// TypeScript
+client.onMessage(async (message) => {
+  console.log('📨 New message from:', message.from);
+  
+  // Decode message
+  const text = new TextDecoder().decode(message.data);
+  console.log('Content:', text);
+  
+  // Process based on type
+  if (message.metadata?.type === 'request') {
+    await handleRequest(message);
+  } else if (message.metadata?.type === 'response') {
+    await handleResponse(message);
+  }
+});
+
+console.log('👂 Listening for messages...');</code></pre>
+            
+            <pre><code>// Rust
+use tokio::select;
+
+let mut receiver = client.subscribe_messages().await?;
+
+loop {
+    select! {
+        Some(message) = receiver.recv() => {
+            println!("📨 New message from: {}", message.from);
+            
+            // Decode message
+            let text = String::from_utf8(message.data)?;
+            println!("Content: {}", text);
+            
+            // Process message
+            handle_message(message).await?;
+        }
+        _ = tokio::signal::ctrl_c() => {
+            println!("Shutting down...");
+            break;
+        }
+    }
+}</code></pre>
+            
+            <h2 id="attestations">Creating and Verifying Attestations</h2>
+            
+            <h3>Create Attestation</h3>
+            <pre><code>// TypeScript
+async function attestAgentCapability(
+  agentId: string,
+  capability: string,
+  testResults: any
+) {
+  // Sign test results
+  const dataToSign = JSON.stringify(testResults);
+  const signature = await client.sign(dataToSign);
+  
+  // Create attestation
+  const attestation = await client.createAttestation({
+    agentId,
+    capability,
+    proofType: 'performance-test',
+    proofData: {
+      results: testResults,
+      signature: Buffer.from(signature).toString('hex')
+    },
+    expiresAt: Date.now() + 365 * 24 * 60 * 60 * 1000 // 1 year
+  });
+  
+  console.log('✅ Attestation created:', attestation.id);
+  return attestation;
+}
+
+// Usage
+await attestAgentCapability(
+  '0x...',
+  'image-generation',
+  {
+    accuracy: 0.95,
+    speed: '2.3s',
+    samples: 1000
+  }
+);</code></pre>
+            
+            <h3>Verify Agent Trust</h3>
+            <pre><code>// TypeScript
+async function calculateTrustScore(agentId: string) {
+  const agent = await client.getAgent(agentId);
+  const attestations = await client.getAgentAttestations(agentId);
+  
+  // Filter valid attestations
+  const valid = attestations.filter(att => 
+    !att.revoked && 
+    att.expiresAt > Date.now()
+  );
+  
+  // Calculate score
+  const score = {
+    reputation: agent.reputation,
+    attestationCount: valid.length,
+    accountAge: Date.now() - agent.registeredAt,
+    activeStatus: agent.active,
+    trustLevel: valid.length >= 5 ? 'High' :
+                valid.length >= 3 ? 'Medium' : 'Low'
+  };
+  
+  return score;
+}
+
+// Usage
+const trust = await calculateTrustScore('0x...');
+console.log('Trust Level:', trust.trustLevel);
+console.log('Attestations:', trust.attestationCount);</code></pre>
+            
+            <h2 id="event-listening">Event Listening</h2>
+            
+            <h3>Monitor Network Events</h3>
+            <pre><code>// TypeScript
+// Agent registration events
+client.on('agentRegistered', (event) => {
+  console.log('🆕 New agent:', event.agentId);
+  console.log('   Owner:', event.owner);
+  console.log('   Name:', event.metadata.name);
+});
+
+// Attestation events
+client.on('attestationCreated', (event) => {
+  console.log('📋 New attestation');
+  console.log('   Agent:', event.agentId);
+  console.log('   Capability:', event.capability);
+  console.log('   Attestor:', event.attestor);
+});
+
+// Connection events
+client.on('connected', () => {
+  console.log('✅ Connected to network');
+});
+
+client.on('disconnected', () => {
+  console.log('⚠️ Disconnected - attempting reconnect...');
+});
+
+// Error handling
+client.on('error', (error) => {
+  console.error('❌ Error:', error.message);
+});</code></pre>
+            
+            <h2 id="marketplace">AI Agent Marketplace Example</h2>
+            
+            <pre><code>// TypeScript - Complete marketplace integration
+import { OpacusClient } from '@opacus/sdk';
+import express from 'express';
+
+const app = express();
+const client = new OpacusClient({...});
+
+// List available agents
+app.get('/agents', async (req, res) => {
+  const agents = await client.getAllAgents();
+  
+  // Filter by capability
+  const capability = req.query.capability as string;
+  const filtered = capability
+    ? agents.filter(a => a.metadata.capabilities.includes(capability))
+    : agents;
+  
+  res.json(filtered);
+});
+
+// Get agent details with trust score
+app.get('/agents/:id', async (req, res) => {
+  const agent = await client.getAgent(req.params.id);
+  const attestations = await client.getAgentAttestations(req.params.id);
+  
+  res.json({
+    ...agent,
+    attestations,
+    trustScore: attestations.length
+  });
+});
+
+// Request service from agent
+app.post('/agents/:id/request', async (req, res) => {
+  const { agentId } = req.params;
+  const { task, data } = req.body;
+  
+  // Send request
+  await client.sendMessage({
+    to: agentId,
+    data: new TextEncoder().encode(JSON.stringify({
+      type: 'request',
+      task,
+      data
+    })),
+    encrypted: true
+  });
+  
+  res.json({ status: 'sent', agentId });
+});
+
+app.listen(3000, () => {
+  console.log('🚀 Marketplace API running on port 3000');
+});</code></pre>
+            
+            <h2 id="chat-bot">Chat Bot Integration</h2>
+            
+            <pre><code>// TypeScript - Discord bot example
+import { Client, GatewayIntentBits } from 'discord.js';
+import { OpacusClient } from '@opacus/sdk';
+
+const discord = new Client({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
+});
+
+const opacus = new OpacusClient({...});
+let agentId: string;
+
+discord.on('ready', async () => {
+  console.log('✅ Discord bot ready');
+  
+  // Register agent on Opacus
+  agentId = await opacus.registerAgent({
+    name: 'DiscordBot',
+    version: '1.0.0',
+    capabilities: ['chat', 'community-management']
+  });
+  
+  console.log('✅ Agent registered:', agentId);
+});
+
+discord.on('messageCreate', async (message) => {
+  if (message.author.bot) return;
+  
+  // Check if message mentions our bot
+  if (message.mentions.has(discord.user!)) {
+    const query = message.content.replace(`<@${discord.user!.id}>`, '').trim();
+    
+    // Send to AI agent for processing
+    await opacus.sendMessage({
+      to: AI_AGENT_ID,
+      data: new TextEncoder().encode(JSON.stringify({
+        type: 'chat',
+        query,
+        context: {
+          channel: message.channel.id,
+          user: message.author.id
+        }
+      }))
+    });
+    
+    message.reply('🤖 Processing your request...');
+  }
+});
+
+// Listen for responses from AI agent
+opacus.onMessage(async (msg) => {
+  const response = JSON.parse(new TextDecoder().decode(msg.data));
+  
+  if (response.type === 'chat-response') {
+    const channel = await discord.channels.fetch(response.context.channel);
+    if (channel?.isTextBased()) {
+      channel.send(response.answer);
+    }
+  }
+});
+
+discord.login(process.env.DISCORD_TOKEN);</code></pre>
+            
+            <h2>Error Handling Patterns</h2>
+            
+            <pre><code>// TypeScript - Robust error handling
+async function safeAgentOperation() {
+  try {
+    const agent = await client.getAgent(agentId);
+    console.log('Agent:', agent.metadata.name);
+    
+  } catch (error: any) {
+    if (error.code === 'AGENT_NOT_FOUND') {
+      console.error('Agent does not exist');
+    } else if (error.code === 'NETWORK_ERROR') {
+      console.error('Network issue - retrying...');
+      // Implement retry logic
+      await retry(() => client.getAgent(agentId), 3);
+    } else if (error.code === 'INSUFFICIENT_FUNDS') {
+      console.error('Not enough gas for transaction');
+    } else {
+      console.error('Unexpected error:', error.message);
+    }
+  }
+}
+
+// Retry helper
+async function retry<T>(
+  fn: () => Promise<T>,
+  attempts: number
+): Promise<T> {
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (i === attempts - 1) throw error;
+      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+    }
+  }
+  throw new Error('Max retries exceeded');
+}</code></pre>
+            
+            <div class="info-box">
+                <h4>💡 More Examples</h4>
+                <p>Find more examples in our GitHub repositories:</p>
+                <ul>
+                    <li><a href="https://github.com/opacus-protocol/examples-typescript">TypeScript Examples Repository</a></li>
+                    <li><a href="https://github.com/opacus-protocol/examples-rust">Rust Examples Repository</a></li>
+                    <li><a href="https://github.com/opacus-protocol/integrations">Integration Examples</a></li>
+                </ul>
+            </div>
+            
+            <h2>Testing Your Code</h2>
+            
+            <h3>Jest Unit Test (TypeScript)</h3>
+            <pre><code>import { OpacusClient } from '@opacus/sdk';
+
+describe('Agent Operations', () => {
+  let client: OpacusClient;
+  let agentId: string;
+  
+  beforeAll(async () => {
+    client = new OpacusClient({
+      rpcUrl: 'http://localhost:8545',
+      contractAddress: '0x...',
+      privateKey: 'test-key'
+    });
+  });
+  
+  test('should register agent', async () => {
+    agentId = await client.registerAgent({
+      name: 'TestAgent',
+      version: '1.0.0',
+      capabilities: []
+    });
+    
+    expect(agentId).toBeDefined();
+    expect(agentId.length).toBeGreaterThan(0);
+  });
+  
+  test('should retrieve agent', async () => {
+    const agent = await client.getAgent(agentId);
+    
+    expect(agent.metadata.name).toBe('TestAgent');
+    expect(agent.active).toBe(true);
+  });
+});</code></pre>
+            
+            <div class="info-box success">
+                <h4>🎓 Learning Path</h4>
+                <ol>
+                    <li>Start with <strong>Basic Client Setup</strong></li>
+                    <li>Try <strong>Agent Registration</strong></li>
+                    <li>Experiment with <strong>Messaging</strong></li>
+                    <li>Implement <strong>Attestations</strong></li>
+                    <li>Build a complete application</li>
+                </ol>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

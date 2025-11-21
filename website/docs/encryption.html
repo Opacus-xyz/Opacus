@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html" class="active">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>End-to-End Encryption</h1>
+            <p>Opacus Protocol uses modern cryptographic primitives to ensure all agent-to-agent communication is encrypted, authenticated, and tamper-proof.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Encryption Overview</h2>
+            
+            <p>Opacus implements a multi-layered cryptographic approach:</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">🔒</span>
+                    <span><strong>X25519 ECDH:</strong> Elliptic curve Diffie-Hellman for shared secret derivation</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">🔑</span>
+                    <span><strong>HKDF:</strong> HMAC-based Key Derivation Function for encryption key generation</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">🛡️</span>
+                    <span><strong>ChaCha20-Poly1305:</strong> Authenticated encryption with associated data (AEAD)</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>HMAC-SHA256:</strong> Message authentication codes for integrity verification</span>
+                </div>
+            </div>
+            
+            <h2>Encryption Flow</h2>
+            
+            <svg viewBox="0 0 900 650" style="width: 100%; max-width: 900px; height: auto; margin: 32px 0; background: #fafafa; padding: 20px; border-radius: 12px;">
+                <text x="450" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#000">Agent-to-Agent Encryption Flow</text>
+                
+                <!-- Alice -->
+                <rect x="50" y="80" width="180" height="120" fill="#e8f7ff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="140" y="110" text-anchor="middle" font-size="18" font-weight="600" fill="#00D1FF">Alice (Sender)</text>
+                <text x="70" y="140" font-size="13" fill="#333">Private Key: a_priv</text>
+                <text x="70" y="160" font-size="13" fill="#333">Public Key: a_pub</text>
+                <text x="70" y="180" font-size="13" fill="#00D1FF" font-weight="600">Plaintext Message:</text>
+                <text x="70" y="200" font-size="12" fill="#666">"Secret data for Bob"</text>
+                
+                <!-- Step 1: Key Exchange -->
+                <rect x="280" y="80" width="340" height="120" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="450" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">1. Derive Shared Secret (ECDH)</text>
+                <text x="300" y="140" font-size="13" fill="#333">shared = X25519(a_priv, b_pub)</text>
+                <text x="300" y="165" font-size="13" fill="#333">Both Alice and Bob compute same shared secret:</text>
+                <text x="300" y="185" font-size="12" fill="#666" font-family="'JetBrains Mono'">shared = 0x3f7a2b... (32 bytes)</text>
+                
+                <!-- Bob -->
+                <rect x="670" y="80" width="180" height="120" fill="#e8ffe8" stroke="#00FF88" stroke-width="2" rx="8"/>
+                <text x="760" y="110" text-anchor="middle" font-size="18" font-weight="600" fill="#00FF88">Bob (Receiver)</text>
+                <text x="690" y="140" font-size="13" fill="#333">Private Key: b_priv</text>
+                <text x="690" y="160" font-size="13" fill="#333">Public Key: b_pub</text>
+                <text x="690" y="180" font-size="13" fill="#00FF88" font-weight="600">← Fetch from chain</text>
+                
+                <!-- Step 2: Key Derivation -->
+                <rect x="280" y="230" width="340" height="100" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="450" y="260" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">2. Derive Encryption Key (HKDF)</text>
+                <text x="300" y="290" font-size="13" fill="#333">enc_key = HKDF-SHA256(shared, salt, info, 32)</text>
+                <text x="300" y="310" font-size="12" fill="#666" font-family="'JetBrains Mono'">enc_key = 0x8c1d... (32 bytes)</text>
+                
+                <!-- Step 3: Encryption -->
+                <rect x="50" y="360" width="260" height="110" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="180" y="390" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">3. Encrypt Message</text>
+                <text x="70" y="415" font-size="13" fill="#333">nonce = random(12 bytes)</text>
+                <text x="70" y="435" font-size="13" fill="#333">ciphertext = ChaCha20-Poly1305</text>
+                <text x="70" y="455" font-size="13" fill="#333">(plaintext, enc_key, nonce)</text>
+                
+                <!-- Step 4: MAC -->
+                <rect x="340" y="360" width="260" height="110" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="470" y="390" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">4. Generate MAC</text>
+                <text x="360" y="415" font-size="13" fill="#333">mac = HMAC-SHA256</text>
+                <text x="360" y="435" font-size="13" fill="#333">(ciphertext + nonce, enc_key)</text>
+                <text x="360" y="455" font-size="12" fill="#666">Ensures integrity</text>
+                
+                <!-- Step 5: Transmission -->
+                <rect x="630" y="360" width="220" height="110" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="740" y="390" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">5. Send Encrypted</text>
+                <text x="650" y="415" font-size="13" fill="#333">package = {</text>
+                <text x="660" y="435" font-size="12" fill="#666">  ciphertext,</text>
+                <text x="660" y="450" font-size="12" fill="#666">  nonce, mac</text>
+                <text x="650" y="465" font-size="13" fill="#333">}</text>
+                
+                <!-- Arrow down -->
+                <path d="M 450 330 L 450 360" stroke="#00D1FF" stroke-width="2" marker-end="url(#arrow3)"/>
+                
+                <!-- Step 6: Decryption -->
+                <rect x="280" y="500" width="340" height="120" fill="#e8ffe8" stroke="#00FF88" stroke-width="3" rx="8"/>
+                <text x="450" y="530" text-anchor="middle" font-size="16" font-weight="600" fill="#00FF88">6. Bob Decrypts</text>
+                <text x="300" y="555" font-size="13" fill="#333">1. Verify MAC (ensures no tampering)</text>
+                <text x="300" y="575" font-size="13" fill="#333">2. Decrypt: plaintext = ChaCha20-Poly1305</text>
+                <text x="310" y="595" font-size="13" fill="#333">(ciphertext, enc_key, nonce)</text>
+                <text x="300" y="615" font-size="13" fill="#00FF88" font-weight="600">✅ "Secret data for Bob"</text>
+                
+                <!-- Arrow down -->
+                <path d="M 450 470 L 450 500" stroke="#00D1FF" stroke-width="2" marker-end="url(#arrow3)"/>
+                
+                <defs>
+                    <marker id="arrow3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#00D1FF"/>
+                    </marker>
+                </defs>
+            </svg>
+            
+            <h2>Cryptographic Primitives</h2>
+            
+            <h3>1. X25519 Key Exchange</h3>
+            
+            <p>X25519 is used for deriving a shared secret between two agents without transmitting the secret over the network:</p>
+            
+            <pre><code>// TypeScript
+import { x25519 } from '@noble/curves/ed25519';
+
+// Alice's keypair
+const alicePrivate = x25519.utils.randomPrivateKey();
+const alicePublic = x25519.getPublicKey(alicePrivate);
+
+// Bob's public key (fetched from blockchain)
+const bobPublic = await client.getAgent(bobId).then(a => a.xPublicKey);
+
+// Derive shared secret
+const sharedSecret = x25519.getSharedSecret(alicePrivate, bobPublic);
+console.log('Shared secret:', Buffer.from(sharedSecret).toString('hex'));</code></pre>
+            
+            <pre><code>// Rust
+use x25519_dalek::{StaticSecret, PublicKey};
+
+// Alice's keypair
+let alice_secret = StaticSecret::random_from_rng(OsRng);
+let alice_public = PublicKey::from(&alice_secret);
+
+// Bob's public key (fetched from blockchain)
+let bob_public = PublicKey::from(bob_public_bytes);
+
+// Derive shared secret
+let shared_secret = alice_secret.diffie_hellman(&bob_public);
+println!("Shared secret: {:?}", shared_secret.as_bytes());</code></pre>
+            
+            <h3>2. HKDF Key Derivation</h3>
+            
+            <p>HKDF transforms the shared secret into a strong encryption key:</p>
+            
+            <pre><code>// TypeScript
+import { hkdf } from '@noble/hashes/hkdf';
+import { sha256 } from '@noble/hashes/sha256';
+
+const salt = new Uint8Array(32); // Optional salt
+const info = new TextEncoder().encode('opacus-encryption-v1');
+
+const encryptionKey = hkdf(
+  sha256,
+  sharedSecret,
+  salt,
+  info,
+  32 // 256-bit key
+);
+
+console.log('Encryption key:', Buffer.from(encryptionKey).toString('hex'));</code></pre>
+            
+            <pre><code>// Rust
+use hkdf::Hkdf;
+use sha2::Sha256;
+
+let salt = [0u8; 32];
+let info = b"opacus-encryption-v1";
+
+let hk = Hkdf::<Sha256>::new(Some(&salt), shared_secret.as_bytes());
+let mut encryption_key = [0u8; 32];
+hk.expand(info, &mut encryption_key).unwrap();
+
+println!("Encryption key: {:?}", encryption_key);</code></pre>
+            
+            <h3>3. ChaCha20-Poly1305 AEAD</h3>
+            
+            <p>Authenticated encryption provides both confidentiality and integrity:</p>
+            
+            <pre><code>// TypeScript
+import { chacha20poly1305 } from '@noble/ciphers/chacha';
+import { randomBytes } from '@noble/hashes/utils';
+
+// Generate random nonce
+const nonce = randomBytes(12); // 96 bits
+
+// Encrypt
+const cipher = chacha20poly1305(encryptionKey, nonce);
+const plaintext = new TextEncoder().encode('Secret message');
+const ciphertext = cipher.encrypt(plaintext);
+
+console.log('Encrypted:', Buffer.from(ciphertext).toString('hex'));
+
+// Decrypt
+const decrypted = cipher.decrypt(ciphertext);
+console.log('Decrypted:', new TextDecoder().decode(decrypted));</code></pre>
+            
+            <pre><code>// Rust
+use chacha20poly1305::{ChaCha20Poly1305, Key, Nonce};
+use chacha20poly1305::aead::{Aead, NewAead};
+use rand::RngCore;
+
+// Generate random nonce
+let mut nonce_bytes = [0u8; 12];
+OsRng.fill_bytes(&mut nonce_bytes);
+let nonce = Nonce::from_slice(&nonce_bytes);
+
+// Create cipher
+let key = Key::from_slice(&encryption_key);
+let cipher = ChaCha20Poly1305::new(key);
+
+// Encrypt
+let plaintext = b"Secret message";
+let ciphertext = cipher.encrypt(nonce, plaintext.as_ref()).unwrap();
+
+// Decrypt
+let decrypted = cipher.decrypt(nonce, ciphertext.as_ref()).unwrap();
+println!("Decrypted: {:?}", String::from_utf8(decrypted));</code></pre>
+            
+            <h3>4. HMAC-SHA256 Authentication</h3>
+            
+            <p>HMAC provides message authentication and integrity:</p>
+            
+            <pre><code>// TypeScript
+import { hmac } from '@noble/hashes/hmac';
+import { sha256 } from '@noble/hashes/sha256';
+
+const message = Buffer.concat([ciphertext, nonce]);
+const mac = hmac(sha256, encryptionKey, message);
+
+console.log('MAC:', Buffer.from(mac).toString('hex'));
+
+// Verify
+const isValid = hmac.verify(mac, encryptionKey, message);
+console.log('Valid:', isValid);</code></pre>
+            
+            <pre><code>// Rust
+use hmac::{Hmac, Mac};
+use sha2::Sha256;
+
+type HmacSha256 = Hmac<Sha256>;
+
+let mut message = ciphertext.clone();
+message.extend_from_slice(&nonce_bytes);
+
+// Generate MAC
+let mut mac = HmacSha256::new_from_slice(&encryption_key).unwrap();
+mac.update(&message);
+let result = mac.finalize();
+let mac_bytes = result.into_bytes();
+
+println!("MAC: {:?}", mac_bytes);
+
+// Verify
+let mut mac_verify = HmacSha256::new_from_slice(&encryption_key).unwrap();
+mac_verify.update(&message);
+mac_verify.verify(&mac_bytes).unwrap();</code></pre>
+            
+            <h2>Security Properties</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">🔒</div>
+                    <h3>Confidentiality</h3>
+                    <p>Only sender and receiver can read messages<br>
+                    ChaCha20 stream cipher<br>
+                    128-bit security level</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <h3>Integrity</h3>
+                    <p>Tampering is detectable<br>
+                    Poly1305 MAC tag<br>
+                    Cryptographic guarantee</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <h3>Authentication</h3>
+                    <p>Sender identity verified<br>
+                    Ed25519 signatures<br>
+                    Non-repudiation</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🔑</div>
+                    <h3>Forward Secrecy</h3>
+                    <p>Past messages stay secure<br>
+                    Ephemeral key exchange<br>
+                    Key rotation support</p>
+                </div>
+            </div>
+            
+            <h2>Complete Example</h2>
+            
+            <h3>TypeScript Full Encryption</h3>
+            <pre><code>import { OpacusClient } from '@opacus/sdk';
+import { x25519 } from '@noble/curves/ed25519';
+import { hkdf } from '@noble/hashes/hkdf';
+import { sha256 } from '@noble/hashes/sha256';
+import { chacha20poly1305 } from '@noble/ciphers/chacha';
+import { randomBytes } from '@noble/hashes/utils';
+
+async function encryptForAgent(
+  recipientAgentId: string,
+  plaintext: Uint8Array
+): Promise<EncryptedMessage> {
+  // 1. Get recipient's public key from blockchain
+  const recipient = await client.getAgent(recipientAgentId);
+  const recipientPublicKey = recipient.xPublicKey;
+  
+  // 2. Generate ephemeral keypair
+  const ephemeralPrivate = x25519.utils.randomPrivateKey();
+  const ephemeralPublic = x25519.getPublicKey(ephemeralPrivate);
+  
+  // 3. Derive shared secret
+  const sharedSecret = x25519.getSharedSecret(
+    ephemeralPrivate,
+    recipientPublicKey
+  );
+  
+  // 4. Derive encryption key
+  const encKey = hkdf(sha256, sharedSecret, undefined, undefined, 32);
+  
+  // 5. Encrypt message
+  const nonce = randomBytes(12);
+  const cipher = chacha20poly1305(encKey, nonce);
+  const ciphertext = cipher.encrypt(plaintext);
+  
+  return {
+    ephemeralPublic,
+    nonce,
+    ciphertext
+  };
+}</code></pre>
+            
+            <h3>Rust Full Encryption</h3>
+            <pre><code>use x25519_dalek::{StaticSecret, PublicKey};
+use hkdf::Hkdf;
+use sha2::Sha256;
+use chacha20poly1305::{ChaCha20Poly1305, Key, Nonce};
+use chacha20poly1305::aead::{Aead, NewAead};
+use rand::rngs::OsRng;
+
+pub struct EncryptedMessage {
+    pub ephemeral_public: [u8; 32],
+    pub nonce: [u8; 12],
+    pub ciphertext: Vec<u8>,
+}
+
+pub async fn encrypt_for_agent(
+    recipient_id: &str,
+    plaintext: &[u8]
+) -> Result<EncryptedMessage, Error> {
+    // 1. Get recipient's public key from blockchain
+    let recipient = client.get_agent(recipient_id).await?;
+    let recipient_public = PublicKey::from(recipient.x_public_key);
+    
+    // 2. Generate ephemeral keypair
+    let ephemeral_secret = StaticSecret::random_from_rng(OsRng);
+    let ephemeral_public = PublicKey::from(&ephemeral_secret);
+    
+    // 3. Derive shared secret
+    let shared_secret = ephemeral_secret.diffie_hellman(&recipient_public);
+    
+    // 4. Derive encryption key
+    let hk = Hkdf::<Sha256>::new(None, shared_secret.as_bytes());
+    let mut enc_key = [0u8; 32];
+    hk.expand(&[], &mut enc_key)?;
+    
+    // 5. Encrypt message
+    let mut nonce_bytes = [0u8; 12];
+    OsRng.fill_bytes(&mut nonce_bytes);
+    
+    let key = Key::from_slice(&enc_key);
+    let cipher = ChaCha20Poly1305::new(key);
+    let nonce = Nonce::from_slice(&nonce_bytes);
+    
+    let ciphertext = cipher.encrypt(nonce, plaintext)?;
+    
+    Ok(EncryptedMessage {
+        ephemeral_public: ephemeral_public.to_bytes(),
+        nonce: nonce_bytes,
+        ciphertext,
+    })
+}</code></pre>
+            
+            <div class="info-box success">
+                <h4>🔐 Best Practices</h4>
+                <ul>
+                    <li>✅ Always use fresh random nonces (never reuse!)</li>
+                    <li>✅ Verify MAC before decrypting to prevent tampering</li>
+                    <li>✅ Use ephemeral keys for forward secrecy</li>
+                    <li>✅ Rotate keys periodically for long-lived agents</li>
+                    <li>✅ Store private keys securely (hardware wallets, encrypted storage)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

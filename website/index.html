@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Opacus: Decentralized Access Control & Data Distribution Protocol on 0G Chain">
+    <title>Opacus Protocol | Decentralized Data Access & Agent Communication</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <img src="logo.png" alt="Opacus" height="56">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#architecture">Architecture</a></li>
+                    <li><a href="#sdk">SDKs</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="docs/index.html">Docs</a></li>
+                </ul>
+                <div class="nav-cta">
+                    <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener" class="btn btn-outline-small">GitHub</a>
+                    <a href="#get-started" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Secure Identity for<br>
+                    Autonomous AI Agents
+                </h1>
+                <p class="hero-subtitle">
+                    Opacus gives every AI agent a verifiable digital identity. Connect agents across networks, manage permissions, and enable secure data sharing—all on-chain.
+                </p>
+                <div class="hero-cta">
+                    <a href="#get-started" class="btn btn-large btn-primary">
+                        <span>Start Building</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10h12m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="docs/index.html" class="btn btn-large btn-secondary">
+                        <span>Documentation</span>
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Smart Contracts</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">Production</div>
+                        <div class="stat-label">Ready</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">SDK Languages</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-container">
+                    <svg viewBox="0 0 500 500" class="hero-illustration">
+                        <defs>
+                            <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#8A8A8A"/>
+                                <stop offset="100%" stop-color="#A1A1A1"/>
+                            </linearGradient>
+                            <filter id="cyanGlow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Metallic Grid Background -->
+                        <g opacity="0.15" stroke="url(#metalGrad)" stroke-width="0.5">
+                            <line x1="0" y1="100" x2="500" y2="100"/>
+                            <line x1="0" y1="200" x2="500" y2="200"/>
+                            <line x1="0" y1="300" x2="500" y2="300"/>
+                            <line x1="0" y1="400" x2="500" y2="400"/>
+                            <line x1="100" y1="0" x2="100" y2="500"/>
+                            <line x1="200" y1="0" x2="200" y2="500"/>
+                            <line x1="300" y1="0" x2="300" y2="500"/>
+                            <line x1="400" y1="0" x2="400" y2="500"/>
+                        </g>
+                        
+                        <!-- Central Neural Core -->
+                        <circle cx="250" cy="250" r="50" fill="none" stroke="#00D1FF" stroke-width="1" opacity="0.8" filter="url(#cyanGlow)"/>
+                        <circle cx="250" cy="250" r="35" fill="none" stroke="#8A8A8A" stroke-width="1" opacity="0.6"/>
+                        <circle cx="250" cy="250" r="20" fill="#0A0A0A" stroke="#00D1FF" stroke-width="2"/>
+                        
+                        <!-- Core Identity Symbol -->
+                        <path d="M250 240 L255 250 L250 260 L245 250 Z" fill="#00D1FF" opacity="0.9"/>
+                        <circle cx="250" cy="250" r="2" fill="#FFFFFF"/>
+                        
+                        <!-- Data Flow Lines (Metallic) -->
+                        <g opacity="0.4">
+                            <!-- Vertical lines -->
+                            <line x1="250" y1="200" x2="250" y2="100" stroke="url(#metalGrad)" stroke-width="1"/>
+                            <line x1="250" y1="300" x2="250" y2="400" stroke="url(#metalGrad)" stroke-width="1"/>
+                            
+                            <!-- Horizontal lines -->
+                            <line x1="200" y1="250" x2="100" y2="250" stroke="url(#metalGrad)" stroke-width="1"/>
+                            <line x1="300" y1="250" x2="400" y2="250" stroke="url(#metalGrad)" stroke-width="1"/>
+                            
+                            <!-- Diagonal lines -->
+                            <line x1="205" y1="205" x2="140" y2="140" stroke="url(#metalGrad)" stroke-width="1"/>
+                            <line x1="295" y1="205" x2="360" y2="140" stroke="url(#metalGrad)" stroke-width="1"/>
+                            <line x1="295" y1="295" x2="360" y2="360" stroke="url(#metalGrad)" stroke-width="1"/>
+                            <line x1="205" y1="295" x2="140" y2="360" stroke="url(#metalGrad)" stroke-width="1"/>
+                        </g>
+                        
+                        <!-- Agent Nodes (Minimal) -->
+                        <g>
+                            <!-- Cardinal directions -->
+                            <circle cx="250" cy="100" r="8" fill="#0A0A0A" stroke="#8A8A8A" stroke-width="1.5"/>
+                            <circle cx="400" cy="250" r="8" fill="#0A0A0A" stroke="#8A8A8A" stroke-width="1.5"/>
+                            <circle cx="250" cy="400" r="8" fill="#0A0A0A" stroke="#8A8A8A" stroke-width="1.5"/>
+                            <circle cx="100" cy="250" r="8" fill="#0A0A0A" stroke="#8A8A8A" stroke-width="1.5"/>
+                            
+                            <!-- Diagonals with cyan accent -->
+                            <circle cx="140" cy="140" r="6" fill="#0A0A0A" stroke="#00D1FF" stroke-width="1" opacity="0.8"/>
+                            <circle cx="360" cy="140" r="6" fill="#0A0A0A" stroke="#00D1FF" stroke-width="1" opacity="0.8"/>
+                            <circle cx="360" cy="360" r="6" fill="#0A0A0A" stroke="#00D1FF" stroke-width="1" opacity="0.8"/>
+                            <circle cx="140" cy="360" r="6" fill="#0A0A0A" stroke="#00D1FF" stroke-width="1" opacity="0.8"/>
+                        </g>
+                        
+                        <!-- Animated Pulses -->
+                        <circle cx="250" cy="250" r="50" fill="none" stroke="#00D1FF" stroke-width="0.5" opacity="0">
+                            <animate attributeName="r" from="20" to="80" dur="3s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" from="0.8" to="0" dur="3s" repeatCount="indefinite"/>
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Diagram Section -->
+    <section id="architecture" class="architecture-diagram-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">System Architecture</h2>
+                <p class="section-subtitle">Complete overview of the Opacus protocol stack</p>
+            </div>
+            <div class="diagram-container">
+                <svg viewBox="0 0 1000 600" class="architecture-svg">
+                    <!-- Background -->
+                    <rect width="1000" height="600" fill="#ffffff"/>
+                    
+                    <!-- Title -->
+                    <text x="500" y="40" text-anchor="middle" font-size="24" font-weight="600" fill="#111827">Opacus Protocol Architecture</text>
+                    
+                    <!-- Layer 1: Client SDKs -->
+                    <g id="client-layer">
+                        <rect x="50" y="80" width="200" height="120" rx="8" fill="#EFF6FF" stroke="#2563eb" stroke-width="2"/>
+                        <text x="150" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#1e40af">TypeScript SDK</text>
+                        <text x="150" y="135" text-anchor="middle" font-size="12" fill="#64748b">WebSocket/WebTransport</text>
+                        <text x="150" y="155" text-anchor="middle" font-size="12" fill="#64748b">Ed25519 + X25519</text>
+                        <text x="150" y="175" text-anchor="middle" font-size="12" fill="#64748b">CBOR Encoding</text>
+                        
+                        <rect x="300" y="80" width="200" height="120" rx="8" fill="#FEF2F2" stroke="#dc2626" stroke-width="2"/>
+                        <text x="400" y="110" text-anchor="middle" font-size="16" font-weight="600" fill="#991b1b">Rust SDK</text>
+                        <text x="400" y="135" text-anchor="middle" font-size="12" fill="#64748b">QUIC Transport (Quinn)</text>
+                        <text x="400" y="155" text-anchor="middle" font-size="12" fill="#64748b">Tokio Async Runtime</text>
+                        <text x="400" y="175" text-anchor="middle" font-size="12" fill="#64748b">Zero-copy Operations</text>
+                    </g>
+                    
+                    <!-- Arrow down -->
+                    <path d="M 250 210 L 250 250" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <!-- Layer 2: Transport & Crypto -->
+                    <g id="transport-layer">
+                        <rect x="100" y="260" width="150" height="80" rx="8" fill="#F0FDF4" stroke="#16a34a" stroke-width="2"/>
+                        <text x="175" y="285" text-anchor="middle" font-size="14" font-weight="600" fill="#15803d">Transport Layer</text>
+                        <text x="175" y="305" text-anchor="middle" font-size="11" fill="#64748b">WebSocket</text>
+                        <text x="175" y="322" text-anchor="middle" font-size="11" fill="#64748b">QUIC/TLS 1.3</text>
+                        
+                        <rect x="270" y="260" width="150" height="80" rx="8" fill="#FEF9C3" stroke="#ca8a04" stroke-width="2"/>
+                        <text x="345" y="285" text-anchor="middle" font-size="14" font-weight="600" fill="#854d0e">Crypto Module</text>
+                        <text x="345" y="305" text-anchor="middle" font-size="11" fill="#64748b">Ed25519 Signing</text>
+                        <text x="345" y="322" text-anchor="middle" font-size="11" fill="#64748b">X25519 ECDH</text>
+                    </g>
+                    
+                    <!-- Arrow down -->
+                    <path d="M 250 350 L 250 390" stroke="#6b7280" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <!-- Layer 3: Smart Contracts -->
+                    <g id="contract-layer">
+                        <rect x="550" y="80" width="400" height="460" rx="12" fill="#F9FAFB" stroke="#d1d5db" stroke-width="2"/>
+                        <text x="750" y="110" text-anchor="middle" font-size="18" font-weight="600" fill="#111827">Smart Contracts (0G Chain)</text>
+                        
+                        <!-- OpacusCore -->
+                        <rect x="625" y="130" width="250" height="60" rx="6" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+                        <text x="750" y="155" text-anchor="middle" font-size="14" font-weight="600" fill="white">OpacusCore</text>
+                        <text x="750" y="175" text-anchor="middle" font-size="11" fill="#dbeafe">Central Coordinator</text>
+                        
+                        <!-- Registry Contracts -->
+                        <rect x="575" y="210" width="160" height="70" rx="6" fill="#EFF6FF" stroke="#2563eb" stroke-width="1.5"/>
+                        <text x="655" y="235" text-anchor="middle" font-size="13" font-weight="600" fill="#1e40af">DACRegistry</text>
+                        <text x="655" y="252" text-anchor="middle" font-size="10" fill="#64748b">DAC Management</text>
+                        <text x="655" y="267" text-anchor="middle" font-size="10" fill="#64748b">Stake: 0.01 0G</text>
+                        
+                        <rect x="765" y="210" width="160" height="70" rx="6" fill="#EFF6FF" stroke="#2563eb" stroke-width="1.5"/>
+                        <text x="845" y="235" text-anchor="middle" font-size="13" font-weight="600" fill="#1e40af">AgentRegistry</text>
+                        <text x="845" y="252" text-anchor="middle" font-size="10" fill="#64748b">Agent Identity</text>
+                        <text x="845" y="267" text-anchor="middle" font-size="10" fill="#64748b">Key Rotation</text>
+                        
+                        <!-- Data Contracts -->
+                        <rect x="575" y="300" width="160" height="70" rx="6" fill="#F0FDF4" stroke="#16a34a" stroke-width="1.5"/>
+                        <text x="655" y="325" text-anchor="middle" font-size="13" font-weight="600" fill="#15803d">DataStream</text>
+                        <text x="655" y="342" text-anchor="middle" font-size="10" fill="#64748b">Channels</text>
+                        <text x="655" y="357" text-anchor="middle" font-size="10" fill="#64748b">Subscriptions</text>
+                        
+                        <rect x="765" y="300" width="160" height="70" rx="6" fill="#FEF9C3" stroke="#ca8a04" stroke-width="1.5"/>
+                        <text x="845" y="325" text-anchor="middle" font-size="13" font-weight="600" fill="#854d0e">MsgEscrow</text>
+                        <text x="845" y="342" text-anchor="middle" font-size="10" fill="#64748b">Micropayments</text>
+                        <text x="845" y="357" text-anchor="middle" font-size="10" fill="#64748b">ERC20 Escrow</text>
+                        
+                        <!-- Contract Addresses -->
+                    </g>
+                    
+                    <!-- Connections -->
+                    <path d="M 250 400 L 550 260" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5,5"/>
+                    
+                    <!-- Layer 4: 0G Chain -->
+                    <rect x="50" y="400" width="400" height="80" rx="8" fill="#F3F4F6" stroke="#6b7280" stroke-width="2"/>
+                    <text x="250" y="430" text-anchor="middle" font-size="16" font-weight="600" fill="#111827">0G Chain Infrastructure</text>
+                    <text x="250" y="450" text-anchor="middle" font-size="12" fill="#64748b">Chain ID: 16661 • RPC: https://evmrpc.0g.ai</text>
+                    <text x="250" y="468" text-anchor="middle" font-size="12" fill="#64748b">Storage: 0G DA • Explorer: https://chainscan.0g.ai</text>
+                    
+                    <!-- Arrow definitions -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#6b7280" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Core Features</h2>
+                <p class="section-subtitle">Enterprise-grade components for decentralized data access</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#EFF6FF"/>
+                            <path d="M24 14v20m-6-6l6 6 6-6" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>DAC Registry</h3>
+                    <p>Register and manage Data Access Consortiums with on-chain stake requirements and permission controls</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#F0FDF4"/>
+                            <circle cx="24" cy="24" r="8" stroke="#16a34a" stroke-width="2" fill="none"/>
+                            <path d="M24 16v8l4 4" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Agent Identity</h3>
+                    <p>Secure agent registration with Ed25519/X25519 keys and time-locked key rotation capabilities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#FEF2F2"/>
+                            <path d="M16 24h16M24 16l8 8-8 8" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Data Streaming</h3>
+                    <p>Create channels with subscription-based access, usage accounting, and automatic revenue settlement</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#FEF9C3"/>
+                            <rect x="18" y="18" width="12" height="12" rx="2" stroke="#ca8a04" stroke-width="2" fill="none"/>
+                            <path d="M21 24h6" stroke="#ca8a04" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Micropayments</h3>
+                    <p>ERC20-based escrow system with authorized relayers for efficient message-level settlements</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#F5F3FF"/>
+                            <path d="M24 16l-8 8 8 8" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M24 16l8 8-8 8" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>TypeScript SDK</h3>
+                    <p>Full-featured SDK with WebSocket/WebTransport, ethers v6, and complete type definitions</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#FFF7ED"/>
+                            <path d="M20 18l8 6-8 6z" fill="#ea580c"/>
+                        </svg>
+                    </div>
+                    <h3>Rust SDK</h3>
+                    <p>High-performance SDK with QUIC transport, tokio async, and zero-cost abstractions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SDK Section -->
+    <section id="sdk" class="sdk">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Developer SDKs</h2>
+                <p class="section-subtitle">Choose your preferred language</p>
+            </div>
+            <div class="sdk-grid">
+                <div class="sdk-card">
+                    <div class="sdk-header">
+                        <div class="sdk-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <rect width="48" height="48" rx="8" fill="#3178C6"/>
+                                <text x="24" y="32" text-anchor="middle" font-size="24" fill="white" font-weight="bold">TS</text>
+                            </svg>
+                        </div>
+                        <h3>TypeScript SDK</h3>
+                    </div>
+                    <p>Full-featured SDK for Node.js and browsers with WebSocket/WebTransport support.</p>
+                    <div class="sdk-features">
+                        <div class="sdk-feature">✓ WebSocket & WebTransport</div>
+                        <div class="sdk-feature">✓ ethers v6 Integration</div>
+                        <div class="sdk-feature">✓ Ed25519 + X25519 Crypto</div>
+                        <div class="sdk-feature">✓ CBOR Encoding</div>
+                        <div class="sdk-feature">✓ Complete Type Definitions</div>
+                    </div>
+                    <div class="sdk-code">
+                        <code>npm install @opacus/sdk</code>
+                    </div>
+                    <a href="docs/typescript.html" class="btn btn-outline">View TypeScript Docs</a>
+                </div>
+                <div class="sdk-card">
+                    <div class="sdk-header">
+                        <div class="sdk-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <rect width="48" height="48" rx="8" fill="#CE422B"/>
+                                <text x="24" y="32" text-anchor="middle" font-size="24" fill="white" font-weight="bold">RS</text>
+                            </svg>
+                        </div>
+                        <h3>Rust SDK</h3>
+                    </div>
+                    <p>High-performance SDK with QUIC transport and tokio async runtime.</p>
+                    <div class="sdk-features">
+                        <div class="sdk-feature">✓ QUIC Transport (Quinn)</div>
+                        <div class="sdk-feature">✓ Tokio Async Runtime</div>
+                        <div class="sdk-feature">✓ Zero-copy Operations</div>
+                        <div class="sdk-feature">✓ ed25519-dalek + x25519-dalek</div>
+                        <div class="sdk-feature">✓ Memory Safe</div>
+                    </div>
+                    <div class="sdk-code">
+                        <code>cargo add opacus-sdk</code>
+                    </div>
+                    <a href="docs/rust.html" class="btn btn-outline">View Rust Docs</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Get Started Section -->
+    <section id="get-started" class="get-started">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get Started</h2>
+                <p class="section-subtitle">Integrate Opacus in three steps</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Install SDK</h3>
+                    <p>Install the SDK for your preferred language</p>
+                    <div class="code-snippet">
+                        <code>npm install @opacus/sdk</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Initialize Client</h3>
+                    <p>Create and configure the Opacus client</p>
+                    <div class="code-snippet">
+                        <code>const client = new OpacusClient(config);</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Connect & Authenticate</h3>
+                    <p>Establish connection and authenticate</p>
+                    <div class="code-snippet">
+                        <code>await client.authenticate();</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section class="documentation">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Documentation</h2>
+                <p class="section-subtitle">Comprehensive guides and API references</p>
+            </div>
+            <div class="docs-grid">
+                <a href="docs/getting-started.html" class="doc-card">
+                    <div class="doc-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#EFF6FF"/>
+                            <path d="M24 16v16m-8-8h16" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Getting Started</h3>
+                    <p>Quick start guide and installation instructions</p>
+                    <span class="doc-link">Read guide →</span>
+                </a>
+                <a href="docs/typescript.html" class="doc-card">
+                    <div class="doc-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#F5F3FF"/>
+                            <path d="M24 16l-8 8 8 8M24 16l8 8-8 8" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>TypeScript SDK</h3>
+                    <p>Complete TypeScript SDK documentation and examples</p>
+                    <span class="doc-link">View docs →</span>
+                </a>
+                <a href="docs/rust.html" class="doc-card">
+                    <div class="doc-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#FFF7ED"/>
+                            <circle cx="24" cy="24" r="8" stroke="#ea580c" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Rust SDK</h3>
+                    <p>Rust SDK API reference and usage examples</p>
+                    <span class="doc-link">View docs →</span>
+                </a>
+                <a href="docs/smart-contracts.html" class="doc-card">
+                    <div class="doc-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#F0FDF4"/>
+                            <rect x="18" y="18" width="12" height="12" rx="2" stroke="#16a34a" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3>Smart Contracts</h3>
+                    <p>Contract interfaces, ABIs, and integration guide</p>
+                    <span class="doc-link">View docs →</span>
+                </a>
+                <a href="docs/api-reference.html" class="doc-card">
+                    <div class="doc-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#FEF9C3"/>
+                            <path d="M18 24h12M18 20h12M18 28h8" stroke="#ca8a04" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>API Reference</h3>
+                    <p>Complete API documentation for all endpoints</p>
+                    <span class="doc-link">View API →</span>
+                </a>
+                <a href="docs/security.html" class="doc-card">
+                    <div class="doc-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="12" fill="#FEF2F2"/>
+                            <path d="M24 16v16m-6-12l6-4 6 4v8l-6 4-6-4z" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Security</h3>
+                    <p>Security model, cryptography, and best practices</p>
+                    <span class="doc-link">Learn more →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know about Opacus</p>
+            </div>
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What is Opacus?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Opacus is an identity system for AI agents. It lets agents prove who they are, control their data, and interact securely across different networks—all using blockchain technology.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What is a Data Access Consortium (DAC)?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A Data Access Consortium is a group of entities that collectively manage access to data streams. DACs can define membership rules, stake requirements, and permission controls through on-chain governance. Each DAC operates independently with its own policies and membership criteria.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Which programming languages are supported?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>H3-DAC provides two production-ready SDKs: TypeScript (for Node.js and browsers) and Rust (for high-performance applications). Both SDKs offer complete functionality including transport layers, cryptography, and smart contract integration.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How does agent authentication work?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Agents register on-chain with Ed25519 signing keys and X25519 encryption keys. Authentication uses cryptographic signatures to prove identity. The system supports time-locked key rotation for enhanced security, allowing agents to update their keys while maintaining identity continuity.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What transport protocols are supported?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>The TypeScript SDK supports WebSocket and WebTransport protocols, while the Rust SDK uses QUIC transport with Quinn. All transports use TLS 1.3 for security and support multiplexing for efficient data streaming.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How do micropayments work?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>The MsgEscrow contract enables ERC20-based micropayments for data access. Users deposit tokens into escrow, and authorized relayers can settle payments based on usage. This allows for efficient message-level billing without per-message blockchain transactions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is the protocol production-ready?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, Opacus is deployed on mainnet with all five core contracts fully operational. Both SDKs are stable and include comprehensive test coverage and documentation.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What are the system requirements?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>For TypeScript: Node.js 18+ or modern browsers. For Rust: rustc 1.70+. Smart contract interaction requires an EVM-compatible wallet with sufficient gas tokens for transactions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How can I get started?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Install the SDK for your preferred language, configure the client with your network settings, and authenticate with your agent credentials. Check out our comprehensive documentation and examples to integrate Opacus into your application.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Where can I find support?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Join our GitHub discussions for community support, check the documentation for detailed guides, or reach out to us at info@opacus.xyz for enterprise inquiries and partnerships.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Build with Opacus?</h2>
+                <p>Start integrating decentralized data access into your application today</p>
+                <div class="cta-buttons">
+                    <a href="#get-started" class="btn btn-large btn-primary">Get Started</a>
+                    <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener" class="btn btn-large btn-secondary">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="logo.png" alt="Opacus" height="40">
+                    </div>
+                    <p>Secure Identity for Autonomous AI Agents</p>
+                    <p class="footer-email"><a href="mailto:info@opacus.xyz" class="email-cyan">info@opacus.xyz</a></p>
+                </div>
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#architecture">Architecture</a></li>
+                        <li><a href="#sdk">SDKs</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="docs/getting-started.html">Getting Started</a></li>
+                        <li><a href="docs/typescript.html">TypeScript SDK</a></li>
+                        <li><a href="docs/rust.html">Rust SDK</a></li>
+                        <li><a href="docs/smart-contracts.html">Smart Contracts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="docs/api-reference.html">API Reference</a></li>
+                        <li><a href="docs/security.html">Security</a></li>
+                        <li><a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Opacus Protocol. MIT Licensed.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

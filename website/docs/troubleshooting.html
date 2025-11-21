@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html" class="active">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Troubleshooting</h1>
+            <p>Common issues and solutions for Opacus Protocol.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Connection Issues</h2>
+            
+            <h3>❌ Cannot Connect to Gateway</h3>
+            
+            <div class="info-box warning">
+                <h4>Error Message</h4>
+                <pre><code>Error: Failed to connect to gateway at wss://gateway.opacus.ai
+WebSocket connection failed: ECONNREFUSED</code></pre>
+            </div>
+            
+            <p><strong>Possible Causes:</strong></p>
+            <ul>
+                <li>Gateway is down or unreachable</li>
+                <li>Network firewall blocking WebSocket connections</li>
+                <li>Incorrect gateway URL</li>
+                <li>TLS certificate issues</li>
+            </ul>
+            
+            <p><strong>Solutions:</strong></p>
+            
+            <pre><code>// 1. Check gateway status
+curl https://gateway.opacus.ai/health
+// Expected: { "status": "ok", "version": "1.0.0" }
+
+// 2. Verify WebSocket connectivity
+wscat -c wss://gateway.opacus.ai
+// Should connect without errors
+
+// 3. Try alternative protocol
+const client = new OpacusClient({
+  gateway: 'gateway.opacus.ai',
+  protocol: 'websocket'  // Force WebSocket instead of WebTransport
+});
+
+// 4. Check firewall rules
+// Allow outbound connections on ports 443 (WSS) and 4433 (QUIC)</code></pre>
+            
+            <h3>❌ Connection Drops Frequently</h3>
+            
+            <p><strong>Solutions:</strong></p>
+            
+            <pre><code>// TypeScript: Enable keepalive
+const client = new OpacusClient({
+  gateway: 'gateway.opacus.ai',
+  keepalive: true,
+  keepaliveInterval: 30000,  // 30 seconds
+  reconnect: true,
+  maxReconnectAttempts: 5
+});
+
+// Handle reconnection
+client.on('reconnect', (attempt) => {
+  console.log(`Reconnecting (attempt ${attempt})...`);
+});
+
+client.on('reconnected', () => {
+  console.log('Connection restored');
+});</code></pre>
+            
+            <pre><code>// Rust: Configure keepalive
+let config = OpacusConfig {
+    gateway_url: "gateway.opacus.ai".to_string(),
+    keep_alive_interval: Duration::from_secs(30),
+    max_idle_timeout: Duration::from_secs(120),
+    ..Default::default()
+};
+
+let client = OpacusClient::new(config).await?;</code></pre>
+            
+            <h2>Authentication & Identity</h2>
+            
+            <h3>❌ Agent Registration Fails</h3>
+            
+            <div class="info-box warning">
+                <h4>Error Message</h4>
+                <pre><code>Error: Transaction reverted: Agent already exists</code></pre>
+            </div>
+            
+            <p><strong>Solution:</strong></p>
+            
+            <pre><code>// Check if agent already registered
+const agentId = keccak256(abi.encodePacked(edPublicKey, xPublicKey));
+const agent = await agentRegistry.getAgent(agentId);
+
+if (agent.active) {
+  console.log('Agent already registered:', agentId);
+  // Use existing agent
+} else {
+  // Register new agent
+  await agentRegistry.registerAgent(metadata, edPublicKey, xPublicKey);
+}</code></pre>
+            
+            <h3>❌ Signature Verification Failed</h3>
+            
+            <div class="info-box warning">
+                <h4>Error Message</h4>
+                <pre><code>Error: Invalid signature: Ed25519 verification failed</code></pre>
+            </div>
+            
+            <p><strong>Possible Causes:</strong></p>
+            <ul>
+                <li>Wrong private key used for signing</li>
+                <li>Message data modified after signing</li>
+                <li>Public key mismatch</li>
+                <li>Incorrect signature encoding</li>
+            </ul>
+            
+            <p><strong>Solution:</strong></p>
+            
+            <pre><code>// TypeScript: Verify signature locally first
+import { ed25519 } from '@noble/curves/ed25519';
+
+const message = 'Hello, world!';
+const messageBytes = new TextEncoder().encode(message);
+
+// Sign
+const signature = ed25519.sign(messageBytes, privateKey);
+
+// Verify immediately
+const valid = ed25519.verify(signature, messageBytes, publicKey);
+console.log('Signature valid:', valid);
+
+// Common mistake: signing different format
+// ❌ Wrong:
+const sig1 = ed25519.sign(message, privateKey);  // String
+
+// ✅ Correct:
+const sig2 = ed25519.sign(messageBytes, privateKey);  // Uint8Array</code></pre>
+            
+            <h3>❌ Public Key Not Found On-Chain</h3>
+            
+            <p><strong>Solution:</strong></p>
+            
+            <pre><code>// Check agent registration status
+const agentId = '0x...';
+
+try {
+  const agent = await agentRegistry.getAgent(agentId);
+  
+  if (!agent.active) {
+    console.error('Agent is deactivated');
+    // Reactivate if you own it
+    await agentRegistry.reactivateAgent(agentId);
+  }
+  
+  console.log('Public keys:', {
+    ed25519: agent.edPublicKey,
+    x25519: agent.xPublicKey
+  });
+} catch (err) {
+  console.error('Agent not found:', agentId);
+  // Register the agent first
+}</code></pre>
+            
+            <h2>Encryption & Decryption</h2>
+            
+            <h3>❌ Decryption Failed</h3>
+            
+            <div class="info-box warning">
+                <h4>Error Message</h4>
+                <pre><code>Error: Decryption failed: authentication tag mismatch</code></pre>
+            </div>
+            
+            <p><strong>Possible Causes:</strong></p>
+            <ul>
+                <li>Wrong decryption key</li>
+                <li>Corrupted ciphertext</li>
+                <li>Incorrect nonce or IV</li>
+                <li>Key derivation mismatch</li>
+            </ul>
+            
+            <p><strong>Solution:</strong></p>
+            
+            <pre><code>// TypeScript: Debug encryption/decryption
+import { x25519 } from '@noble/curves/ed25519';
+
+// Sender side
+const alicePrivate = x25519.utils.randomPrivateKey();
+const alicePublic = x25519.getPublicKey(alicePrivate);
+
+const bobPublic = await getRecipientPublicKey(bobAgentId);
+
+// Derive shared secret
+const sharedSecret = x25519.scalarMult(alicePrivate, bobPublic);
+console.log('Shared secret (sender):', Buffer.from(sharedSecret).toString('hex'));
+
+// Recipient side
+const bobPrivate = x25519.utils.randomPrivateKey();
+const bobPublic2 = x25519.getPublicKey(bobPrivate);
+
+// Derive same shared secret
+const sharedSecret2 = x25519.scalarMult(bobPrivate, alicePublic);
+console.log('Shared secret (recipient):', Buffer.from(sharedSecret2).toString('hex'));
+
+// ✅ Both should match!
+assert(Buffer.from(sharedSecret).equals(Buffer.from(sharedSecret2)));</code></pre>
+            
+            <h3>❌ Key Derivation Mismatch</h3>
+            
+            <pre><code>// Ensure consistent key derivation
+import { hkdf } from '@noble/hashes/hkdf';
+import { sha256 } from '@noble/hashes/sha256';
+
+function deriveMessageKey(
+  sharedSecret: Uint8Array,
+  messageId: string,
+  keyLength: number = 32
+): Uint8Array {
+  const salt = new Uint8Array(0);  // Empty salt
+  const info = new TextEncoder().encode(`opacus-v1-${messageId}`);
+  
+  return hkdf(sha256, sharedSecret, salt, info, keyLength);
+}
+
+// ✅ Both sender and recipient must use same parameters
+const key1 = deriveMessageKey(secret, 'msg-123');
+const key2 = deriveMessageKey(secret, 'msg-123');
+// key1 === key2 ✓</code></pre>
+            
+            <h2>Smart Contract Issues</h2>
+            
+            <h3>❌ Transaction Reverted</h3>
+            
+            <div class="info-box warning">
+                <h4>Error Message</h4>
+                <pre><code>Error: Transaction reverted without a reason string</code></pre>
+            </div>
+            
+            <p><strong>Solutions:</strong></p>
+            
+            <pre><code>// 1. Estimate gas before sending
+const gasEstimate = await contract.estimateGas.registerAgent(
+  metadata,
+  edPublicKey,
+  xPublicKey
+);
+
+console.log('Estimated gas:', gasEstimate.toString());
+
+// Add 20% buffer
+const gasLimit = gasEstimate * 120n / 100n;
+
+// 2. Send with explicit gas limit
+const tx = await contract.registerAgent(
+  metadata,
+  edPublicKey,
+  xPublicKey,
+  { gasLimit }
+);
+
+// 3. Debug with hardhat node
+// Run local node: npx hardhat node
+// Deploy to local: npx hardhat run scripts/deploy.ts --network localhost
+// Transaction errors will show detailed stack traces</code></pre>
+            
+            <h3>❌ Insufficient Gas</h3>
+            
+            <pre><code>// Check wallet balance
+const balance = await provider.getBalance(wallet.address);
+console.log('Balance:', ethers.formatEther(balance), '0G');
+
+if (balance < ethers.parseEther('0.01')) {
+  console.error('Insufficient balance. Need at least 0.01 0G');
+  // Get testnet tokens from faucet
+  console.log('Faucet: https://faucet.0g.ai');
+}</code></pre>
+            
+            <h3>❌ Nonce Too Low</h3>
+            
+            <div class="info-box warning">
+                <h4>Error Message</h4>
+                <pre><code>Error: nonce has already been used</code></pre>
+            </div>
+            
+            <p><strong>Solution:</strong></p>
+            
+            <pre><code>// Get latest nonce
+const nonce = await provider.getTransactionCount(wallet.address, 'latest');
+
+// Send with explicit nonce
+const tx = await contract.registerAgent(
+  metadata,
+  edPublicKey,
+  xPublicKey,
+  { nonce }
+);
+
+// Or reset local cache
+// Hardhat: npx hardhat clean
+// Ethers: create new provider instance</code></pre>
+            
+            <h2>Message Delivery</h2>
+            
+            <h3>❌ Messages Not Being Received</h3>
+            
+            <p><strong>Debug Checklist:</strong></p>
+            
+            <pre><code>// 1. Verify recipient is connected
+const recipientOnline = await client.isAgentOnline(recipientId);
+console.log('Recipient online:', recipientOnline);
+
+// 2. Check message was sent
+const messageId = await client.sendMessage({
+  to: recipientId,
+  content: 'Test'
+});
+console.log('Message sent:', messageId);
+
+// 3. Verify delivery
+const status = await client.getMessageStatus(messageId);
+console.log('Message status:', status);
+// Possible: 'pending', 'delivered', 'failed'
+
+// 4. Check recipient's message handler
+client.onMessage((msg) => {
+  console.log('Received message:', msg);
+  // Make sure this handler is registered!
+});</code></pre>
+            
+            <h3>❌ Message Order Not Preserved</h3>
+            
+            <p><strong>Solution:</strong></p>
+            
+            <pre><code>// Use message sequencing
+let messageSequence = 0;
+
+async function sendOrdered(to: string, content: string) {
+  const seq = messageSequence++;
+  
+  await client.sendMessage({
+    to,
+    content,
+    metadata: { sequence: seq }
+  });
+}
+
+// Recipient side: reorder messages
+const messageBuffer = new Map<number, Message>();
+let expectedSeq = 0;
+
+client.onMessage((msg) => {
+  const seq = msg.metadata.sequence;
+  
+  if (seq === expectedSeq) {
+    processMessage(msg);
+    expectedSeq++;
+    
+    // Process buffered messages
+    while (messageBuffer.has(expectedSeq)) {
+      processMessage(messageBuffer.get(expectedSeq)!);
+      messageBuffer.delete(expectedSeq);
+      expectedSeq++;
+    }
+  } else {
+    // Buffer out-of-order message
+    messageBuffer.set(seq, msg);
+  }
+});</code></pre>
+            
+            <h2>Performance Issues</h2>
+            
+            <h3>❌ High Latency</h3>
+            
+            <p><strong>Diagnose:</strong></p>
+            
+            <pre><code>// Measure end-to-end latency
+const start = performance.now();
+
+const messageId = await client.sendMessage({
+  to: recipientId,
+  content: 'Ping'
+});
+
+// Wait for delivery confirmation
+await client.waitForDelivery(messageId);
+
+const latency = performance.now() - start;
+console.log('Round-trip latency:', latency, 'ms');
+
+// Expected: <10ms on good network
+// If >100ms, check:
+// - Network connectivity (ping gateway)
+// - Gateway load (check /metrics endpoint)
+// - Message size (large messages take longer)</code></pre>
+            
+            <p><strong>Solutions:</strong></p>
+            
+            <ul>
+                <li>Use connection pooling (see <a href="performance.html">Performance Guide</a>)</li>
+                <li>Choose nearest gateway (geo-routing)</li>
+                <li>Enable WebTransport for lower latency</li>
+                <li>Compress large payloads</li>
+            </ul>
+            
+            <h3>❌ Low Throughput</h3>
+            
+            <pre><code>// Measure throughput
+const count = 1000;
+const start = Date.now();
+
+for (let i = 0; i < count; i++) {
+  await client.sendMessage({
+    to: recipientId,
+    content: `Message ${i}`
+  });
+}
+
+const duration = (Date.now() - start) / 1000;
+const throughput = count / duration;
+
+console.log('Throughput:', throughput.toFixed(0), 'msg/s');
+
+// Expected: >1000 msg/s
+// If lower, try:
+// - Batch messages
+// - Use parallel processing
+// - Increase connection pool size</code></pre>
+            
+            <h2>Development & Debugging</h2>
+            
+            <h3>Enable Debug Logging</h3>
+            
+            <pre><code>// TypeScript: Enable verbose logging
+const client = new OpacusClient({
+  gateway: 'gateway.opacus.ai',
+  logLevel: 'debug'
+});
+
+// Logs will show:
+// [DEBUG] Connecting to gateway...
+// [DEBUG] WebSocket opened
+// [DEBUG] Sending message: {...}
+// [DEBUG] Received message: {...}</code></pre>
+            
+            <pre><code>// Rust: Enable tracing
+use tracing_subscriber;
+
+tracing_subscriber::fmt()
+    .with_max_level(tracing::Level::DEBUG)
+    .init();
+
+// Or set environment variable
+// RUST_LOG=debug cargo run</code></pre>
+            
+            <h3>Test in Local Environment</h3>
+            
+            <pre><code># Start local 0G node
+git clone https://github.com/0glabs/0g-chain
+cd 0g-chain
+make install
+0gchaind start
+
+# Deploy contracts locally
+npx hardhat run scripts/deploy.ts --network localhost
+
+# Start local gateway
+cd gateway
+cargo run -- --config config.local.toml
+
+# Run SDK tests
+npm test  # TypeScript
+cargo test  # Rust</code></pre>
+            
+            <h2>Common Error Codes</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error Code</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ECONNREFUSED</code></td>
+                        <td>Connection refused</td>
+                        <td>Check gateway URL and firewall</td>
+                    </tr>
+                    <tr>
+                        <td><code>ETIMEOUT</code></td>
+                        <td>Connection timeout</td>
+                        <td>Check network connectivity</td>
+                    </tr>
+                    <tr>
+                        <td><code>INVALID_SIGNATURE</code></td>
+                        <td>Signature verification failed</td>
+                        <td>Verify keys and message format</td>
+                    </tr>
+                    <tr>
+                        <td><code>AGENT_NOT_FOUND</code></td>
+                        <td>Agent not registered</td>
+                        <td>Register agent on-chain first</td>
+                    </tr>
+                    <tr>
+                        <td><code>INSUFFICIENT_GAS</code></td>
+                        <td>Not enough gas for transaction</td>
+                        <td>Add more 0G tokens to wallet</td>
+                    </tr>
+                    <tr>
+                        <td><code>NONCE_TOO_LOW</code></td>
+                        <td>Transaction nonce already used</td>
+                        <td>Get latest nonce or reset cache</td>
+                    </tr>
+                    <tr>
+                        <td><code>DECRYPTION_FAILED</code></td>
+                        <td>Cannot decrypt message</td>
+                        <td>Check keys and encryption params</td>
+                    </tr>
+                    <tr>
+                        <td><code>RATE_LIMITED</code></td>
+                        <td>Too many requests</td>
+                        <td>Implement backoff and retry</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>Getting Help</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">💬</div>
+                    <h3>Discord</h3>
+                    <p>Join our community<br>
+                    <a href="https://discord.gg/opacus">discord.gg/opacus</a></p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🐛</div>
+                    <h3>GitHub Issues</h3>
+                    <p>Report bugs<br>
+                    <a href="https://github.com/opacus-protocol/opacus/issues">github.com/opacus-protocol</a></p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">📚</div>
+                    <h3>Documentation</h3>
+                    <p>Read the docs<br>
+                    <a href="index.html">docs.opacus.ai</a></p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">✉️</div>
+                    <h3>Email Support</h3>
+                    <p>Contact us<br>
+                    <a href="mailto:support@opacus.ai">support@opacus.ai</a></p>
+                </div>
+            </div>
+            
+            <h2>FAQ</h2>
+            
+            <h3>Q: Which SDK should I use?</h3>
+            <p><strong>A:</strong> Use TypeScript SDK for web/Node.js applications. Use Rust SDK for high-performance server applications or when you need QUIC protocol.</p>
+            
+            <h3>Q: How much do transactions cost?</h3>
+            <p><strong>A:</strong> Registration costs ~0.0001 0G, attestations ~0.00008 0G. Message routing is off-chain and free (only gateway bandwidth costs).</p>
+            
+            <h3>Q: Can I use testnet for production?</h3>
+            <p><strong>A:</strong> No, testnet is for development only. Testnet can be reset without notice. Use mainnet for production applications.</p>
+            
+            <h3>Q: How do I rotate keys?</h3>
+            <p><strong>A:</strong> Generate new keypair, update on-chain via <code>agentRegistry.updateKeys()</code>, revoke old attestations, create new ones.</p>
+            
+            <h3>Q: What happens if gateway goes down?</h3>
+            <p><strong>A:</strong> SDKs will automatically reconnect. Messages are queued during downtime. Use multiple gateway URLs for redundancy.</p>
+            
+            <h3>Q: How private are my messages?</h3>
+            <p><strong>A:</strong> Messages are end-to-end encrypted. Gateways cannot read content. Only sender and recipient can decrypt. See <a href="security.html">Security Model</a>.</p>
+            
+            <div class="info-box success">
+                <h4>🎯 Still Stuck?</h4>
+                <p>If you can't find a solution here:</p>
+                <ul>
+                    <li>Check <a href="https://github.com/opacus-protocol/opacus/issues">GitHub Issues</a> for similar problems</li>
+                    <li>Ask on <a href="https://discord.gg/opacus">Discord</a> for community help</li>
+                    <li>Email <a href="mailto:support@opacus.ai">support@opacus.ai</a> for direct support</li>
+                </ul>
+            </div>
+            
+            <h2>Related Documentation</h2>
+            
+            <ul>
+                <li><a href="getting-started.html">Getting Started</a> - Setup guide</li>
+                <li><a href="installation.html">Installation</a> - Installation instructions</li>
+                <li><a href="examples.html">Examples</a> - Working code examples</li>
+                <li><a href="security.html">Security</a> - Security best practices</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

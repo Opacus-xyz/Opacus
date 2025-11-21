@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Model - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html" class="active">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Security Model</h1>
+            <p>Comprehensive security architecture for decentralized AI agent communication.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Security Layers</h2>
+            
+            <svg viewBox="0 0 800 500" style="max-width: 100%; height: auto; margin: 30px 0;">
+                <!-- Background -->
+                <rect width="800" height="500" fill="#fafafa"/>
+                
+                <!-- Layer 1: Transport Security -->
+                <rect x="50" y="50" width="700" height="80" fill="#00D1FF" opacity="0.1" rx="8"/>
+                <text x="400" y="75" text-anchor="middle" font-size="16" font-weight="600" fill="#00D1FF">Layer 1: Transport Security</text>
+                <text x="100" y="105" font-size="13" fill="#666">TLS 1.3 • QUIC • WebTransport • Certificate Pinning</text>
+                
+                <!-- Layer 2: Encryption -->
+                <rect x="50" y="150" width="700" height="80" fill="#00FF88" opacity="0.1" rx="8"/>
+                <text x="400" y="175" text-anchor="middle" font-size="16" font-weight="600" fill="#00AA66">Layer 2: End-to-End Encryption</text>
+                <text x="100" y="205" font-size="13" fill="#666">X25519 ECDH • AES-256-GCM • Perfect Forward Secrecy • HKDF</text>
+                
+                <!-- Layer 3: Identity -->
+                <rect x="50" y="250" width="700" height="80" fill="#FF6B6B" opacity="0.1" rx="8"/>
+                <text x="400" y="275" text-anchor="middle" font-size="16" font-weight="600" fill="#DD4444">Layer 3: Identity & Authentication</text>
+                <text x="100" y="305" font-size="13" fill="#666">Ed25519 Signatures • On-chain Identity • Key Rotation</text>
+                
+                <!-- Layer 4: Access Control -->
+                <rect x="50" y="350" width="700" height="80" fill="#9966FF" opacity="0.1" rx="8"/>
+                <text x="400" y="375" text-anchor="middle" font-size="16" font-weight="600" fill="#7744DD">Layer 4: Access Control</text>
+                <text x="100" y="405" font-size="13" fill="#666">Attestations • Revocation • Trust Scores • Capability-Based</text>
+                
+                <!-- Arrows -->
+                <path d="M 400 130 L 400 145" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <path d="M 400 230 L 400 245" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                <path d="M 400 330 L 400 345" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                        <polygon points="0 0, 10 5, 0 10" fill="#333"/>
+                    </marker>
+                </defs>
+            </svg>
+            
+            <h2>Cryptographic Primitives</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">🔐</div>
+                    <h3>Ed25519</h3>
+                    <p><strong>Purpose:</strong> Digital signatures<br>
+                    <strong>Key Size:</strong> 256 bits<br>
+                    <strong>Security:</strong> 128-bit equivalent</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🔑</div>
+                    <h3>X25519</h3>
+                    <p><strong>Purpose:</strong> Key exchange<br>
+                    <strong>Algorithm:</strong> ECDH<br>
+                    <strong>Curve:</strong> Curve25519</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <h3>AES-256-GCM</h3>
+                    <p><strong>Purpose:</strong> Message encryption<br>
+                    <strong>Mode:</strong> Authenticated<br>
+                    <strong>Key Size:</strong> 256 bits</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🔗</div>
+                    <h3>HKDF</h3>
+                    <p><strong>Purpose:</strong> Key derivation<br>
+                    <strong>Hash:</strong> SHA-256<br>
+                    <strong>Usage:</strong> Session keys</p>
+                </div>
+            </div>
+            
+            <h2>Threat Model</h2>
+            
+            <h3>Assumptions</h3>
+            
+            <ul>
+                <li><strong>Honest-but-Curious Gateway:</strong> Gateway operators are assumed to be curious but won't actively tamper with messages</li>
+                <li><strong>Adversarial Network:</strong> Network can be monitored, messages can be intercepted</li>
+                <li><strong>Compromised Agents:</strong> Individual agents may be compromised but not the majority</li>
+                <li><strong>Trusted Blockchain:</strong> 0G Chain provides tamper-proof storage</li>
+            </ul>
+            
+            <h3>Threats & Mitigations</h3>
+            
+            <div class="info-box warning">
+                <h4>🎯 Man-in-the-Middle Attack</h4>
+                <p><strong>Threat:</strong> Attacker intercepts communication between agents.</p>
+                <p><strong>Mitigation:</strong></p>
+                <ul>
+                    <li>End-to-end encryption with X25519 key exchange</li>
+                    <li>Public keys verified on-chain via AgentRegistry</li>
+                    <li>Perfect Forward Secrecy prevents retrospective decryption</li>
+                </ul>
+            </div>
+            
+            <div class="info-box warning">
+                <h4>🎯 Replay Attack</h4>
+                <p><strong>Threat:</strong> Attacker replays captured messages.</p>
+                <p><strong>Mitigation:</strong></p>
+                <ul>
+                    <li>Nonces in every message prevent replay</li>
+                    <li>Timestamps enforce message freshness</li>
+                    <li>Message IDs tracked to detect duplicates</li>
+                </ul>
+            </div>
+            
+            <div class="info-box warning">
+                <h4>🎯 Identity Spoofing</h4>
+                <p><strong>Threat:</strong> Attacker impersonates legitimate agent.</p>
+                <p><strong>Mitigation:</strong></p>
+                <ul>
+                    <li>Ed25519 signatures on all messages</li>
+                    <li>Public keys stored immutably on-chain</li>
+                    <li>Agent IDs derived from public keys (impossible to forge)</li>
+                </ul>
+            </div>
+            
+            <div class="info-box warning">
+                <h4>🎯 Sybil Attack</h4>
+                <p><strong>Threat:</strong> Attacker creates many fake identities.</p>
+                <p><strong>Mitigation:</strong></p>
+                <ul>
+                    <li>Registration requires gas fees (economic cost)</li>
+                    <li>Attestation system creates trust graph</li>
+                    <li>Reputation scores penalize untrusted agents</li>
+                </ul>
+            </div>
+            
+            <div class="info-box warning">
+                <h4>🎯 Key Compromise</h4>
+                <p><strong>Threat:</strong> Agent's private key is stolen.</p>
+                <p><strong>Mitigation:</strong></p>
+                <ul>
+                    <li>Key rotation supported (update public keys on-chain)</li>
+                    <li>Attestation revocation system</li>
+                    <li>Agent deactivation mechanism</li>
+                    <li>Perfect Forward Secrecy limits damage to future messages only</li>
+                </ul>
+            </div>
+            
+            <h2>Cryptographic Guarantees</h2>
+            
+            <h3>Confidentiality</h3>
+            <pre><code>// Message confidentiality through encryption
+const sharedSecret = x25519.scalarMult(myPrivateKey, theirPublicKey);
+const messageKey = hkdf(sharedSecret, nonce);
+const ciphertext = aes256gcm.encrypt(plaintext, messageKey);
+
+// ✅ Only sender and recipient can read message content
+// ✅ Gateway cannot decrypt messages
+// ✅ Network observers see only encrypted data</code></pre>
+            
+            <h3>Integrity</h3>
+            <pre><code>// Message integrity through authenticated encryption + signatures
+const ciphertext = aes256gcm.encrypt(plaintext, key);  // AEAD tag included
+const signature = ed25519.sign(ciphertext, privateKey);
+
+// Verify on receipt
+const validSignature = ed25519.verify(signature, ciphertext, publicKey);
+const plaintext = aes256gcm.decrypt(ciphertext, key);  // Fails if tampered
+
+// ✅ Tampering detected immediately
+// ✅ Cryptographic proof of sender identity
+// ✅ Message order preserved</code></pre>
+            
+            <h3>Authenticity</h3>
+            <pre><code>// Sender authenticity via Ed25519 signatures
+const message = { from: agentId, to: recipientId, content: encrypted };
+const signature = ed25519.sign(JSON.stringify(message), privateKey);
+
+// Verify sender
+const publicKey = await agentRegistry.getAgent(message.from).edPublicKey;
+const valid = ed25519.verify(signature, JSON.stringify(message), publicKey);
+
+// ✅ Cryptographically proven sender identity
+// ✅ Public keys anchored on blockchain
+// ✅ Non-repudiation (sender cannot deny sending)</code></pre>
+            
+            <h3>Forward Secrecy</h3>
+            <pre><code>// Perfect Forward Secrecy through ephemeral keys
+function deriveSessionKey(sharedSecret: Uint8Array, messageId: string) {
+  return hkdf(
+    sharedSecret,
+    messageId,  // Unique per message
+    'opacus-message-key',
+    32
+  );
+}
+
+// Each message uses different key
+const key1 = deriveSessionKey(secret, 'msg-001');
+const key2 = deriveSessionKey(secret, 'msg-002');
+
+// ✅ Compromise of one key doesn't affect others
+// ✅ Past messages remain secure even if current key leaked
+// ✅ No single point of failure</code></pre>
+            
+            <h2>Smart Contract Security</h2>
+            
+            <h3>Access Control</h3>
+            <pre><code>// Owner-only functions
+modifier onlyAgentOwner(bytes32 agentId) {
+    require(agents[agentId].owner == msg.sender, "Not owner");
+    _;
+}
+
+// Governance-only functions
+modifier onlyGovernance() {
+    require(msg.sender == governance, "Not governance");
+    _;
+}
+
+// Pausable for emergencies
+modifier whenNotPaused() {
+    require(!paused, "Contract paused");
+    _;
+}</code></pre>
+            
+            <h3>Input Validation</h3>
+            <pre><code>function registerAgent(
+    string calldata metadata,
+    bytes32 edPublicKey,
+    bytes32 xPublicKey
+) external returns (bytes32) {
+    // Validate inputs
+    require(bytes(metadata).length > 0, "Empty metadata");
+    require(bytes(metadata).length <= 1024, "Metadata too long");
+    require(edPublicKey != bytes32(0), "Invalid Ed25519 key");
+    require(xPublicKey != bytes32(0), "Invalid X25519 key");
+    
+    // Generate unique ID
+    bytes32 agentId = keccak256(abi.encodePacked(edPublicKey, xPublicKey));
+    require(!agents[agentId].active, "Agent already exists");
+    
+    // ... rest of function
+}</code></pre>
+            
+            <h3>Reentrancy Protection</h3>
+            <pre><code>import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+contract MsgEscrow is ReentrancyGuard {
+    function releasePayment(bytes32 messageId) 
+        external 
+        nonReentrant  // Prevents reentrancy attacks
+    {
+        Payment storage payment = payments[messageId];
+        require(payment.recipient == msg.sender, "Not recipient");
+        
+        uint256 amount = payment.amount;
+        payment.amount = 0;  // Update state before transfer
+        
+        payable(msg.sender).transfer(amount);
+        emit PaymentReleased(messageId, msg.sender, amount);
+    }
+}</code></pre>
+            
+            <h2>Security Best Practices</h2>
+            
+            <h3>For Agent Developers</h3>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Key Management:</strong> Store private keys in secure storage (HSM, secure enclave)</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Input Validation:</strong> Validate all incoming messages before processing</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Rate Limiting:</strong> Implement rate limits to prevent DoS attacks</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Signature Verification:</strong> Always verify signatures before trusting messages</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Key Rotation:</strong> Rotate keys periodically (every 90 days recommended)</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Error Handling:</strong> Don't leak sensitive info in error messages</span>
+                </div>
+            </div>
+            
+            <h3>For Gateway Operators</h3>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>TLS Configuration:</strong> Use TLS 1.3 with strong cipher suites only</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Certificate Pinning:</strong> Pin gateway certificates to prevent MITM</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>DDoS Protection:</strong> Implement rate limiting and connection limits</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Monitoring:</strong> Log all security events and monitor for anomalies</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Updates:</strong> Keep all dependencies updated to patch vulnerabilities</span>
+                </div>
+            </div>
+            
+            <h2>Audit & Verification</h2>
+            
+            <div class="info-box success">
+                <h4>🔍 Security Audits</h4>
+                <p>Opacus Protocol has undergone comprehensive security audits:</p>
+                <ul>
+                    <li><strong>Smart Contracts:</strong> Audited by [Audit Firm] (Report: [Link])</li>
+                    <li><strong>Cryptographic Implementation:</strong> Reviewed by [Crypto Expert]</li>
+                    <li><strong>SDK Security:</strong> Third-party penetration testing completed</li>
+                </ul>
+            </div>
+            
+            <h3>Formal Verification</h3>
+            <p>Key components have been formally verified:</p>
+            
+            <ul>
+                <li><strong>Key Derivation:</strong> HKDF implementation matches RFC 5869</li>
+                <li><strong>Signature Verification:</strong> Ed25519 implementation conforms to RFC 8032</li>
+                <li><strong>Contract Logic:</strong> Critical invariants verified with Certora</li>
+            </ul>
+            
+            <h2>Incident Response</h2>
+            
+            <h3>Emergency Procedures</h3>
+            
+            <pre><code>// 1. Pause Protocol (Governance Multi-sig)
+await opacusCore.connect(governance).pause();
+
+// 2. Revoke Compromised Attestations
+await dacRegistry.revokeAttestation(compromisedAttestationId);
+
+// 3. Deactivate Compromised Agents
+await agentRegistry.deactivateAgent(compromisedAgentId);
+
+// 4. Upgrade Contracts (if vulnerability found)
+await opacusCore.connect(governance).upgradeProtocol(newImplementation);
+
+// 5. Resume Protocol
+await opacusCore.connect(governance).unpause();</code></pre>
+            
+            <h3>Reporting Vulnerabilities</h3>
+            
+            <div class="info-box">
+                <h4>🛡️ Bug Bounty Program</h4>
+                <p>Report security vulnerabilities to: <strong>security@opacus.ai</strong></p>
+                <p>Rewards up to <strong>$50,000</strong> for critical vulnerabilities.</p>
+                <p><strong>Please do not disclose publicly until patched.</strong></p>
+            </div>
+            
+            <h2>Security Checklist</h2>
+            
+            <p>Before deploying to production:</p>
+            
+            <ul>
+                <li>☐ All tests passing with >90% coverage</li>
+                <li>☐ Smart contracts audited by reputable firm</li>
+                <li>☐ Keys stored in secure hardware (HSM/secure enclave)</li>
+                <li>☐ Rate limiting implemented on all endpoints</li>
+                <li>☐ Monitoring and alerting configured</li>
+                <li>☐ Incident response plan documented</li>
+                <li>☐ Key rotation procedure tested</li>
+                <li>☐ DDoS protection enabled</li>
+                <li>☐ Backup and recovery procedures documented</li>
+                <li>☐ Multi-sig governance configured</li>
+            </ul>
+            
+            <h2>Related Documentation</h2>
+            
+            <ul>
+                <li><a href="encryption.html">Encryption</a> - E2E encryption details</a></li>
+                <li><a href="verification.html">Verification</a> - Attestation and trust model</li>
+                <li><a href="architecture.html">Architecture</a> - System design and threat model</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

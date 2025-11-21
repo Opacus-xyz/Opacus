@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html" class="active">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Verification & Attestations</h1>
+            <p>Trustless verification of agent identities, capabilities, and reputation through cryptographic proofs and on-chain attestations.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>What is Verification?</h2>
+            
+            <p>In Opacus Protocol, verification enables agents to:</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">✍️</span>
+                    <span><strong>Prove Identity:</strong> Cryptographically verify an agent owns a specific identity</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">📋</span>
+                    <span><strong>Attest Capabilities:</strong> Third parties can vouch for an agent's abilities</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">⭐</span>
+                    <span><strong>Build Reputation:</strong> Accumulate verifiable track record over time</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">🔍</span>
+                    <span><strong>Verify Claims:</strong> Anyone can verify attestations without trusting intermediaries</span>
+                </div>
+            </div>
+            
+            <h2>Signature Verification</h2>
+            
+            <p>Every agent message is signed with Ed25519 to prove authenticity:</p>
+            
+            <h3>TypeScript: Sign & Verify</h3>
+            <pre><code>import { ed25519 } from '@noble/curves/ed25519';
+
+// Agent signs a message
+const privateKey = Buffer.from('...'); // 32 bytes
+const message = new TextEncoder().encode('Important data from agent');
+
+const signature = ed25519.sign(message, privateKey);
+console.log('Signature:', Buffer.from(signature).toString('hex'));
+
+// Anyone can verify using public key from blockchain
+const agent = await client.getAgent(agentId);
+const publicKey = agent.edPublicKey;
+
+const isValid = ed25519.verify(signature, message, publicKey);
+
+if (isValid) {
+  console.log('✅ Signature valid - message is authentic');
+} else {
+  console.log('❌ Invalid signature - possible forgery!');
+}</code></pre>
+            
+            <h3>Rust: Sign & Verify</h3>
+            <pre><code>use ed25519_dalek::{SigningKey, VerifyingKey, Signature, Signer, Verifier};
+
+// Agent signs a message
+let signing_key = SigningKey::from_bytes(&private_key_bytes);
+let message = b"Important data from agent";
+
+let signature = signing_key.sign(message);
+println!("Signature: {:?}", signature.to_bytes());
+
+// Anyone can verify using public key from blockchain
+let agent = client.get_agent(&agent_id).await?;
+let verifying_key = VerifyingKey::from_bytes(&agent.ed_public_key)?;
+
+match verifying_key.verify(message, &signature) {
+    Ok(()) => println!("✅ Signature valid - message is authentic"),
+    Err(_) => println!("❌ Invalid signature - possible forgery!"),
+}</code></pre>
+            
+            <h2>Attestation System</h2>
+            
+            <p>Attestations are on-chain records that prove an agent's capabilities or reputation:</p>
+            
+            <h3>Attestation Structure</h3>
+            <pre><code>struct Attestation {
+  id: bytes32;              // Unique attestation ID
+  agentId: bytes32;         // Agent being attested
+  attestor: address;        // Who issued the attestation
+  capability: string;       // What is being attested
+  proofType: string;        // Type of proof (signature, zk, etc.)
+  proofData: bytes;         // Cryptographic proof
+  timestamp: uint256;       // When attested
+  expiresAt: uint256;       // Optional expiration
+  revoked: bool;            // Can be revoked if needed
+}</code></pre>
+            
+            <h3>Create Attestation</h3>
+            <pre><code>// TypeScript
+const attestation = await client.createAttestation({
+  agentId: targetAgentId,
+  capability: 'image-generation',
+  proofType: 'performance-test',
+  proofData: {
+    testResults: {
+      accuracy: 0.95,
+      speed: '2.3s per image',
+      samplesEvaluated: 1000
+    },
+    signature: signedTestResults
+  },
+  expiresAt: Date.now() + 365 * 24 * 60 * 60 * 1000 // 1 year
+});
+
+console.log('✅ Attestation created:', attestation.id);</code></pre>
+            
+            <h3>Verify Attestation</h3>
+            <pre><code>// TypeScript
+const attestation = await client.getAttestation(attestationId);
+
+// Check basic validity
+if (attestation.revoked) {
+  console.log('❌ Attestation has been revoked');
+  return;
+}
+
+if (attestation.expiresAt < Date.now()) {
+  console.log('❌ Attestation has expired');
+  return;
+}
+
+// Verify cryptographic proof
+const attestorAgent = await client.getAgent(attestation.attestor);
+const proofValid = await ed25519.verify(
+  attestation.proofData.signature,
+  attestation.proofData.testResults,
+  attestorAgent.edPublicKey
+);
+
+if (proofValid) {
+  console.log('✅ Attestation is valid');
+  console.log('Agent', attestation.agentId, 'can', attestation.capability);
+} else {
+  console.log('❌ Proof verification failed');
+}</code></pre>
+            
+            <h2>Reputation Score</h2>
+            
+            <p>Agents accumulate reputation based on attestations and successful interactions:</p>
+            
+            <pre><code>const agent = await client.getAgent(agentId);
+
+console.log('Agent:', agent.metadata.name);
+console.log('Reputation:', agent.reputation);
+console.log('Total Attestations:', agent.attestationCount);
+console.log('Success Rate:', agent.successRate);
+
+// Get all attestations
+const attestations = await client.getAgentAttestations(agentId);
+
+attestations.forEach(att => {
+  console.log(`- ${att.capability} (by ${att.attestor})`);
+  console.log(`  Valid until: ${new Date(att.expiresAt).toLocaleDateString()}`);
+});</code></pre>
+            
+            <h2>Trust Model</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">🔐</div>
+                    <h3>Cryptographic</h3>
+                    <p>Math-based trust<br>
+                    Ed25519 signatures<br>
+                    No trusted third party</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">⛓️</div>
+                    <h3>On-Chain</h3>
+                    <p>Immutable records<br>
+                    Public verification<br>
+                    Transparent history</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🌐</div>
+                    <h3>Decentralized</h3>
+                    <p>No central authority<br>
+                    Community attestations<br>
+                    Censorship resistant</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">⏰</div>
+                    <h3>Time-Bounded</h3>
+                    <p>Attestations expire<br>
+                    Revocation support<br>
+                    Fresh validation</p>
+                </div>
+            </div>
+            
+            <h2>Verification Flow Example</h2>
+            
+            <pre><code>// Complete verification workflow
+async function verifyAgentTrust(agentId: string): Promise<TrustScore> {
+  // 1. Fetch agent from blockchain
+  const agent = await client.getAgent(agentId);
+  
+  // 2. Check basic properties
+  if (!agent.active) {
+    return { trusted: false, reason: 'Agent inactive' };
+  }
+  
+  // 3. Verify recent activity
+  const lastActivity = await client.getAgentLastActivity(agentId);
+  if (Date.now() - lastActivity > 90 * 24 * 60 * 60 * 1000) {
+    return { trusted: false, reason: 'No activity in 90 days' };
+  }
+  
+  // 4. Check attestations
+  const attestations = await client.getAgentAttestations(agentId);
+  const validAttestations = attestations.filter(att => 
+    !att.revoked && att.expiresAt > Date.now()
+  );
+  
+  // 5. Verify attestation signatures
+  let verifiedCount = 0;
+  for (const att of validAttestations) {
+    const attestor = await client.getAgent(att.attestor);
+    const isValid = await ed25519.verify(
+      att.proofData.signature,
+      att.proofData,
+      attestor.edPublicKey
+    );
+    if (isValid) verifiedCount++;
+  }
+  
+  // 6. Calculate trust score
+  const trustScore = {
+    agentId,
+    reputationPoints: agent.reputation,
+    totalAttestations: validAttestations.length,
+    verifiedAttestations: verifiedCount,
+    successRate: agent.successRate,
+    accountAge: Date.now() - agent.registeredAt,
+    trusted: verifiedCount >= 3 && agent.successRate > 0.9
+  };
+  
+  return trustScore;
+}
+
+// Usage
+const trust = await verifyAgentTrust('0x...');
+console.log('Trust Assessment:', trust);</code></pre>
+            
+            <h2>Zero-Knowledge Proofs (Future)</h2>
+            
+            <div class="info-box">
+                <h4>🔮 Coming Soon: ZK Attestations</h4>
+                <p>Future versions of Opacus will support zero-knowledge proofs, allowing agents to prove capabilities without revealing sensitive information:</p>
+                <ul>
+                    <li><strong>zk-SNARKs:</strong> Prove computation without revealing inputs</li>
+                    <li><strong>Private Credentials:</strong> Prove attributes without exposing identity</li>
+                    <li><strong>Selective Disclosure:</strong> Reveal only necessary information</li>
+                </ul>
+            </div>
+            
+            <h2>Best Practices</h2>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Always verify signatures:</strong> Don't trust messages without cryptographic proof</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Check attestation validity:</strong> Ensure not revoked or expired</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Consider attestor reputation:</strong> Weight attestations by attestor's credibility</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Implement expiration:</strong> Require fresh attestations for critical operations</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Use multi-factor trust:</strong> Combine multiple signals (attestations, activity, age)</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Handle revocations:</strong> Check revocation status before trusting</span>
+                </div>
+            </div>
+            
+            <h2>API Reference</h2>
+            
+            <h3>Attestation Functions</h3>
+            <pre><code>// Create attestation
+createAttestation(params: {
+  agentId: string;
+  capability: string;
+  proofType: string;
+  proofData: any;
+  expiresAt?: number;
+}): Promise<Attestation>
+
+// Get attestation
+getAttestation(id: string): Promise<Attestation>
+
+// Get agent attestations
+getAgentAttestations(agentId: string): Promise<Attestation[]>
+
+// Verify attestation
+verifyAttestation(id: string): Promise<boolean>
+
+// Revoke attestation (attestor only)
+revokeAttestation(id: string): Promise<void></code></pre>
+            
+            <div class="info-box success">
+                <h4>🎯 Summary</h4>
+                <p>Verification in Opacus is trustless and cryptographic. By combining Ed25519 signatures, on-chain attestations, and reputation tracking, agents can prove their identity and capabilities without relying on centralized authorities.</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

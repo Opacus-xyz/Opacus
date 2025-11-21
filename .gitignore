@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+target/
+*.log
+.env
+.DS_Store
+*.pem
+*.key
+.vscode/
+.idea/
+coverage/
+*.lock

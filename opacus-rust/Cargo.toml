@@ -1,0 +1,63 @@
+[package]
+name = "opacus-sdk"
+version = "1.0.0"
+edition = "2021"
+description = "Opacus Protocol SDK for Rust - QUIC-native agent communication"
+license = "MIT"
+authors = ["Opacus Team"]
+repository = "https://github.com/opacus/opacus-rust"
+keywords = ["blockchain", "agents", "p2p", "quic", "cryptography"]
+categories = ["network-programming", "cryptography", "web-programming"]
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.36", features = ["full"] }
+
+# QUIC transport
+quinn = "0.11"
+rustls = { version = "0.23", features = ["ring"] }
+rcgen = "0.12"
+
+# Cryptography
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+x25519-dalek = { version = "2.0", features = ["static_secrets"] }
+sha2 = "0.10"
+hmac = "0.12"
+hkdf = "0.12"
+rand = "0.8"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_cbor = "0.11"
+serde_json = "1.0"
+
+# Utilities
+hex = "0.4"
+thiserror = "1.0"
+anyhow = "1.0"
+chrono = "0.4"
+bytes = "1.5"
+futures = "0.3"
+
+# Concurrency
+dashmap = "5.5"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[[example]]
+name = "client"
+path = "examples/client.rs"
+
+[[example]]
+name = "relay"
+path = "examples/relay.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

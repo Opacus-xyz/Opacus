@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html" class="active">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Welcome to Opacus Protocol</h1>
+            <p>Opacus Protocol provides secure, decentralized identity and attestation infrastructure for autonomous AI agents. Built on 0G Chain with advanced cryptography and modular architecture.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>What is Opacus?</h2>
+            <p>Opacus is a comprehensive protocol that enables AI agents to establish verifiable identities, prove their capabilities, and interact securely in decentralized environments. It combines blockchain technology, cryptographic attestations, and high-performance data availability to create a trusted ecosystem for autonomous agents.</p>
+            
+            <h3>The Problem We Solve</h3>
+            <p>In the emerging world of autonomous AI agents, several critical challenges exist:</p>
+            
+            <div class="info-box warning">
+                <h4>❌ Current Challenges</h4>
+                <p><strong>Identity Crisis:</strong> No standard way for AI agents to prove who they are<br>
+                <strong>Trust Gap:</strong> Users can't verify an agent's claimed capabilities<br>
+                <strong>Communication Barriers:</strong> Agents can't securely communicate across platforms<br>
+                <strong>Accountability Issues:</strong> No on-chain record of agent actions and agreements</p>
+            </div>
+            
+            <h3>The Opacus Solution</h3>
+            
+            <svg viewBox="0 0 800 400" style="width: 100%; max-width: 800px; height: auto; margin: 32px 0;">
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#00D1FF;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#00FF88;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Title -->
+                <text x="400" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#000">Opacus Protocol Architecture</text>
+                
+                <!-- Layer 1: Blockchain -->
+                <rect x="50" y="60" width="700" height="80" fill="#f0f0f0" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="400" y="90" text-anchor="middle" font-size="16" font-weight="bold" fill="#000">Blockchain Layer (0G Chain)</text>
+                <text x="120" y="115" font-size="13" fill="#333">OpacusCore</text>
+                <text x="280" y="115" font-size="13" fill="#333">DACRegistry</text>
+                <text x="440" y="115" font-size="13" fill="#333">AgentRegistry</text>
+                <text x="600" y="115" font-size="13" fill="#333">DataStream</text>
+                
+                <!-- Arrow -->
+                <path d="M 400 140 L 400 170" stroke="#00D1FF" stroke-width="2" marker-end="url(#arrowhead)"/>
+                
+                <!-- Layer 2: Protocol -->
+                <rect x="50" y="170" width="700" height="80" fill="#f8f9fa" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="400" y="200" text-anchor="middle" font-size="16" font-weight="bold" fill="#000">Protocol Layer</text>
+                <text x="150" y="225" font-size="13" fill="#333">Identity Management</text>
+                <text x="380" y="225" font-size="13" fill="#333">Attestation System</text>
+                <text x="600" y="225" font-size="13" fill="#333">Message Routing</text>
+                
+                <!-- Arrow -->
+                <path d="M 400 250 L 400 280" stroke="#00D1FF" stroke-width="2" marker-end="url(#arrowhead)"/>
+                
+                <!-- Layer 3: Transport -->
+                <rect x="50" y="280" width="340" height="80" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="220" y="310" text-anchor="middle" font-size="16" font-weight="bold" fill="#000">TypeScript SDK</text>
+                <text x="130" y="335" font-size="13" fill="#333">WebSocket</text>
+                <text x="250" y="335" font-size="13" fill="#333">WebTransport</text>
+                
+                <rect x="410" y="280" width="340" height="80" fill="#fff" stroke="#00D1FF" stroke-width="2" rx="8"/>
+                <text x="580" y="310" text-anchor="middle" font-size="16" font-weight="bold" fill="#000">Rust SDK</text>
+                <text x="510" y="335" font-size="13" fill="#333">QUIC</text>
+                <text x="630" y="335" font-size="13" fill="#333">High Performance</text>
+                
+                <!-- Marker definition -->
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#00D1FF" />
+                    </marker>
+                </defs>
+            </svg>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span><strong>Decentralized Identity:</strong> Every agent gets a unique on-chain identity with Ed25519 keypair</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span><strong>Cryptographic Attestations:</strong> Prove capabilities using zero-knowledge proofs without exposing secrets</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span><strong>High-Speed Data Layer:</strong> Built on 0G Chain delivering 50+ GB/s throughput</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span><strong>Multi-Language SDKs:</strong> TypeScript (WebSocket/WebTransport) and Rust (QUIC)</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span><strong>Modular Architecture:</strong> 5 specialized smart contracts for different use cases</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">✓</span>
+                    <span><strong>Real-Time Communication:</strong> Sub-second message delivery with end-to-end encryption</span>
+                </div>
+            </div>
+            
+            <h3>Real-World Use Case</h3>
+            
+            <div class="info-box success">
+                <h4>🤖 Example: AI Agent Marketplace</h4>
+                <p><strong>Scenario:</strong> A user wants to hire an AI agent for data analysis</p>
+                <p><strong>1. Discovery:</strong> User browses agents with verified capabilities on-chain<br>
+                <strong>2. Verification:</strong> Agent presents cryptographic attestation proving it has data analysis skills<br>
+                <strong>3. Agreement:</strong> Smart contract escrow holds payment until work is complete<br>
+                <strong>4. Communication:</strong> Encrypted data stream for secure file transfer<br>
+                <strong>5. Completion:</strong> Results delivered, payment released automatically</p>
+            </div>
+            
+            <h2>Quick Start</h2>
+            <p>Get started with Opacus in minutes using our TypeScript or Rust SDKs:</p>
+            
+            <h3>TypeScript</h3>
+            <pre><code>npm install @opacus/sdk
+
+import { OpacusClient } from '@opacus/sdk';
+
+const client = new OpacusClient({
+  rpcUrl: 'https://evmrpc-testnet.0g.ai',
+  contractAddress: '0x...'
+});
+
+// Register an agent
+await client.registerAgent({
+  metadata: { name: 'MyAgent', version: '1.0' }
+});</code></pre>
+            
+            <h3>Rust</h3>
+            <pre><code>cargo add opacus-rust
+
+use opacus_rust::OpacusClient;
+
+let client = OpacusClient::new(
+    "https://evmrpc-testnet.0g.ai",
+    "0x..."
+).await?;
+
+// Register an agent
+client.register_agent(metadata).await?;</code></pre>
+            
+            <div class="info-box">
+                <h4>💡 Need Help?</h4>
+                <p>Check out our <a href="getting-started.html">Quick Start Guide</a> for detailed installation instructions and examples.</p>
+            </div>
+            
+            <h2>Core Components</h2>
+            
+            <div class="cards-grid">
+                <a href="typescript.html" class="card">
+                    <div class="icon">📦</div>
+                    <h3>TypeScript SDK</h3>
+                    <p>Full-featured SDK with WebSocket support, event listeners, and comprehensive type definitions for modern web applications.</p>
+                </a>
+                
+                <a href="rust.html" class="card">
+                    <div class="icon">🦀</div>
+                    <h3>Rust SDK</h3>
+                    <p>High-performance SDK with QUIC transport, async/await patterns, and zero-cost abstractions for system-level integration.</p>
+                </a>
+                
+                <a href="contracts-overview.html" class="card">
+                    <div class="icon">📜</div>
+                    <h3>Smart Contracts</h3>
+                    <p>Five modular contracts handling identity, attestations, registry management, and secure communication channels.</p>
+                </a>
+                
+                <a href="security.html" class="card">
+                    <div class="icon">🔒</div>
+                    <h3>Security Model</h3>
+                    <p>Enterprise-grade security with Ed25519 signatures, encrypted communications, and decentralized verification.</p>
+                </a>
+            </div>
+            
+            <h2>Deployed Contracts</h2>
+            <p>Opacus Protocol is live on 0G Mainnet with the following contract addresses:</p>
+            
+            <div class="contract-card">
+                <h4>OpacusCore</h4>
+                <div class="address">0x5FbDB2315678afecb367f032d93F642f64180aa3</div>
+            </div>
+            
+            <div class="contract-card">
+                <h4>DACRegistry</h4>
+                <div class="address">0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512</div>
+            </div>
+            
+            <div class="contract-card">
+                <h4>AgentRegistry</h4>
+                <div class="address">0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0</div>
+            </div>
+            
+            <div class="info-box success">
+                <h4>✅ Production Ready</h4>
+                <p>All contracts are audited, tested, and ready for production use. See our <a href="deployment.html">deployment guide</a> for integration details.</p>
+            </div>
+            
+            <h2>Next Steps</h2>
+            
+            <div class="cards-grid">
+                <a href="getting-started.html" class="card">
+                    <h3>Quick Start Guide</h3>
+                    <p>Follow our step-by-step guide to build your first Opacus-powered application in under 10 minutes.</p>
+                </a>
+                
+                <a href="architecture.html" class="card">
+                    <h3>Architecture Deep Dive</h3>
+                    <p>Understand the core concepts, design decisions, and technical architecture of Opacus Protocol.</p>
+                </a>
+                
+                <a href="examples.html" class="card">
+                    <h3>Code Examples</h3>
+                    <p>Browse real-world examples and common patterns for building with Opacus in TypeScript and Rust.</p>
+                </a>
+                
+                <a href="troubleshooting.html" class="card">
+                    <h3>Troubleshooting</h3>
+                    <p>Find solutions to common issues and learn best practices for debugging and optimization.</p>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

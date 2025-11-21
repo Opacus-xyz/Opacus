@@ -1,0 +1,29 @@
+{
+  "name": "h3-dac",
+  "version": "1.0.0",
+  "description": "H3-DAC: Deterministic Authentication & Consensus Protocol",
+  "private": true,
+  "workspaces": [
+    "sdk-ts",
+    "gateway",
+    "examples"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "dev:gateway": "npm run dev -w gateway",
+    "dev:example": "npm run dev -w examples"
+  },
+  "keywords": [
+    "blockchain",
+    "authentication",
+    "consensus",
+    "multi-chain"
+  ],
+  "author": "H3-DAC Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Opacus: Decentralized Access Control & Data Distribution Protocol on 0G Chain">
+    <title>Opacus Protocol | Decentralized Data Access & Agent Communication</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#2563eb"/>
+                        <path d="M8 16l8-8 8 8-8 8-8-8z" fill="white" opacity="0.9"/>
+                        <circle cx="16" cy="16" r="3" fill="white"/>
+                    </svg>
+                    <span class="logo-text">Opacus</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#architecture">Architecture</a></li>
+                    <li><a href="#contracts">Contracts</a></li>
+                    <li><a href="#sdk">SDKs</a></li>
+                    <li><a href="docs/index.html">Docs</a></li>
+                </ul>
+                <div class="nav-cta">
+                    <a href="https://github.com/opacus-protocol" target="_blank" class="btn btn-outline-small">GitHub</a>
+                    <a href="#get-started" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>Live on 0G Chain Mainnet</span>
+                </div>
+                <h1 class="hero-title">
+                    Decentralized Access Control<br>
+                    for Data Distribution
+                </h1>
+                <p class="hero-subtitle">
+                    Production-ready smart contract suite for managing Data Access Consortiums (DACs), 
+                    agent identity, data streaming channels, and micropayments on 0G Chain.
+                </p>
+                <div class="hero-cta">
+                    <a href="#get-started" class="btn btn-large btn-primary">
+                        <span>Start Building</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10h12m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="docs/index.html" class="btn btn-large btn-secondary">
+                        <span>Documentation</span>
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Smart Contracts</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">0G</div>
+                        <div class="stat-label">Chain Mainnet</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">SDK Languages</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-preview">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="code-title">Quick Start</div>
+                    </div>
+                    <div class="code-content">
+<pre><code><span class="code-comment">// TypeScript SDK</span>
+<span class="code-keyword">import</span> { OpacusClient } <span class="code-keyword">from</span> <span class="code-string">'@opacus/sdk'</span>;
+
+<span class="code-keyword">const</span> client = <span class="code-keyword">new</span> <span class="code-function">OpacusClient</span>({
+  <span class="code-property">transport</span>: <span class="code-string">'websocket'</span>,
+  <span class="code-property">chainId</span>: <span class="code-number">16661</span>
+});
+
+<span class="code-keyword">await</span> client.<span class="code-function">connect</span>();
+<span class="code-keyword">const</span> session = <span class="code-keyword">await</span> client.<span class="code-function">authenticate</span>();</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Core Features</h2>
+                <p class="section-subtitle">Built for security, scalability, and developer experience</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Multi-Layer Authentication</h3>
+                    <p>Signature + Nonce + Shared Secret model for robust device and application authentication</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⛓️</div>
+                    <h3>Chain-Agnostic</h3>
+                    <p>Seamless support for OG Chain, EVM, Solana, and Cosmos ecosystems</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Developer-Friendly SDKs</h3>
+                    <p>Comprehensive TypeScript and Rust SDKs with complete documentation</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>High Performance</h3>
+                    <p>ECDH key exchange with HKDF derivation for optimal speed and security</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Replay Protection</h3>
+                    <p>30-second nonce TTL with single-use guarantee prevents replay attacks</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Session Management</h3>
+                    <p>Automatic session key derivation with configurable expiration policies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Architecture</h2>
+                <p class="section-subtitle">End-to-end trust layer for decentralized systems</p>
+            </div>
+            <div class="architecture-diagram">
+                <div class="arch-flow">
+                    <div class="arch-step">
+                        <div class="arch-box">
+                            <div class="arch-icon">📱</div>
+                            <div class="arch-label">Client SDK</div>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-step">
+                        <div class="arch-box">
+                            <div class="arch-icon">🌐</div>
+                            <div class="arch-label">Gateway</div>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-step">
+                        <div class="arch-box">
+                            <div class="arch-icon">🔑</div>
+                            <div class="arch-label">Nonce Service</div>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-step">
+                        <div class="arch-box">
+                            <div class="arch-icon">✍️</div>
+                            <div class="arch-label">Signature Auth</div>
+                        </div>
+                    </div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-step">
+                        <div class="arch-box">
+                            <div class="arch-icon">🔗</div>
+                            <div class="arch-label">On-Chain</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="architecture-details">
+                <div class="detail-card">
+                    <h4>Authentication Flow</h4>
+                    <ol>
+                        <li>Client requests nonce from gateway</li>
+                        <li>Client signs: hash(nonce + clientId + timestamp)</li>
+                        <li>ECDH shared secret derivation</li>
+                        <li>Session key generation via HKDF</li>
+                        <li>AES-GCM encrypted communication</li>
+                        <li>On-chain proof commitment</li>
+                    </ol>
+                </div>
+                <div class="detail-card">
+                    <h4>Security Model</h4>
+                    <ul>
+                        <li><strong>Nonce:</strong> 32-byte random, 30s TTL, single-use</li>
+                        <li><strong>Signatures:</strong> Secp256k1 ECDSA</li>
+                        <li><strong>Key Exchange:</strong> ECDH with HKDF</li>
+                        <li><strong>Encryption:</strong> AES-256-GCM</li>
+                        <li><strong>Replay Protection:</strong> Timestamp validation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SDK Section -->
+    <section id="sdk" class="sdk">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Choose Your SDK</h2>
+                <p class="section-subtitle">Full-featured SDKs for your preferred language</p>
+            </div>
+            <div class="sdk-grid">
+                <div class="sdk-card">
+                    <div class="sdk-header">
+                        <div class="sdk-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <rect width="48" height="48" rx="8" fill="#3178C6"/>
+                                <text x="24" y="32" font-size="24" fill="white" text-anchor="middle" font-weight="bold">TS</text>
+                            </svg>
+                        </div>
+                        <h3>TypeScript SDK</h3>
+                    </div>
+                    <p>Full-featured SDK for Node.js and browser environments with complete type safety.</p>
+                    <div class="sdk-code">
+                        <code>npm install @h3-dac/sdk-ts</code>
+                    </div>
+                    <div class="sdk-features">
+                        <span class="tag">✓ Type Safety</span>
+                        <span class="tag">✓ Async/Await</span>
+                        <span class="tag">✓ Browser Support</span>
+                    </div>
+                    <a href="#" class="btn btn-outline">View Documentation</a>
+                </div>
+                <div class="sdk-card">
+                    <div class="sdk-header">
+                        <div class="sdk-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <rect width="48" height="48" rx="8" fill="#CE422B"/>
+                                <text x="24" y="32" font-size="24" fill="white" text-anchor="middle" font-weight="bold">RS</text>
+                            </svg>
+                        </div>
+                        <h3>Rust SDK</h3>
+                    </div>
+                    <p>High-performance SDK for systems programming with zero-cost abstractions.</p>
+                    <div class="sdk-code">
+                        <code>cargo add h3-dac-sdk</code>
+                    </div>
+                    <div class="sdk-features">
+                        <span class="tag">✓ Zero Copy</span>
+                        <span class="tag">✓ Memory Safe</span>
+                        <span class="tag">✓ High Performance</span>
+                    </div>
+                    <a href="#" class="btn btn-outline">View Documentation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Get Started Section -->
+    <section id="get-started" class="get-started">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get Started in Minutes</h2>
+                <p class="section-subtitle">Three simple steps to integrate H3-DAC</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Install SDK</h3>
+                    <p>Choose your preferred language and install the SDK via npm or cargo</p>
+                    <div class="code-snippet">
+                        <code>npm install @h3-dac/sdk-ts</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Initialize Client</h3>
+                    <p>Create a new H3DAC client with your gateway URL</p>
+                    <div class="code-snippet">
+                        <code>const client = new H3DAC();</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Authenticate & Send</h3>
+                    <p>Authenticate once and send encrypted payloads securely</p>
+                    <div class="code-snippet">
+                        <code>await client.authenticate(id);</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Use Cases</h2>
+                <p class="section-subtitle">Real-world applications of H3-DAC protocol</p>
+            </div>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">💼</div>
+                    <h3>DeFi Applications</h3>
+                    <p>Secure transaction signing and multi-chain asset management</p>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">🎮</div>
+                    <h3>Gaming Platforms</h3>
+                    <p>Cross-chain authentication for in-game assets and player identity</p>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">🏢</div>
+                    <h3>Enterprise Systems</h3>
+                    <p>Hybrid cloud-blockchain authentication for enterprise applications</p>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">📱</div>
+                    <h3>Mobile Wallets</h3>
+                    <p>Device-level authentication for mobile cryptocurrency wallets</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="docs" class="documentation">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Documentation</h2>
+                <p class="section-subtitle">Everything you need to build with H3-DAC</p>
+            </div>
+            <div class="docs-grid">
+                <a href="#" class="doc-card">
+                    <div class="doc-icon">📚</div>
+                    <h3>Getting Started</h3>
+                    <p>Quick start guide and basic concepts</p>
+                    <span class="doc-link">Read guide →</span>
+                </a>
+                <a href="#" class="doc-card">
+                    <div class="doc-icon">🔧</div>
+                    <h3>API Reference</h3>
+                    <p>Complete API documentation for all endpoints</p>
+                    <span class="doc-link">View API →</span>
+                </a>
+                <a href="#" class="doc-card">
+                    <div class="doc-icon">💡</div>
+                    <h3>Examples</h3>
+                    <p>Code examples and integration patterns</p>
+                    <span class="doc-link">Browse examples →</span>
+                </a>
+                <a href="#" class="doc-card">
+                    <div class="doc-icon">🛡️</div>
+                    <h3>Security</h3>
+                    <p>Security model and best practices</p>
+                    <span class="doc-link">Learn more →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Build?</h2>
+                <p>Start integrating H3-DAC protocol into your application today</p>
+                <div class="cta-buttons">
+                    <a href="#get-started" class="btn btn-large btn-primary">Get Started</a>
+                    <a href="https://github.com/h3-dac" target="_blank" class="btn btn-large btn-secondary">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-icon">H3</span>
+                        <span class="logo-text">DAC</span>
+                    </div>
+                    <p>Trust-enhancing protocol for multi-chain systems</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#architecture">Architecture</a></li>
+                            <li><a href="#sdk">SDKs</a></li>
+                            <li><a href="#docs">Documentation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Getting Started</a></li>
+                            <li><a href="#">API Reference</a></li>
+                            <li><a href="#">Examples</a></li>
+                            <li><a href="#">Security</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Community</h4>
+                        <ul>
+                            <li><a href="https://github.com/h3-dac" target="_blank">GitHub</a></li>
+                            <li><a href="#">Discord</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 H3-DAC Protocol. MIT Licensed.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

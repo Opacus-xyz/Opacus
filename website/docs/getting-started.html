@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html" class="active">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>Getting Started</h1>
+            <p>Learn how to integrate Opacus Protocol into your application in minutes. This guide will walk you through installation, basic setup, and your first agent registration.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Prerequisites</h2>
+            <p>Before you begin, make sure you have:</p>
+            <ul>
+                <li>Node.js 18+ or Rust 1.70+</li>
+                <li>A wallet with 0G testnet tokens</li>
+                <li>Basic understanding of blockchain concepts</li>
+                <li>An IDE or text editor of your choice</li>
+            </ul>
+            
+            <div class="info-box">
+                <h4>💡 Need Testnet Tokens?</h4>
+                <p>Visit the 0G testnet faucet to get free tokens for development and testing.</p>
+            </div>
+            
+            <h2>Installation</h2>
+            
+            <h3>TypeScript SDK</h3>
+            <p>Install the Opacus TypeScript SDK using npm or yarn:</p>
+            <pre><code>npm install @opacus/sdk
+# or
+yarn add @opacus/sdk
+# or
+pnpm add @opacus/sdk</code></pre>
+            
+            <h3>Rust SDK</h3>
+            <p>Add the Opacus Rust SDK to your <code>Cargo.toml</code>:</p>
+            <pre><code>[dependencies]
+opacus-rust = "0.1.0"
+tokio = { version = "1.0", features = ["full"] }</code></pre>
+            
+            <h2>Quick Start</h2>
+            
+            <h3>TypeScript Example</h3>
+            <p>Initialize the Opacus client and connect to 0G Chain:</p>
+            <pre><code>import { OpacusClient } from '@opacus/sdk';
+
+// Initialize client
+const client = new OpacusClient({
+  rpcUrl: 'https://evmrpc-testnet.0g.ai',
+  contractAddress: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+  privateKey: process.env.PRIVATE_KEY
+});
+
+// Connect to the network
+await client.connect();
+
+// Register a new AI agent
+const agentId = await client.registerAgent({
+  metadata: {
+    name: 'MyAIAgent',
+    version: '1.0.0',
+    capabilities: ['text-generation', 'reasoning']
+  }
+});
+
+console.log('Agent registered with ID:', agentId);</code></pre>
+            
+            <h3>Rust Example</h3>
+            <p>Create and register an agent using the Rust SDK:</p>
+            <pre><code>use opacus_rust::{OpacusClient, AgentMetadata};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Initialize client
+    let client = OpacusClient::new(
+        "https://evmrpc-testnet.0g.ai",
+        "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        std::env::var("PRIVATE_KEY")?
+    ).await?;
+    
+    // Register agent
+    let metadata = AgentMetadata {
+        name: "MyAIAgent".to_string(),
+        version: "1.0.0".to_string(),
+        capabilities: vec![
+            "text-generation".to_string(),
+            "reasoning".to_string()
+        ],
+    };
+    
+    let agent_id = client.register_agent(metadata).await?;
+    println!("Agent registered with ID: {}", agent_id);
+    
+    Ok(())
+}</code></pre>
+            
+            <div class="info-box success">
+                <h4>✅ Success!</h4>
+                <p>You've successfully registered your first AI agent on Opacus Protocol. The agent now has a unique, verifiable identity on the blockchain.</p>
+            </div>
+            
+            <h2>Next Steps</h2>
+            
+            <div class="cards-grid">
+                <a href="typescript.html" class="card">
+                    <h3>Explore TypeScript SDK</h3>
+                    <p>Learn about advanced features like attestations, event listening, and real-time communication.</p>
+                </a>
+                
+                <a href="rust.html" class="card">
+                    <h3>Explore Rust SDK</h3>
+                    <p>Discover high-performance patterns, QUIC transport, and async/await best practices.</p>
+                </a>
+                
+                <a href="architecture.html" class="card">
+                    <h3>Understand Architecture</h3>
+                    <p>Deep dive into the protocol's design, smart contracts, and cryptographic foundations.</p>
+                </a>
+                
+                <a href="examples.html" class="card">
+                    <h3>Browse Examples</h3>
+                    <p>Explore real-world code examples and common integration patterns for various use cases.</p>
+                </a>
+            </div>
+            
+            <h2>Common Tasks</h2>
+            
+            <h3>Creating Attestations</h3>
+            <p>Attestations allow agents to prove their capabilities without revealing sensitive information:</p>
+            <pre><code>// Create an attestation
+const attestation = await client.createAttestation({
+  agentId: agentId,
+  capability: 'text-generation',
+  proof: proofData
+});
+
+// Verify an attestation
+const isValid = await client.verifyAttestation(attestation);</code></pre>
+            
+            <h3>Listening to Events</h3>
+            <p>Subscribe to real-time events from the Opacus protocol:</p>
+            <pre><code>// Listen for agent registrations
+client.on('agentRegistered', (event) => {
+  console.log('New agent:', event.agentId);
+});
+
+// Listen for attestation events
+client.on('attestationCreated', (event) => {
+  console.log('New attestation:', event.attestationId);
+});</code></pre>
+            
+            <div class="info-box warning">
+                <h4>⚠️ Security Note</h4>
+                <p>Never expose private keys in client-side code. Use environment variables and secure key management solutions in production.</p>
+            </div>
+            
+            <h2>Troubleshooting</h2>
+            
+            <h3>Connection Issues</h3>
+            <p>If you're having trouble connecting to the network:</p>
+            <ul>
+                <li>Verify your RPC URL is correct</li>
+                <li>Check that you have sufficient balance for gas fees</li>
+                <li>Ensure your network connection is stable</li>
+                <li>Try switching to a different RPC endpoint</li>
+            </ul>
+            
+            <h3>Transaction Failures</h3>
+            <p>Common reasons for transaction failures:</p>
+            <ul>
+                <li>Insufficient gas limit</li>
+                <li>Invalid contract address</li>
+                <li>Missing or invalid parameters</li>
+                <li>Network congestion</li>
+            </ul>
+            
+            <p>For more detailed troubleshooting, see our <a href="troubleshooting.html">Troubleshooting Guide</a>.</p>
+            
+            <h2>Getting Help</h2>
+            <p>If you need assistance:</p>
+            <ul>
+                <li>Join our Discord community</li>
+                <li>Open an issue on GitHub</li>
+                <li>Check the FAQ section</li>
+                <li>Contact support at info@opacus.xyz</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DACRegistry Contract - Opacus Protocol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="docs-style.css">
+</head>
+<body>
+    <aside class="docs-sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Opacus">
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Getting Started</h4>
+            <ul>
+                <li><a href="index.html">Overview</a></li>
+                <li><a href="getting-started.html">Quick Start</a></li>
+                <li><a href="installation.html">Installation</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Core Concepts</h4>
+            <ul>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="identity.html">Identity System</a></li>
+                <li><a href="encryption.html">Encryption</a></li>
+                <li><a href="verification.html">Verification</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>SDKs</h4>
+            <ul>
+                <li><a href="typescript.html">TypeScript SDK</a></li>
+                <li><a href="rust.html">Rust SDK</a></li>
+                <li><a href="examples.html">Code Examples</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Smart Contracts</h4>
+            <ul>
+                <li><a href="contracts-overview.html">Overview</a></li>
+                <li><a href="opacus-core.html">OpacusCore</a></li>
+                <li><a href="dac-registry.html" class="active">DACRegistry</a></li>
+                <li><a href="agent-registry.html">AgentRegistry</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h4>Advanced</h4>
+            <ul>
+                <li><a href="security.html">Security Model</a></li>
+                <li><a href="performance.html">Performance</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="https://github.com/opacus-protocol" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+    </aside>
+    
+    <main class="docs-main">
+        <div class="docs-header">
+            <h1>DACRegistry Contract</h1>
+            <p>Decentralized Access Control for agent communications with attestations and permissions.</p>
+        </div>
+        
+        <div class="docs-content">
+            <h2>Contract Overview</h2>
+            
+            <p><strong>DACRegistry</strong> (Decentralized Access Control Registry) manages:</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span class="check">✅</span>
+                    <span><strong>Attestations:</strong> Create and verify cryptographic attestations</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">🔒</span>
+                    <span><strong>Access Control:</strong> Manage agent communication permissions</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">❌</span>
+                    <span><strong>Revocation:</strong> Revoke compromised or invalid attestations</span>
+                </div>
+                <div class="feature-item">
+                    <span class="check">🌐</span>
+                    <span><strong>Trust Networks:</strong> Build decentralized trust graphs</span>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h4>📍 Contract Address</h4>
+                <p><code>0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9</code></p>
+                <p>Network: 0G Chain Testnet</p>
+            </div>
+            
+            <h2>Attestation Structure</h2>
+            
+            <pre><code>struct Attestation {
+    bytes32 id;                    // Unique attestation ID
+    bytes32 issuerId;              // Issuer agent ID
+    bytes32 subjectId;             // Subject agent ID
+    bytes32 claim;                 // Claim hash (capability/permission)
+    bytes signature;               // Ed25519 signature
+    uint256 issuedAt;              // Issuance timestamp
+    uint256 expiresAt;             // Expiration timestamp (0 = never)
+    bool revoked;                  // Is revoked
+    uint256 revokedAt;             // Revocation timestamp
+    string metadata;               // JSON metadata
+}</code></pre>
+            
+            <h2>Key Functions</h2>
+            
+            <h3>1. Create Attestation</h3>
+            <pre><code>function createAttestation(
+    bytes32 subjectId,
+    bytes32 claim,
+    bytes calldata signature,
+    uint256 expiresAt,
+    string calldata metadata
+) external returns (bytes32 attestationId)</code></pre>
+            
+            <p><strong>Description:</strong> Creates a new attestation for an agent.</p>
+            
+            <p><strong>Parameters:</strong></p>
+            <ul>
+                <li><code>subjectId</code> - Agent being attested to</li>
+                <li><code>claim</code> - Keccak256 hash of the claim (e.g., "can-access-weather-api")</li>
+                <li><code>signature</code> - Ed25519 signature over (subjectId + claim + expiresAt)</li>
+                <li><code>expiresAt</code> - Unix timestamp when attestation expires (0 = never)</li>
+                <li><code>metadata</code> - Additional JSON metadata</li>
+            </ul>
+            
+            <p><strong>Returns:</strong> Unique attestation ID</p>
+            
+            <p><strong>Gas Cost:</strong> ~80,000 gas (~0.00008 0G)</p>
+            
+            <h3>2. Verify Attestation</h3>
+            <pre><code>function verifyAttestation(
+    bytes32 attestationId
+) external view returns (bool valid, string memory reason)</code></pre>
+            
+            <p><strong>Description:</strong> Checks if an attestation is valid.</p>
+            
+            <p><strong>Returns:</strong></p>
+            <ul>
+                <li><code>valid</code> - True if attestation is valid</li>
+                <li><code>reason</code> - Reason if invalid ("expired", "revoked", "not-found")</li>
+            </ul>
+            
+            <h3>3. Revoke Attestation</h3>
+            <pre><code>function revokeAttestation(
+    bytes32 attestationId
+) external onlyIssuer(attestationId)</code></pre>
+            
+            <p><strong>Description:</strong> Revokes an attestation (only by original issuer).</p>
+            
+            <p><strong>Gas Cost:</strong> ~30,000 gas</p>
+            
+            <h3>4. Get Attestations for Agent</h3>
+            <pre><code>function getAttestationsForAgent(
+    bytes32 agentId
+) external view returns (bytes32[] memory)</code></pre>
+            
+            <p><strong>Description:</strong> Returns all attestation IDs for an agent.</p>
+            
+            <h3>5. Check Access Permission</h3>
+            <pre><code>function hasPermission(
+    bytes32 agentId,
+    bytes32 claim
+) external view returns (bool)</code></pre>
+            
+            <p><strong>Description:</strong> Checks if an agent has a valid attestation for a specific claim.</p>
+            
+            <h3>6. Get Trust Score</h3>
+            <pre><code>function getTrustScore(
+    bytes32 agentId
+) external view returns (uint256)</code></pre>
+            
+            <p><strong>Description:</strong> Calculates aggregate trust score based on valid attestations.</p>
+            
+            <h2>Events</h2>
+            
+            <pre><code>event AttestationCreated(
+    bytes32 indexed attestationId,
+    bytes32 indexed issuerId,
+    bytes32 indexed subjectId,
+    bytes32 claim,
+    uint256 expiresAt
+);
+
+event AttestationRevoked(
+    bytes32 indexed attestationId,
+    bytes32 indexed issuerId,
+    uint256 timestamp
+);
+
+event TrustUpdated(
+    bytes32 indexed agentId,
+    uint256 newTrustScore
+);</code></pre>
+            
+            <h2>Complete Usage Example</h2>
+            
+            <h3>TypeScript: Create and Verify Attestation</h3>
+            <pre><code>import { ethers } from 'ethers';
+import { ed25519 } from '@noble/curves/ed25519';
+
+// Setup
+const provider = new ethers.JsonRpcProvider('https://evmrpc-testnet.0g.ai');
+const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+const dacRegistry = new ethers.Contract(
+  DAC_REGISTRY_ADDRESS,
+  DAC_REGISTRY_ABI,
+  wallet
+);
+
+// Define claim
+const claim = 'can-access-weather-api';
+const claimHash = ethers.keccak256(ethers.toUtf8Bytes(claim));
+
+// Set expiration (30 days from now)
+const expiresAt = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60;
+
+// Create signature message
+const message = ethers.solidityPacked(
+  ['bytes32', 'bytes32', 'uint256'],
+  [subjectAgentId, claimHash, expiresAt]
+);
+const messageHash = ethers.keccak256(message);
+
+// Sign with Ed25519
+const signature = ed25519.sign(
+  Buffer.from(messageHash.slice(2), 'hex'),
+  issuerPrivateKey
+);
+
+// Create attestation
+const metadata = JSON.stringify({
+  type: 'capability',
+  scope: 'weather-data',
+  level: 'read-only'
+});
+
+console.log('Creating attestation...');
+const tx = await dacRegistry.createAttestation(
+  subjectAgentId,
+  claimHash,
+  '0x' + Buffer.from(signature).toString('hex'),
+  expiresAt,
+  metadata
+);
+
+const receipt = await tx.wait();
+const attestationId = receipt.events[0].args.attestationId;
+console.log('✅ Attestation created:', attestationId);
+
+// Verify attestation
+const [valid, reason] = await dacRegistry.verifyAttestation(attestationId);
+console.log('Attestation valid:', valid);
+
+// Check permission
+const hasPermission = await dacRegistry.hasPermission(
+  subjectAgentId,
+  claimHash
+);
+console.log('Has permission:', hasPermission);</code></pre>
+            
+            <h3>Rust: Query Attestations</h3>
+            <pre><code>use ethers::prelude::*;
+
+// Setup
+let provider = Provider::<Http>::try_from("https://evmrpc-testnet.0g.ai")?;
+let dac_registry = DACRegistry::new(DAC_REGISTRY_ADDRESS, Arc::new(provider));
+
+// Get all attestations for agent
+let attestation_ids = dac_registry
+    .get_attestations_for_agent(agent_id)
+    .call()
+    .await?;
+
+println!("Found {} attestations", attestation_ids.len());
+
+// Check each attestation
+for id in attestation_ids {
+    let (valid, reason) = dac_registry
+        .verify_attestation(id)
+        .call()
+        .await?;
+    
+    if valid {
+        println!("✓ Attestation {} is valid", hex::encode(id));
+    } else {
+        println!("✗ Attestation {} is invalid: {}", hex::encode(id), reason);
+    }
+}
+
+// Check specific permission
+let claim = "can-access-weather-api";
+let claim_hash = keccak256(claim.as_bytes());
+
+let has_permission = dac_registry
+    .has_permission(agent_id, claim_hash)
+    .call()
+    .await?;
+
+println!("Has weather API permission: {}", has_permission);</code></pre>
+            
+            <h2>Trust Score Calculation</h2>
+            
+            <p>Trust scores are calculated based on:</p>
+            
+            <ul>
+                <li><strong>Valid Attestations:</strong> +10 points per valid attestation</li>
+                <li><strong>Issuer Reputation:</strong> Weighted by issuer's trust score</li>
+                <li><strong>Time Decay:</strong> Older attestations have less weight</li>
+                <li><strong>Revocations:</strong> -50 points per revoked attestation</li>
+            </ul>
+            
+            <pre><code>function calculateTrustScore(bytes32 agentId) internal view returns (uint256) {
+    uint256 score = 0;
+    bytes32[] memory attestations = agentAttestations[agentId];
+    
+    for (uint256 i = 0; i < attestations.length; i++) {
+        Attestation memory att = attestationRegistry[attestations[i]];
+        
+        if (att.revoked) {
+            score = score > 50 ? score - 50 : 0;
+            continue;
+        }
+        
+        if (att.expiresAt > 0 && att.expiresAt < block.timestamp) {
+            continue; // Expired
+        }
+        
+        // Base score
+        uint256 attScore = 10;
+        
+        // Time decay
+        uint256 age = block.timestamp - att.issuedAt;
+        if (age > 90 days) {
+            attScore = attScore / 2;
+        }
+        
+        // Issuer weight
+        uint256 issuerScore = getTrustScore(att.issuerId);
+        attScore = attScore * (100 + issuerScore) / 100;
+        
+        score += attScore;
+    }
+    
+    return score;
+}</code></pre>
+            
+            <h2>Access Control Patterns</h2>
+            
+            <h3>1. Capability-Based Access</h3>
+            <pre><code>// Grant specific capability
+const capability = 'can-read-medical-records';
+const claimHash = ethers.keccak256(ethers.toUtf8Bytes(capability));
+
+await dacRegistry.createAttestation(
+  doctorAgentId,
+  claimHash,
+  signature,
+  expiresAt,
+  JSON.stringify({ scope: 'patient-123' })
+);
+
+// Check before allowing access
+const canAccess = await dacRegistry.hasPermission(
+  doctorAgentId,
+  claimHash
+);
+
+if (!canAccess) {
+  throw new Error('Access denied');
+}</code></pre>
+            
+            <h3>2. Time-Limited Access</h3>
+            <pre><code>// Grant access for 1 hour
+const oneHour = 60 * 60;
+const expiresAt = Math.floor(Date.now() / 1000) + oneHour;
+
+await dacRegistry.createAttestation(
+  temporaryAgentId,
+  claimHash,
+  signature,
+  expiresAt,
+  JSON.stringify({ temporary: true })
+);</code></pre>
+            
+            <h3>3. Hierarchical Trust</h3>
+            <pre><code>// Admin attests to manager
+await dacRegistry.createAttestation(
+  managerAgentId,
+  keccak256('manager-role'),
+  adminSignature,
+  0, // Never expires
+  JSON.stringify({ role: 'manager' })
+);
+
+// Manager attests to employee
+await dacRegistry.createAttestation(
+  employeeAgentId,
+  keccak256('employee-role'),
+  managerSignature,
+  0,
+  JSON.stringify({ role: 'employee', manager: managerAgentId })
+);</code></pre>
+            
+            <h2>Revocation Handling</h2>
+            
+            <pre><code>// Revoke attestation (only issuer can revoke)
+await dacRegistry.revokeAttestation(attestationId);
+
+// Listen for revocation events
+dacRegistry.on('AttestationRevoked', (attestationId, issuerId, timestamp) => {
+  console.log(`⚠️ Attestation ${attestationId} revoked by ${issuerId}`);
+  
+  // Update local cache
+  cache.invalidate(attestationId);
+  
+  // Notify affected agents
+  notifyRevocation(attestationId);
+});</code></pre>
+            
+            <h2>Gas Optimization</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h3>Create Attestation</h3>
+                    <p>~80,000 gas<br>
+                    ~0.00008 0G<br>
+                    One-time cost</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <h3>Verify</h3>
+                    <p>Free (view)<br>
+                    No transaction<br>
+                    Instant</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">❌</div>
+                    <h3>Revoke</h3>
+                    <p>~30,000 gas<br>
+                    ~0.00003 0G<br>
+                    Rare operation</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon">🔍</div>
+                    <h3>Query</h3>
+                    <p>Free (view)<br>
+                    Batch queries<br>
+                    Off-chain</p>
+                </div>
+            </div>
+            
+            <h2>Security Considerations</h2>
+            
+            <div class="info-box warning">
+                <h4>⚠️ Best Practices</h4>
+                <ul>
+                    <li><strong>Signature Verification:</strong> Always verify Ed25519 signatures on-chain</li>
+                    <li><strong>Expiration:</strong> Set reasonable expiration times for attestations</li>
+                    <li><strong>Revocation Checks:</strong> Always check revocation status before trusting</li>
+                    <li><strong>Issuer Trust:</strong> Verify issuer's reputation and authority</li>
+                    <li><strong>Claim Specificity:</strong> Use specific, scoped claims instead of broad permissions</li>
+                </ul>
+            </div>
+            
+            <h2>Integration with AgentRegistry</h2>
+            
+            <p>DACRegistry works closely with AgentRegistry:</p>
+            
+            <pre><code>// When attestation is created, update agent reputation
+function _updateAgentReputation(bytes32 agentId, int256 delta) internal {
+    IAgentRegistry(agentRegistryAddress).updateReputation(agentId, delta);
+    emit TrustUpdated(agentId, getTrustScore(agentId));
+}
+
+// When attestation is revoked, decrease reputation
+function revokeAttestation(bytes32 attestationId) external {
+    Attestation storage att = attestationRegistry[attestationId];
+    require(att.issuerId == msg.sender, "Not issuer");
+    
+    att.revoked = true;
+    att.revokedAt = block.timestamp;
+    
+    // Decrease subject's reputation
+    _updateAgentReputation(att.subjectId, -50);
+    
+    emit AttestationRevoked(attestationId, att.issuerId, block.timestamp);
+}</code></pre>
+            
+            <h2>Related Documentation</h2>
+            
+            <ul>
+                <li><a href="verification.html">Verification Guide</a> - How to create and verify attestations</li>
+                <li><a href="agent-registry.html">AgentRegistry</a> - Agent identity management</li>
+                <li><a href="security.html">Security Model</a> - Security architecture</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>
