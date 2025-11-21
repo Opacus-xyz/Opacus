@@ -1,150 +1,222 @@
-# Opacus SDK - Complete Implementation
+# Opacus Protocol
 
-Multi-language SDK suite for decentralized agent communication.
+**Multi-Chain Decentralized Agent Communication Protocol**
 
-## 📦 Implementations
+Opacus enables secure, authenticated communication between decentralized agents with native support for 0G Chain and multi-chain operations.
 
-### TypeScript SDK (`opacus-sdk/`)
-- **Transport**: WebSocket + WebTransport (HTTP/3)
-- **Runtime**: Node.js 18+ & Browser
-- **Package**: `@opacus/sdk`
-- **Size**: ~100KB minified
+[![Website](https://img.shields.io/badge/Website-newopacus.vercel.app-blue)](https://newopacus.vercel.app)
+[![Documentation](https://img.shields.io/badge/Docs-Read%20Now-green)](https://newopacus.vercel.app/docs)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![TypeScript SDK](https://img.shields.io/badge/npm-@opacus%2Fsdk-red)](https://www.npmjs.com/package/@opacus/sdk)
+[![Rust SDK](https://img.shields.io/badge/crates.io-opacus--sdk-orange)](https://crates.io/crates/opacus-sdk)
 
-**Install:**
+## 🚀 Features
+
+- ✅ **End-to-End Encryption**: Ed25519 + X25519 cryptography
+- ✅ **Multi-Chain Support**: Native 0G Chain integration, EVM-compatible
+- ✅ **High Performance**: QUIC transport for Rust, WebSocket for TypeScript
+- ✅ **Type-Safe**: Full TypeScript and Rust support
+- ✅ **Production Ready**: Battle-tested SDKs with comprehensive tests
+- ✅ **Easy Integration**: Simple APIs for quick setup
+
+## 📦 SDK Packages
+
+### TypeScript/JavaScript SDK
+
+**Installation:**
+```bash
+npm install @opacus/sdk
+```
+
+**Quick Start:**
+```typescript
+import { OpacusClient } from '@opacus/sdk';
+
+const client = new OpacusClient({
+  privateKey: 'your-private-key',
+  network: 'testnet'
+});
+
+await client.connect();
+```
+
+**Features:**
+- WebSocket + WebTransport support
+- Node.js 18+ & Browser compatible
+- Full TypeScript definitions
+- ~100KB minified
+
+[📖 TypeScript SDK Documentation](opacus-sdk/README.md)
+
+### Rust SDK
+
+**Installation:**
+```toml
+[dependencies]
+opacus-sdk = "1.0"
+tokio = { version = "1.36", features = ["full"] }
+```
+
+**Quick Start:**
+```rust
+use opacus_sdk::{OpacusClient, ClientConfig};
+
+let client = OpacusClient::new(config).await?;
+```
+
+**Features:**
+- Native QUIC transport (HTTP/3)
+- Zero-copy operations
+- Async/await with Tokio
+- Production-optimized
+
+[📖 Rust SDK Documentation](opacus-rust/README.md)
+
+## 🏗️ Project Structure
+
+```
+opacus/
+├── opacus-sdk/          # TypeScript SDK (@opacus/sdk)
+├── opacus-rust/         # Rust SDK (opacus-sdk)
+├── sdk-ts/              # Legacy TypeScript implementation
+├── sdk-rust/            # Legacy Rust implementation
+├── gateway/             # WebSocket/HTTP Gateway
+├── contracts/           # Smart Contracts (0G Chain, EVM)
+├── website/             # Documentation website
+├── EXAMPLES.md          # Quick start examples
+├── PUBLISH.md           # Publishing guide
+└── LICENSE              # MIT License
+```
+
+## 📚 Documentation
+
+- **[Getting Started](https://newopacus.vercel.app/docs)** - Complete guide
+- **[Examples](EXAMPLES.md)** - Code examples for both SDKs
+- **[Publishing Guide](PUBLISH.md)** - How to publish packages
+- **[Architecture](https://newopacus.vercel.app/docs/architecture.html)** - System design
+- **[API Reference](https://newopacus.vercel.app/docs)** - Full API docs
+
+## 🔐 Security Features
+
+### Authentication Flow
+
+1. **Nonce Generation**: 32-byte random nonces (30s validity)
+2. **Key Exchange**: ECDH shared secret derivation
+3. **Session Keys**: HKDF-based key derivation
+4. **Encryption**: AES-GCM for messages
+5. **Signatures**: Ed25519 digital signatures
+6. **Proof Storage**: Multi-chain commitment
+
+### Cryptography Stack
+
+- **Signing**: Ed25519 (32-byte keys)
+- **Encryption**: X25519 + AES-GCM
+- **Hashing**: SHA-256
+- **Key Derivation**: HKDF
+- **Anti-Replay**: Nonce-based protection
+
+## 🚦 Quick Examples
+
+See [EXAMPLES.md](EXAMPLES.md) for complete examples.
+
+### Send Encrypted Message (TypeScript)
+
+```typescript
+const response = await client.sendMessage({
+  to: 'agent-id',
+  payload: { message: 'Hello!' },
+  encrypted: true
+});
+```
+
+### Listen for Messages (Rust)
+
+```rust
+let mut stream = client.message_stream();
+while let Some(msg) = stream.recv().await {
+    println!("From: {}", msg.from);
+}
+```
+
+## 🧪 Development
+
+### Build TypeScript SDK
+
 ```bash
 cd opacus-sdk
 npm install
 npm run build
+npm test
 ```
 
-### Rust SDK (`opacus-rust/`)
-- **Transport**: QUIC (Quinn)
-- **Runtime**: Native binary
-- **Crate**: `opacus-sdk`
-- **Binary Size**: ~8MB (release)
+### Build Rust SDK
 
-**Build:**
-```
+```bash
 cd opacus-rust
 cargo build --release
+cargo test
 ```
 
-### Components
-
-- **Client SDK** (TypeScript/Rust) - Easy integration for developers
-- **H3-DAC Gateway** (Node.js) - Central authentication hub
-- **Signature Authority** - ECDSA-based verification
-- **Nonce Service** - Redis-backed temporary nonce storage
-- **Shared Secret Derivation** - ECDH key exchange
-- **On-Chain Contracts** - Multi-chain proof storage
-- **Verifier Engine** (Rust) - High-performance verification
-
-## 🚀 Quick Start
-
-### Installation
+### Run Gateway
 
 ```bash
-# Install TypeScript SDK
-npm install @h3-dac/sdk-ts
-
-# Or use Rust SDK
-cargo add h3-dac-sdk
+cd gateway
+npm install
+npm start
 ```
 
-### TypeScript Usage
+## 📦 Publishing
 
-```typescript
-import { H3DAC } from '@h3-dac/sdk-ts';
+Both SDKs are ready for publication:
 
-const client = new H3DAC(privateKey);
-const session = await client.authenticate(clientId);
-await client.sendPayload({ data: "secure message" });
-```
-
-### Rust Usage
-
-```rust
-use h3_dac_sdk::Client;
-
-let client = Client::new(private_key);
-let session = client.authenticate(client_id).await?;
-client.send_payload(payload).await?;
-```
-
-## 📦 Workspace Structure
-
-```
-/sdk-ts          - TypeScript SDK
-/sdk-rust        - Rust SDK
-/gateway         - Node.js Gateway Server
-/contracts       - Smart Contracts (OG Chain, EVM, Solana)
-/examples        - Demo Applications
-/tests           - Integration Tests
-/docs            - Documentation
-```
-
-## 🔐 Security Model
-
-### Authentication Flow
-
-1. Client requests nonce from gateway
-2. Client signs: `hash(nonce + clientId + timestamp)`
-3. ECDH shared secret derivation
-4. Session key generation via HKDF
-5. AES-GCM encrypted communication
-6. On-chain proof commitment
-
-### Key Features
-
-- ✅ 32-byte random nonces (30s validity, single-use)
-- ✅ ECDH key exchange for shared secrets
-- ✅ HKDF for session key derivation
-- ✅ Secp256k1 signatures
-- ✅ AES-GCM encryption
-- ✅ Multi-chain proof storage
-
-## 🧪 Testing
-
+**TypeScript SDK** → npm
 ```bash
-npm test                    # Run all tests
-npm run test:integration    # Integration tests
-npm run test:security       # Security test suite
+cd opacus-sdk
+npm publish --access public
 ```
 
-## 🐳 Docker Support
-
+**Rust SDK** → crates.io
 ```bash
-docker-compose up           # Start entire stack
-docker-compose up gateway   # Gateway only
+cd opacus-rust
+cargo publish
 ```
 
-## 📖 Documentation
+See [PUBLISH.md](PUBLISH.md) for detailed instructions.
 
-- [Architecture Guide](./docs/architecture.md)
-- [API Reference](./docs/api-reference.md)
-- [SDK Documentation](./docs/sdk-guide.md)
-- [Security Model](./docs/security.md)
-- [Multi-Chain Support](./docs/multi-chain.md)
+## 🤖 CI/CD
 
-## 🛠️ Development
+GitHub Actions workflows included:
 
-```bash
-npm install                 # Install dependencies
-npm run build              # Build all packages
-npm run dev:gateway        # Start gateway in dev mode
-npm run dev:example        # Run example client
-```
+- **CI**: Automated testing on push
+- **Publishing**: Automated release to npm/crates.io
+- **Deployment**: Vercel integration for website
 
-## 📝 License
+## 📄 License
 
-MIT
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md).
+Contributions welcome! Please:
+
+1. Fork the repository
+2. Create your feature branch
+3. Add tests for new features
+4. Submit a pull request
 
 ## 🔗 Links
 
-- [Website](https://h3-dac.io)
-- [Documentation](https://docs.h3-dac.io)
-- [GitHub](https://github.com/h3-dac)
+- **Website**: https://newopacus.vercel.app
+- **Documentation**: https://newopacus.vercel.app/docs
+- **GitHub**: https://github.com/Opacus-xyz/Opacus
+- **npm Package**: https://www.npmjs.com/package/@opacus/sdk
+- **crates.io**: https://crates.io/crates/opacus-sdk
+
+## 💬 Support
+
+- **Issues**: [GitHub Issues](https://github.com/Opacus-xyz/Opacus/issues)
+- **Email**: support@opacus.network
+
+---
+
+Built with ❤️ by the Opacus Team
