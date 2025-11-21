@@ -1,0 +1,99 @@
+name: Publish SDK Packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      publish_npm:
+        description: 'Publish to npm'
+        required: true
+        type: boolean
+        default: true
+      publish_crates:
+        description: 'Publish to crates.io'
+        required: true
+        type: boolean
+        default: true
+
+jobs:
+  publish-npm:
+    name: Publish TypeScript SDK to npm
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'release' || inputs.publish_npm }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Install dependencies
+        run: |
+          cd opacus-sdk
+          npm install
+      
+      - name: Run tests
+        run: |
+          cd opacus-sdk
+          npm test
+      
+      - name: Build package
+        run: |
+          cd opacus-sdk
+          npm run build
+      
+      - name: Publish to npm
+        run: |
+          cd opacus-sdk
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-crates:
+    name: Publish Rust SDK to crates.io
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'release' || inputs.publish_crates }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+      
+      - name: Run tests
+        run: |
+          cd opacus-rust
+          cargo test --release
+      
+      - name: Build package
+        run: |
+          cd opacus-rust
+          cargo build --release
+      
+      - name: Publish to crates.io
+        run: |
+          cd opacus-rust
+          cargo publish --token ${{ secrets.CARGO_TOKEN }}
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
+
+  notify:
+    name: Notify on completion
+    runs-on: ubuntu-latest
+    needs: [publish-npm, publish-crates]
+    if: always()
+    
+    steps:
+      - name: Check results
+        run: |
+          echo "NPM Publish: ${{ needs.publish-npm.result }}"
+          echo "Crates.io Publish: ${{ needs.publish-crates.result }}"

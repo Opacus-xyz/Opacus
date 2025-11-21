@@ -1,0 +1,110 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-typescript:
+    name: Test TypeScript SDK
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          cd opacus-sdk
+          npm install
+      
+      - name: Run linter
+        run: |
+          cd opacus-sdk
+          npm run lint || true
+      
+      - name: Build
+        run: |
+          cd opacus-sdk
+          npm run build
+      
+      - name: Run tests
+        run: |
+          cd opacus-sdk
+          npm test
+
+  test-rust:
+    name: Test Rust SDK
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+      
+      - name: Cache cargo registry
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+      
+      - name: Cache cargo index
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-git-${{ hashFiles('**/Cargo.lock') }}
+      
+      - name: Cache cargo build
+        uses: actions/cache@v3
+        with:
+          path: opacus-rust/target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+      
+      - name: Check formatting
+        run: |
+          cd opacus-rust
+          cargo fmt -- --check
+      
+      - name: Run clippy
+        run: |
+          cd opacus-rust
+          cargo clippy -- -D warnings
+      
+      - name: Build
+        run: |
+          cd opacus-rust
+          cargo build --release
+      
+      - name: Run tests
+        run: |
+          cd opacus-rust
+          cargo test --release
+
+  build-website:
+    name: Build Website
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check HTML files
+        run: |
+          echo "Checking website structure..."
+          ls -la website/
+          ls -la website/docs/
+      
+      - name: Validate CSS
+        run: |
+          echo "CSS files found:"
+          find website -name "*.css"

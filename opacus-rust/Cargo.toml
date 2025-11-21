@@ -5,7 +5,9 @@ edition = "2021"
 description = "Opacus Protocol SDK for Rust - QUIC-native agent communication"
 license = "MIT"
 authors = ["Opacus Team"]
-repository = "https://github.com/opacus/opacus-rust"
+repository = "https://github.com/Opacus-xyz/Opacus"
+homepage = "https://newopacus.vercel.app"
+documentation = "https://newopacus.vercel.app/docs"
 keywords = ["blockchain", "agents", "p2p", "quic", "cryptography"]
 categories = ["network-programming", "cryptography", "web-programming"]
 

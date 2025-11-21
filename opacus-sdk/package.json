@@ -56,10 +56,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/opacus/opacus-sdk"
+    "url": "https://github.com/Opacus-xyz/Opacus",
+    "directory": "opacus-sdk"
   },
   "bugs": {
-    "url": "https://github.com/opacus/opacus-sdk/issues"
+    "url": "https://github.com/Opacus-xyz/Opacus/issues"
   },
-  "homepage": "https://opacus.io"
+  "homepage": "https://newopacus.vercel.app"
 }
