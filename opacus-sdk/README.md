@@ -291,12 +291,11 @@ Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for de
 
 MIT License - see [LICENSE](LICENSE) for details.
 
-## 🔗 Links
+## Links
 
-- Website: https://opacus.io
-- Documentation: https://docs.opacus.io
-- GitHub: https://github.com/opacus/opacus-sdk
-- Discord: https://discord.gg/opacus
+- Website: https://opacus.xyz
+- Documentation: https://opacus.xyz/docs
+- GitHub: https://github.com/Opacus-xyz/Opacus
 
 ---
 

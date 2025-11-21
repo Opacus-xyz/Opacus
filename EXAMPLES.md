@@ -351,4 +351,3 @@ cargo test -- --nocapture  # Show output
 
 - GitHub Issues: https://github.com/Opacus-xyz/Opacus/issues
 - Documentation: https://newopacus.vercel.app/docs
-- Discord: https://discord.gg/opacus

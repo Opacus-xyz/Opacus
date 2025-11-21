@@ -298,10 +298,9 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🔗 Links
 
-- Website: https://opacus.io
-- Documentation: https://docs.opacus.io
-- TypeScript SDK: https://github.com/opacus/opacus-sdk
-- Discord: https://discord.gg/opacus
+- Website: https://opacus.xyz
+- Documentation: https://opacus.xyz/docs
+- GitHub: https://github.com/Opacus-xyz/Opacus
 
 ## 🙏 Credits
 
