@@ -1,6 +1,6 @@
 {
   "name": "@brienteth/opacus-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Opacus - Multi-Chain Decentralized Agent Communication Protocol",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
