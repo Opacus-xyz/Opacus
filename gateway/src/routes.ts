@@ -22,11 +22,16 @@ import { logger } from './logger';
 
 const router = Router();
 
-// Gateway keys from environment
-const GATEWAY_PRIVATE_KEY = process.env.GATEWAY_PRIVATE_KEY!;
-const GATEWAY_PUBLIC_KEY = process.env.GATEWAY_PUBLIC_KEY!;
-const NONCE_EXPIRY = parseInt(process.env.NONCE_EXPIRY_SECONDS || '30');
-const SESSION_EXPIRY = parseInt(process.env.SESSION_EXPIRY_SECONDS || '3600');
+// Helper functions to get environment variables at runtime
+const getGatewayKeys = () => ({
+  privateKey: process.env.GATEWAY_PRIVATE_KEY!,
+  publicKey: process.env.GATEWAY_PUBLIC_KEY!,
+});
+
+const getConfig = () => ({
+  nonceExpiry: parseInt(process.env.NONCE_EXPIRY_SECONDS || '30'),
+  sessionExpiry: parseInt(process.env.SESSION_EXPIRY_SECONDS || '3600'),
+});
 
 /**
  * GET /nonce
@@ -34,17 +39,20 @@ const SESSION_EXPIRY = parseInt(process.env.SESSION_EXPIRY_SECONDS || '3600');
  */
 router.get('/nonce', async (req: Request, res: Response) => {
   try {
+    const { publicKey } = getGatewayKeys();
+    const { nonceExpiry } = getConfig();
+    
     const nonce = generateNonce();
-    const expiresAt = Date.now() + NONCE_EXPIRY * 1000;
+    const expiresAt = Date.now() + nonceExpiry * 1000;
 
     // Store nonce in Redis
-    await storeNonce(nonce, NONCE_EXPIRY);
+    await storeNonce(nonce, nonceExpiry);
 
     logger.info(`Generated nonce: ${nonce.substring(0, 8)}...`);
 
     res.json({
       nonce,
-      serverPubKey: GATEWAY_PUBLIC_KEY,
+      serverPubKey: publicKey,
       expiresAt,
     });
   } catch (error) {
@@ -101,12 +109,21 @@ router.post('/auth', async (req: Request, res: Response) => {
       new Uint8Array(new BigUint64Array([BigInt(timestamp)]).buffer)
     );
 
+    logger.info(`Auth Debug - Client: ${clientId}`);
+    logger.info(`  Nonce: ${nonce.substring(0, 16)}...`);
+    logger.info(`  Timestamp: ${timestamp}`);
+    logger.info(`  Public Key: ${clientPubKey.substring(0, 16)}...`);
+    logger.info(`  Signature: ${signature.substring(0, 16)}...`);
+    logger.info(`  Message: ${bytesToHex(message).substring(0, 32)}...`);
+
     // Verify signature
     const signatureValid = await verifySignature(
       message,
       signature,
       clientPubKey
     );
+
+    logger.info(`  Signature Valid: ${signatureValid}`);
 
     if (!signatureValid) {
       logger.warn(`Invalid signature for client: ${clientId}`);
@@ -117,13 +134,16 @@ router.post('/auth', async (req: Request, res: Response) => {
     }
 
     // Derive shared secret
-    const sharedSecret = deriveSharedSecret(GATEWAY_PRIVATE_KEY, clientPubKey);
+    const { privateKey } = getGatewayKeys();
+    const { sessionExpiry } = getConfig();
+    
+    const sharedSecret = deriveSharedSecret(privateKey, clientPubKey);
     const sessionKey = deriveSessionKey(sharedSecret);
     const sessionKeyHex = bytesToHex(sessionKey);
 
     // Store session
-    const expiresAt = Date.now() + SESSION_EXPIRY * 1000;
-    await storeSession(clientId, sessionKeyHex, SESSION_EXPIRY);
+    const expiresAt = Date.now() + sessionExpiry * 1000;
+    await storeSession(clientId, sessionKeyHex, sessionExpiry);
 
     // Store proof (for on-chain commitment)
     const sessionKeyHash = hashData(sessionKey);

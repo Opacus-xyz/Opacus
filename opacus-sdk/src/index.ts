@@ -3,27 +3,27 @@
  */
 
 // Types
-export * from './types';
+export * from './types.js';
 
 // Main Client
-export { OpacusClient } from './client';
+export { OpacusClient } from './client.js';
 
 // Crypto
-export { KeyManager } from './crypto/keys';
-export { SecurityManager } from './crypto/security';
+export { KeyManager } from './crypto/keys.js';
+export { SecurityManager } from './crypto/security.js';
 
 // Protocol
-export { CBORCodec } from './proto/cbor';
+export { CBORCodec } from './proto/cbor.js';
 
 // Transport
-export { ITransport, BaseTransport } from './transport/base';
-export { WebSocketTransport } from './transport/websocket';
-export { WebTransportTransport } from './transport/webtransport';
+export { ITransport, BaseTransport } from './transport/base.js';
+export { WebSocketTransport } from './transport/websocket.js';
+export { WebTransportTransport } from './transport/webtransport.js';
 
 // Chain
-export { OGChainClient, OG_NETWORKS } from './chain/0g';
-export { EVMChainAdapter, MultiChainManager } from './chain/multichain';
-export type { ChainAdapter } from './chain/multichain';
+export { OGChainClient, OG_NETWORKS } from './chain/0g.js';
+export { EVMChainAdapter, MultiChainManager } from './chain/multichain.js';
+export type { ChainAdapter } from './chain/multichain.js';
 
 // DAC
-export { DACManager } from './dac/manager';
+export { DACManager } from './dac/manager.js';

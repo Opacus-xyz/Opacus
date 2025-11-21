@@ -2,13 +2,20 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
+import path from 'path';
+import http from 'http';
 import routes from './routes';
 import { initRedis } from './redis';
 import { logger } from './logger';
 import { generateGatewayKeys } from './crypto';
+import { setupWebSocket } from './websocket';
 
-// Load environment variables
-dotenv.config();
+// Load environment variables from parent directory's .env file
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+// Debug: Log loaded env vars
+logger.info(`Gateway Public Key loaded: ${process.env.GATEWAY_PUBLIC_KEY ? 'YES' : 'NO'}`);
+logger.info(`Gateway Private Key loaded: ${process.env.GATEWAY_PRIVATE_KEY ? 'YES' : 'NO'}`);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -61,9 +68,17 @@ async function start() {
       process.env.GATEWAY_PUBLIC_KEY = keys.publicKey;
     }
 
+    // Create HTTP server
+    const server = http.createServer(app);
+
+    // Setup WebSocket server
+    setupWebSocket(server);
+
     // Start server
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       logger.info(`H3-DAC Gateway listening on port ${PORT}`);
+      logger.info(`HTTP: http://localhost:${PORT}`);
+      logger.info(`WebSocket: ws://localhost:${PORT}`);
       logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
   } catch (error) {
