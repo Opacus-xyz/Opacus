@@ -4,6 +4,8 @@ build/
 target/
 *.log
 .env
+.env.*
+!.env.example
 .DS_Store
 *.pem
 *.key
@@ -12,3 +14,7 @@ target/
 coverage/
 *.lock
 .vercel
+
+# Test configuration with sensitive keys
+test-config.json
+gateway/.env

@@ -1,0 +1,27 @@
+{
+  "gateway": {
+    "url": "http://localhost:3000",
+    "publicKey": "YOUR_GATEWAY_PUBLIC_KEY_HERE",
+    "privateKey": "YOUR_GATEWAY_PRIVATE_KEY_HERE"
+  },
+  "agents": [
+    {
+      "id": "agent-a",
+      "publicKey": "YOUR_AGENT_A_PUBLIC_KEY_HERE",
+      "privateKey": "YOUR_AGENT_A_PRIVATE_KEY_HERE",
+      "discoveryTags": ["test", "agent-a"]
+    },
+    {
+      "id": "agent-b", 
+      "publicKey": "YOUR_AGENT_B_PUBLIC_KEY_HERE",
+      "privateKey": "YOUR_AGENT_B_PRIVATE_KEY_HERE",
+      "discoveryTags": ["test", "agent-b"]
+    },
+    {
+      "id": "agent-c",
+      "publicKey": "YOUR_AGENT_C_PUBLIC_KEY_HERE", 
+      "privateKey": "YOUR_AGENT_C_PRIVATE_KEY_HERE",
+      "discoveryTags": ["test", "agent-c"]
+    }
+  ]
+}
