@@ -217,6 +217,62 @@ Contributions welcome! Please:
 - **Issues**: [GitHub Issues](https://github.com/Opacus-xyz/Opacus/issues)
 - **Email**: support@opacus.network
 
+## 🛠️ Kalıcı Çalıştırma (Gateway)
+
+VS Code kapalı olsa bile Gateway'i çalışır tutmak için iki yöntem:
+
+### 1. PM2 ile
+
+```bash
+cd gateway
+npm install --production
+npm run build
+pm2 start ecosystem.config.js --env production
+pm2 save
+pm2 startup launchd   # macOS otomatik başlatma
+```
+
+Durum & loglar:
+```bash
+pm2 status
+pm2 logs opacus-gateway
+```
+
+Güncelleme (kod değiştirdikten sonra):
+```bash
+pm2 restart opacus-gateway
+```
+
+### 2. Docker + Compose
+
+`docker-compose.yml` ile Redis + Gateway birlikte:
+```bash
+docker compose up -d --build
+```
+
+Log inceleme:
+```bash
+docker logs -f opacus-gateway
+```
+
+Yeniden başlatma / güncelleme:
+```bash
+docker compose pull
+docker compose up -d --build gateway
+```
+
+### Temizleme
+```bash
+pm2 stop opacus-gateway && pm2 delete opacus-gateway
+docker compose down
+```
+
+### Notlar
+- `.env` içindeki test private key'lerini production'da kullanmayın.
+- Redis persistence kapalı (appendonly=no); gerekirse AOF veya snapshot etkinleştirin.
+- Health endpoint: `http://localhost:8080/health`
+- WebSocket endpoint: `ws://localhost:8080`
+
 ---
 
 Built with ❤️ by the Opacus Team
