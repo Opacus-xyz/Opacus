@@ -7,7 +7,9 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 /// @title Opacus DataStream
 /// @notice Manages data channels, subscriptions and usage accounting
 contract DataStream is Ownable, ReentrancyGuard {
-    constructor() Ownable(_msgSender()) {}
+    constructor(address _protocolTreasury) Ownable(_msgSender()) {
+        protocolTreasury = _protocolTreasury;
+    }
     struct Channel {
         bytes32 id;
         bytes32 dacId;
@@ -34,7 +36,8 @@ contract DataStream is Ownable, ReentrancyGuard {
     mapping(bytes32 => address[]) public channelSubscribers;
     mapping(bytes32 => bytes32[]) public dacChannels;
 
-    uint256 public platformFeePercent = 5; // 5%
+    address public protocolTreasury;
+    uint256 public platformFeePercent = 2; // 2% protocol fee
     uint256 public totalChannels;
 
     event ChannelCreated(bytes32 indexed channelId, bytes32 indexed dacId, address owner);
@@ -130,7 +133,12 @@ contract DataStream is Ownable, ReentrancyGuard {
             uint256 platformFee = (total * platformFeePercent) / 100;
             uint256 ownerAmount = total - platformFee;
             payable(ch.owner).transfer(ownerAmount);
-            payable(owner()).transfer(platformFee);
+            
+            // Transfer protocol fee to treasury
+            if (platformFee > 0 && protocolTreasury != address(0)) {
+                payable(protocolTreasury).transfer(platformFee);
+            }
+            
             ch.totalRevenue += total;
         }
         emit Settled(channelId, total);
@@ -152,5 +160,15 @@ contract DataStream is Ownable, ReentrancyGuard {
 
     function getDACChannels(bytes32 dacId) external view returns (bytes32[] memory) {
         return dacChannels[dacId];
+    }
+    
+    function setProtocolTreasury(address _treasury) external onlyOwner {
+        require(_treasury != address(0), "Invalid treasury");
+        protocolTreasury = _treasury;
+    }
+    
+    function setPlatformFeePercent(uint256 _percent) external onlyOwner {
+        require(_percent <= 10, "Fee too high"); // Max 10%
+        platformFeePercent = _percent;
     }
 }

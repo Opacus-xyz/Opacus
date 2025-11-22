@@ -72,6 +72,8 @@ export interface MsgEscrowInterface extends Interface {
       | "minLockAmount"
       | "owner"
       | "paymentToken"
+      | "protocolFeePercentage"
+      | "protocolTreasury"
       | "relayerBondAmount"
       | "relayerBonds"
       | "release"
@@ -79,6 +81,8 @@ export interface MsgEscrowInterface extends Interface {
       | "renounceOwnership"
       | "setDefaultExpiry"
       | "setMinLockAmount"
+      | "setProtocolFeePercentage"
+      | "setProtocolTreasury"
       | "setRelayerBondAmount"
       | "transferOwnership"
   ): FunctionFragment;
@@ -122,6 +126,14 @@ export interface MsgEscrowInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "protocolFeePercentage",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "protocolTreasury",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "relayerBondAmount",
     values?: undefined
   ): string;
@@ -145,6 +157,14 @@ export interface MsgEscrowInterface extends Interface {
   encodeFunctionData(
     functionFragment: "setMinLockAmount",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setProtocolFeePercentage",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setProtocolTreasury",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setRelayerBondAmount",
@@ -178,6 +198,14 @@ export interface MsgEscrowInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "protocolFeePercentage",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "protocolTreasury",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "relayerBondAmount",
     data: BytesLike
   ): Result;
@@ -200,6 +228,14 @@ export interface MsgEscrowInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setMinLockAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setProtocolFeePercentage",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setProtocolTreasury",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -405,6 +441,10 @@ export interface MsgEscrow extends BaseContract {
 
   paymentToken: TypedContractMethod<[], [string], "view">;
 
+  protocolFeePercentage: TypedContractMethod<[], [bigint], "view">;
+
+  protocolTreasury: TypedContractMethod<[], [string], "view">;
+
   relayerBondAmount: TypedContractMethod<[], [bigint], "view">;
 
   relayerBonds: TypedContractMethod<[arg0: AddressLike], [bigint], "view">;
@@ -423,6 +463,18 @@ export interface MsgEscrow extends BaseContract {
 
   setMinLockAmount: TypedContractMethod<
     [_amount: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setProtocolFeePercentage: TypedContractMethod<
+    [_percentage: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setProtocolTreasury: TypedContractMethod<
+    [_treasury: AddressLike],
     [void],
     "nonpayable"
   >;
@@ -513,6 +565,12 @@ export interface MsgEscrow extends BaseContract {
     nameOrSignature: "paymentToken"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "protocolFeePercentage"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "protocolTreasury"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
     nameOrSignature: "relayerBondAmount"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
@@ -533,6 +591,12 @@ export interface MsgEscrow extends BaseContract {
   getFunction(
     nameOrSignature: "setMinLockAmount"
   ): TypedContractMethod<[_amount: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setProtocolFeePercentage"
+  ): TypedContractMethod<[_percentage: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setProtocolTreasury"
+  ): TypedContractMethod<[_treasury: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "setRelayerBondAmount"
   ): TypedContractMethod<[_amount: BigNumberish], [void], "nonpayable">;

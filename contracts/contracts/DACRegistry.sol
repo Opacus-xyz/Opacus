@@ -7,7 +7,9 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 /// @title Opacus DAC Registry
 /// @notice Registers and manages Decentralized Agent Communication (DAC) instances
 contract DACRegistry is Ownable, ReentrancyGuard {
-    constructor() Ownable(_msgSender()) {}
+    constructor(address _protocolTreasury) Ownable(_msgSender()) {
+        protocolTreasury = _protocolTreasury;
+    }
     struct DAC {
         bytes32 id;
         address owner;
@@ -28,7 +30,9 @@ contract DACRegistry is Ownable, ReentrancyGuard {
     mapping(bytes32 => Permission[]) public dacPermissions;
     mapping(address => bytes32[]) public ownerDACs;
 
+    address public protocolTreasury;
     uint256 public minStake = 0.01 ether;
+    uint256 public registrationFee = 0.002 ether; // 2% of typical stake as protocol fee
     uint256 public totalDACs;
 
     event DACRegistered(bytes32 indexed dacId, address indexed owner, string metadataURI);
@@ -51,9 +55,14 @@ contract DACRegistry is Ownable, ReentrancyGuard {
 
     /// @notice Register a new DAC with metadata and stake
     function registerDAC(string calldata metadataURI) external payable nonReentrant returns (bytes32) {
-        require(msg.value >= minStake, "Insufficient stake");
+        require(msg.value >= minStake + registrationFee, "Insufficient payment");
         bytes32 dacId = keccak256(abi.encodePacked(_msgSender(), block.timestamp, totalDACs));
         require(dacs[dacId].created == 0, "DAC exists");
+        
+        // Transfer registration fee to protocol treasury
+        if (registrationFee > 0 && protocolTreasury != address(0)) {
+            payable(protocolTreasury).transfer(registrationFee);
+        }
 
         dacs[dacId] = DAC({
             id: dacId,
@@ -62,7 +71,7 @@ contract DACRegistry is Ownable, ReentrancyGuard {
             created: block.timestamp,
             updated: block.timestamp,
             active: true,
-            stake: msg.value
+            stake: msg.value - registrationFee
         });
 
         ownerDACs[_msgSender()].push(dacId);
@@ -128,5 +137,14 @@ contract DACRegistry is Ownable, ReentrancyGuard {
 
     function setMinStake(uint256 _minStake) external onlyOwner {
         minStake = _minStake;
+    }
+    
+    function setProtocolTreasury(address _treasury) external onlyOwner {
+        require(_treasury != address(0), "Invalid treasury");
+        protocolTreasury = _treasury;
+    }
+    
+    function setRegistrationFee(uint256 _fee) external onlyOwner {
+        registrationFee = _fee;
     }
 }

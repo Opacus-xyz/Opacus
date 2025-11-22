@@ -10,9 +10,13 @@ async function main() {
   console.log(`👤 Deployer: ${deployer.address}`);
   console.log(`💰 Balance: ${(await ethers.provider.getBalance(deployer.address))}`);
 
-  // 1. Deploy DACRegistry
+  // Protocol treasury address (deployer address or custom treasury)
+  const protocolTreasury = process.env.PROTOCOL_TREASURY || deployer.address;
+  console.log(`🏦 Protocol Treasury: ${protocolTreasury}`);
+
+  // 1. Deploy DACRegistry with treasury
   const DACRegistry = await ethers.getContractFactory("DACRegistry");
-  const dacRegistry = await DACRegistry.deploy();
+  const dacRegistry = await DACRegistry.deploy(protocolTreasury);
   await dacRegistry.waitForDeployment();
   console.log(`✅ DACRegistry: ${dacRegistry.target}`);
 
@@ -22,16 +26,16 @@ async function main() {
   await agentRegistry.waitForDeployment();
   console.log(`✅ AgentRegistry: ${agentRegistry.target}`);
 
-  // 3. Deploy DataStream
+  // 3. Deploy DataStream with treasury
   const DataStream = await ethers.getContractFactory("DataStream");
-  const dataStream = await DataStream.deploy();
+  const dataStream = await DataStream.deploy(protocolTreasury);
   await dataStream.waitForDeployment();
   console.log(`✅ DataStream: ${dataStream.target}`);
 
-  // 4. Deploy MsgEscrow (requires ERC20 token address)
+  // 4. Deploy MsgEscrow with payment token and treasury
   const paymentToken = process.env.PAYMENT_TOKEN || ethers.ZeroAddress; // Replace with actual 0G token wrapper
   const MsgEscrow = await ethers.getContractFactory("MsgEscrow");
-  const msgEscrow = await MsgEscrow.deploy(paymentToken);
+  const msgEscrow = await MsgEscrow.deploy(paymentToken, protocolTreasury);
   await msgEscrow.waitForDeployment();
   console.log(`✅ MsgEscrow: ${msgEscrow.target}`);
 
@@ -56,7 +60,9 @@ async function main() {
     network: Number(network),
     timestamp: Date.now(),
     deployer: deployer.address,
+    protocolTreasury,
     paymentToken,
+    protocolFee: "2%",
     contracts: {
       DACRegistry: dacRegistry.target,
       AgentRegistry: agentRegistry.target,

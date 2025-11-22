@@ -8,10 +8,15 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 /// @title Opacus Message Escrow
 /// @notice ERC20-based micropayment escrow for message routing / relay incentives
 contract MsgEscrow is Ownable, ReentrancyGuard {
-    constructor(address _paymentToken) Ownable(_msgSender()) {
+    constructor(address _paymentToken, address _protocolTreasury) Ownable(_msgSender()) {
         paymentToken = IERC20(_paymentToken);
+        protocolTreasury = _protocolTreasury;
     }
     IERC20 public paymentToken;
+    
+    // Protocol fee system
+    address public protocolTreasury;
+    uint256 public protocolFeePercentage = 200; // 2% (basis points: 200/10000 = 2%)
 
     struct Lock {
         bytes32 id;
@@ -82,7 +87,18 @@ contract MsgEscrow is Ownable, ReentrancyGuard {
         require(l.payer != address(0), "Lock not found");
         require(!l.released && !l.cancelled, "Already processed");
         l.released = true;
-        require(paymentToken.transfer(l.payee, l.amount), "Transfer failed");
+        
+        // Calculate protocol fee (2%)
+        uint256 protocolFee = (l.amount * protocolFeePercentage) / 10000;
+        uint256 payeeAmount = l.amount - protocolFee;
+        
+        // Transfer protocol fee to treasury
+        if (protocolFee > 0 && protocolTreasury != address(0)) {
+            require(paymentToken.transfer(protocolTreasury, protocolFee), "Fee transfer failed");
+        }
+        
+        // Transfer remaining amount to payee
+        require(paymentToken.transfer(l.payee, payeeAmount), "Transfer failed");
         emit Released(lockId, _msgSender());
         return true;
     }
@@ -112,5 +128,15 @@ contract MsgEscrow is Ownable, ReentrancyGuard {
 
     function setRelayerBondAmount(uint256 _amount) external onlyOwner {
         relayerBondAmount = _amount;
+    }
+    
+    function setProtocolTreasury(address _treasury) external onlyOwner {
+        require(_treasury != address(0), "Invalid treasury");
+        protocolTreasury = _treasury;
+    }
+    
+    function setProtocolFeePercentage(uint256 _percentage) external onlyOwner {
+        require(_percentage <= 1000, "Fee too high"); // Max 10%
+        protocolFeePercentage = _percentage;
     }
 }

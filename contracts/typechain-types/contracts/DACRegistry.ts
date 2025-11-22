@@ -67,9 +67,13 @@ export interface DACRegistryInterface extends Interface {
       | "minStake"
       | "owner"
       | "ownerDACs"
+      | "protocolTreasury"
       | "registerDAC"
+      | "registrationFee"
       | "renounceOwnership"
       | "setMinStake"
+      | "setProtocolTreasury"
+      | "setRegistrationFee"
       | "totalDACs"
       | "transferDAC"
       | "transferOwnership"
@@ -118,13 +122,29 @@ export interface DACRegistryInterface extends Interface {
     functionFragment: "ownerDACs",
     values: [AddressLike, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "protocolTreasury",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "registerDAC", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "registrationFee",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "setMinStake",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setProtocolTreasury",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRegistrationFee",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "totalDACs", values?: undefined): string;
@@ -172,7 +192,15 @@ export interface DACRegistryInterface extends Interface {
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerDACs", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "protocolTreasury",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "registerDAC",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registrationFee",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -181,6 +209,14 @@ export interface DACRegistryInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setMinStake",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setProtocolTreasury",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRegistrationFee",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "totalDACs", data: BytesLike): Result;
@@ -427,12 +463,28 @@ export interface DACRegistry extends BaseContract {
     "view"
   >;
 
+  protocolTreasury: TypedContractMethod<[], [string], "view">;
+
   registerDAC: TypedContractMethod<[metadataURI: string], [string], "payable">;
+
+  registrationFee: TypedContractMethod<[], [bigint], "view">;
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
   setMinStake: TypedContractMethod<
     [_minStake: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setProtocolTreasury: TypedContractMethod<
+    [_treasury: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  setRegistrationFee: TypedContractMethod<
+    [_fee: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -546,14 +598,26 @@ export interface DACRegistry extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "protocolTreasury"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
     nameOrSignature: "registerDAC"
   ): TypedContractMethod<[metadataURI: string], [string], "payable">;
+  getFunction(
+    nameOrSignature: "registrationFee"
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "setMinStake"
   ): TypedContractMethod<[_minStake: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setProtocolTreasury"
+  ): TypedContractMethod<[_treasury: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setRegistrationFee"
+  ): TypedContractMethod<[_fee: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "totalDACs"
   ): TypedContractMethod<[], [bigint], "view">;

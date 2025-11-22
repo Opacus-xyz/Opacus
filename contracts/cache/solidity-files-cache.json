@@ -193,8 +193,8 @@
       ]
     },
     "/Users/bl10buer/Desktop/newopacus/contracts/contracts/DACRegistry.sol": {
-      "lastModificationDate": 1763671109839,
-      "contentHash": "5a15ef888055d35f3dd6a0feba8dd602",
+      "lastModificationDate": 1763810819354,
+      "contentHash": "66d1de4ce3e8e1375108234fd83e8eb8",
       "sourceName": "contracts/DACRegistry.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -232,8 +232,8 @@
       ]
     },
     "/Users/bl10buer/Desktop/newopacus/contracts/contracts/DataStream.sol": {
-      "lastModificationDate": 1763671170628,
-      "contentHash": "60cde41bd145bc9beb4504911d357b96",
+      "lastModificationDate": 1763810819342,
+      "contentHash": "12d361b7eb4304c134d3c9b815c0cea5",
       "sourceName": "contracts/DataStream.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -271,8 +271,8 @@
       ]
     },
     "/Users/bl10buer/Desktop/newopacus/contracts/contracts/MsgEscrow.sol": {
-      "lastModificationDate": 1763671207839,
-      "contentHash": "be771cda1074bb273a9bfba8440acce2",
+      "lastModificationDate": 1763810819342,
+      "contentHash": "3962023f786a3661dcf30b37871135e7",
       "sourceName": "contracts/MsgEscrow.sol",
       "solcConfig": {
         "version": "0.8.20",

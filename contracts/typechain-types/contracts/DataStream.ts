@@ -97,8 +97,11 @@ export interface DataStreamInterface extends Interface {
       | "getSubscription"
       | "owner"
       | "platformFeePercent"
+      | "protocolTreasury"
       | "recordUsage"
       | "renounceOwnership"
+      | "setPlatformFeePercent"
+      | "setProtocolTreasury"
       | "settle"
       | "subscribe"
       | "subscriptions"
@@ -155,12 +158,24 @@ export interface DataStreamInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "protocolTreasury",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "recordUsage",
     values: [BytesLike, AddressLike, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setPlatformFeePercent",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setProtocolTreasury",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(functionFragment: "settle", values: [BytesLike]): string;
   encodeFunctionData(
@@ -217,11 +232,23 @@ export interface DataStreamInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "protocolTreasury",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "recordUsage",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setPlatformFeePercent",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setProtocolTreasury",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "settle", data: BytesLike): Result;
@@ -491,6 +518,8 @@ export interface DataStream extends BaseContract {
 
   platformFeePercent: TypedContractMethod<[], [bigint], "view">;
 
+  protocolTreasury: TypedContractMethod<[], [string], "view">;
+
   recordUsage: TypedContractMethod<
     [
       channelId: BytesLike,
@@ -503,6 +532,18 @@ export interface DataStream extends BaseContract {
   >;
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
+
+  setPlatformFeePercent: TypedContractMethod<
+    [_percent: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setProtocolTreasury: TypedContractMethod<
+    [_treasury: AddressLike],
+    [void],
+    "nonpayable"
+  >;
 
   settle: TypedContractMethod<[channelId: BytesLike], [bigint], "nonpayable">;
 
@@ -630,6 +671,9 @@ export interface DataStream extends BaseContract {
     nameOrSignature: "platformFeePercent"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
+    nameOrSignature: "protocolTreasury"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
     nameOrSignature: "recordUsage"
   ): TypedContractMethod<
     [
@@ -644,6 +688,12 @@ export interface DataStream extends BaseContract {
   getFunction(
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setPlatformFeePercent"
+  ): TypedContractMethod<[_percent: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setProtocolTreasury"
+  ): TypedContractMethod<[_treasury: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "settle"
   ): TypedContractMethod<[channelId: BytesLike], [bigint], "nonpayable">;
