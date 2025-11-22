@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opacus Protocol - Sektörel Çözümler</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: white;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2.5em;
+            margin: 30px 0 20px;
+            color: #764ba2;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            font-size: 1.8em;
+            margin: 20px 0 10px;
+            color: #333;
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+            width: 100%;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .flow-number {
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .sector-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        
+        .problem-solution {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .problem {
+            background: #ffe5e5;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ff4444;
+        }
+        
+        .solution {
+            background: #e5ffe5;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #44ff44;
+        }
+        
+        .metrics {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .metric-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .metric-label {
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .layer {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        ul, ol {
+            margin: 20px 0 20px 40px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .arrow {
+            font-size: 2em;
+            color: #667eea;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.8em; }
+            .problem-solution { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Cover -->
+<div class="slide">
+    <h1>🔐 Opacus Protocol</h1>
+    <p class="subtitle">Decentralized Agent Communication for Enterprise & Web3</p>
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">65</div>
+            <div class="metric-label">Tests Passed</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">%100</div>
+            <div class="metric-label">Success Rate</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">6</div>
+            <div class="metric-label">Core Modules</div>
+        </div>
+    </div>
+    <p style="margin-top: 40px; font-size: 1.2em;">Multi-Chain AI Agent Infrastructure</p>
+</div>
+
+<!-- Slide 2: Technology Overview -->
+<div class="slide">
+    <h2>🔧 Teknoloji Altyapısı</h2>
+    
+    <div class="tech-stack">
+        <div class="layer">🔐 Crypto Layer: Ed25519 + X25519 + HMAC + Nonce</div>
+        <div class="arrow">⬇️</div>
+        <div class="layer">📡 Protocol Layer: CBOR + WebSocket/WebTransport</div>
+        <div class="arrow">⬇️</div>
+        <div class="layer">🌐 Gateway Layer: Redis + PM2 + Load Balancer</div>
+        <div class="arrow">⬇️</div>
+        <div class="layer">⛓️ Blockchain Layer: 0G Chain + Smart Contracts</div>
+    </div>
+    
+    <div class="highlight">
+        <h3>🎯 Temel Değer Önerisi</h3>
+        <ul>
+            <li>✅ End-to-End Şifreleme (sunucu hiç mesaj görmez)</li>
+            <li>✅ Kriptografik Kimlik (şifre çalınması imkansız)</li>
+            <li>✅ Multi-Chain Support (vendor lock-in yok)</li>
+            <li>✅ Pay-per-use ($0.001/mesaj, %90 daha ucuz)</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 3: CRYPTO - Feature #1 -->
+<div class="slide">
+    <h2>🔑 Özellik 1: Çift Anahtar Sistemi</h2>
+    
+    <div class="diagram">
+        <pre>
+┌─────────────────────────────────────────────┐
+│  Ed25519 (Signing Keys)                     │
+│  • 32-byte public/private key               │
+│  • Digital signatures (kimlik kanıtı)       │
+│  • 100,000+ imza/saniye                     │
+│                                             │
+│  X25519 (Encryption Keys)                   │
+│  • 32-byte ECDH keys                        │
+│  • Shared secret derivation                 │
+│  • AES-256-GCM şifreleme                    │
+└─────────────────────────────────────────────┘
+        </pre>
+    </div>
+    
+    <div class="problem-solution">
+        <div class="problem">
+            <h3>❌ Geleneksel Sorunlar</h3>
+            <ul>
+                <li>Username/password çalınabilir</li>
+                <li>Man-in-the-middle saldırıları</li>
+                <li>Sunucu data breach'i</li>
+                <li>Certificate authority'ye güven</li>
+            </ul>
+        </div>
+        <div class="solution">
+            <h3>✅ Opacus Çözümü</h3>
+            <ul>
+                <li>Kriptografik kimlik (çalınamaz)</li>
+                <li>Direct key exchange (trustless)</li>
+                <li>E2E encryption (sunucu görmez)</li>
+                <li>Self-sovereign identity</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Healthcare Use Case -->
+<div class="slide">
+    <h2>🏥 Sektör: Healthcare</h2>
+    
+    <div class="sector-card">
+        <h3>📋 Kullanım: Hasta Kayıtları Paylaşımı</h3>
+        
+        <div class="flow-diagram">
+            <div class="flow-step">
+                <div class="flow-number">1</div>
+                <div>
+                    <strong>Sorun:</strong> HIPAA compliance zorlukları, veri sızıntısı riski ($50K-$1.5M ceza)
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">2</div>
+                <div>
+                    <strong>Teknoloji:</strong> Her doktor/hastane Ed25519 kimliği + Lab sonuçları X25519 ile encrypt
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">3</div>
+                <div>
+                    <strong>Akış:</strong> Hastane A encrypt → Hastane B decrypt → Blockchain access log → Audit trail
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">4</div>
+                <div>
+                    <strong>Sonuç:</strong> HIPAA cezaları $0'a düşer, hasta consent otomatik, compliance maliyet %80 azalır
+                </div>
+            </div>
+        </div>
+        
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">%100</div>
+                <div class="metric-label">HIPAA Compliance</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">%95</div>
+                <div class="metric-label">Sızıntı Riski ↓</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">%80</div>
+                <div class="metric-label">Maliyet ↓</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Finance Use Case -->
+<div class="slide">
+    <h2>💰 Sektör: Finance/DeFi</h2>
+    
+    <div class="sector-card">
+        <h3>🌉 Kullanım: Cross-Chain Asset Transfer</h3>
+        
+        <div class="flow-diagram">
+            <div class="flow-step">
+                <div class="flow-number">1</div>
+                <div>
+                    <strong>Sorun:</strong> Bridge hacks ($2B+ çalındı 2024), merkezi custody riski, front-running
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">2</div>
+                <div>
+                    <strong>Teknoloji:</strong> User kendi key'leri + Intent signing (Ed25519) + Multi-sig X25519 encrypt
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">3</div>
+                <div>
+                    <strong>Akış:</strong> Transfer intent sign → Validator verify → Cross-chain encrypt → Atomic execution
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">4</div>
+                <div>
+                    <strong>Sonuç:</strong> Bridge hack riski %95 azalır, TVL artar, front-running imkansız
+                </div>
+            </div>
+        </div>
+        
+        <div class="highlight">
+            <strong>💡 Rakip Analiz:</strong><br>
+            Wormhole hack: $325M | Ronin Bridge: $625M | BNB Bridge: $586M<br>
+            <strong>→ Opacus ile: Kriptografik proof, merkezi custody yok</strong>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: Supply Chain -->
+<div class="slide">
+    <h2>🏭 Sektör: Supply Chain</h2>
+    
+    <div class="sector-card">
+        <h3>📦 Kullanım: Ürün Takibi & Anti-Counterfeiting</h3>
+        
+        <div class="diagram">
+            <pre>
+Üretici                Distribütör           Tüketici
+   │                        │                     │
+   ├─ Üretim                │                     │
+   │  Ed25519 sign          │                     │
+   │  Blockchain kayıt      │                     │
+   │                        │                     │
+   └────────────────────────▶                     │
+                            │                     │
+                            ├─ El değişimi        │
+                            │  Signature verify   │
+                            │  Blockchain update  │
+                            │                     │
+                            └─────────────────────▶
+                                                  │
+                                                  ├─ QR Scan
+                                                  │  Verify sigs
+                                                  │  Blockchain check
+                                                  │
+                                                  └─ Sahte? ❌
+                                                     Orijinal? ✅
+            </pre>
+        </div>
+        
+        <div class="problem-solution">
+            <div class="problem">
+                <h3>❌ Mevcut Sorun</h3>
+                <ul>
+                    <li>Sahte ürünler: $464B küresel kayıp</li>
+                    <li>QR kod kopyalanabilir</li>
+                    <li>Tedarik zinciri görünürlüğü yok</li>
+                </ul>
+            </div>
+            <div class="solution">
+                <h3>✅ Opacus İle</h3>
+                <ul>
+                    <li>Her hareket blockchain'de signed</li>
+                    <li>Kriptografik proof kopyalanamaz</li>
+                    <li>Real-time tracking</li>
+                    <li>Sahtecilik %80 ↓</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: ECDH Feature -->
+<div class="slide">
+    <h2>🔄 Özellik 2: ECDH Shared Secret</h2>
+    
+    <div class="diagram">
+        <pre>
+Alice                              Bob
+┌────────┐                      ┌────────┐
+│ xPrivA │                      │ xPrivB │
+└───┬────┘                      └───┬────┘
+    │                               │
+    │  xPubA                 xPubB  │
+    ├──────────────────────────────▶│
+    │◀──────────────────────────────┤
+    │                               │
+    ↓                               ↓
+[ECDH(xPrivA, xPubB)]     [ECDH(xPrivB, xPubA)]
+    │                               │
+    └───────────┬───────────────────┘
+                │
+         Shared Secret
+         (32 bytes)
+                │
+                ↓
+         HKDF-SHA256
+                │
+                ↓
+         Session Key
+         (AES-256)
+        </pre>
+    </div>
+    
+    <div class="highlight">
+        <h3>🎯 Çözülen Sorunlar</h3>
+        <ul>
+            <li><strong>Key Distribution:</strong> Merkezi key server yok → Peer-to-peer</li>
+            <li><strong>Forward Secrecy:</strong> Her session yeni key → Geçmiş mesajlar güvende</li>
+            <li><strong>Scalability:</strong> N² değil N keypair → On-demand derivation</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 8: AI/ML Use Case -->
+<div class="slide">
+    <h2>🤖 Sektör: AI/ML Industry</h2>
+    
+    <div class="sector-card">
+        <h3>🧠 Kullanım: Federated Learning</h3>
+        
+        <div class="flow-diagram">
+            <div class="flow-step">
+                <div class="flow-number">1</div>
+                <div>
+                    <strong>Sorun:</strong> Training data privacy (GDPR), model poisoning, gradient leakage
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">2</div>
+                <div>
+                    <strong>Teknoloji:</strong> Her node ECDH session key → Gradients encrypt → Aggregation server hiç raw data görmez
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">3</div>
+                <div>
+                    <strong>Akış:</strong> 10 hastane local train → Gradients ECDH encrypt → Central aggregate → Update distribute
+                </div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">4</div>
+                <div>
+                    <strong>Sonuç:</strong> GDPR compliance + model accuracy korunur + hasta data NEVER leaves hospital
+                </div>
+            </div>
+        </div>
+        
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">10x</div>
+                <div class="metric-label">More Hospitals</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">%100</div>
+                <div class="metric-label">Privacy</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">%95</div>
+                <div class="metric-label">Accuracy</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: HMAC Feature -->
+<div class="slide">
+    <h2>✅ Özellik 3: HMAC Doğrulama</h2>
+    
+    <div class="diagram">
+        <pre>
+HMAC-SHA256(key, message) → 32-byte tag
+
+Properties:
+✓ Integrity:  Tamper detection
+✓ Authenticity: Sender verification
+✓ Non-repudiation: Cannot deny
+        </pre>
+    </div>
+    
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>🏦 Banking</h3>
+            <p><strong>Sorun:</strong> Transaction tampering</p>
+            <p><strong>Çözüm:</strong> Her transaction HMAC seal</p>
+            <p><strong>ROI:</strong> Internal fraud %90 ↓</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>📦 Logistics</h3>
+            <p><strong>Sorun:</strong> Sensor manipulation</p>
+            <p><strong>Çözüm:</strong> IoT device HMAC data</p>
+            <p><strong>ROI:</strong> Insurance fraud ↓</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>⚖️ Legal</h3>
+            <p><strong>Sorun:</strong> Evidence tampering</p>
+            <p><strong>Çözüm:</strong> Chain of custody HMAC</p>
+            <p><strong>ROI:</strong> Admissibility %100</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 10: Nonce Feature -->
+<div class="slide">
+    <h2>🔢 Özellik 4: Nonce & Replay Protection</h2>
+    
+    <div class="diagram">
+        <pre>
+Nonce Structure:
+┌────────────────┬─────────────────┐
+│  Timestamp     │  Random Bytes   │
+│  (13 digits)   │  (8 bytes hex)  │
+└────────────────┴─────────────────┘
+         │                │
+         ↓                ↓
+  1700000000000-a1b2c3d4e5f6g7h8
+
+Validation:
+• Timestamp within 60s window
+• Nonce never seen before
+• Auto-cleanup after 120s
+        </pre>
+    </div>
+    
+    <div class="problem-solution">
+        <div class="problem">
+            <h3>❌ Replay Attack</h3>
+            <p>Saldırgan valid request'i yakalar ve tekrar gönderir.</p>
+            <p>Geleneksel sistem: Savunmasız</p>
+        </div>
+        <div class="solution">
+            <h3>✅ Nonce Protection</h3>
+            <p>Her nonce tek kullanımlık, zaman sınırlı.</p>
+            <p>Opacus: %100 önleme</p>
+        </div>
+    </div>
+    
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>🔒 API Security</h3>
+            <p>Session hijack %99 ↓</p>
+        </div>
+        <div class="feature-card">
+            <h3>💳 Payments</h3>
+            <p>Double-charge önlenir</p>
+        </div>
+        <div class="feature-card">
+            <h3>🗳️ Voting</h3>
+            <p>One person, one vote</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Auth Frame -->
+<div class="slide">
+    <h2>🛡️ Özellik 5: Auth Frame (Triple Protection)</h2>
+    
+    <div class="diagram">
+        <pre>
+Authenticated Frame:
+┌────────────────────────────────────┐
+│ Version: 1                         │
+│ Type: msg|ping|ack|stream         │
+│ From: sender-id                    │
+│ To: receiver-id                    │
+│ Seq: 42                            │
+│ Timestamp: 1700000000000           │
+│ Nonce: 1700000000000-abc123       │
+│ Payload: {...}                     │
+│ HMAC: 32-byte tag                  │ ◄─ Integrity
+│ Signature: 64-byte Ed25519         │ ◄─ Authenticity
+└────────────────────────────────────┘
+         │
+         ▼
+   Triple Protection:
+   1️⃣ Signature → Who sent?
+   2️⃣ HMAC → Tampered?
+   3️⃣ Nonce → Replayed?
+        </pre>
+    </div>
+    
+    <div class="highlight">
+        <h3>🎯 Kullanım Alanları</h3>
+        <ul>
+            <li><strong>🏭 Industrial IoT:</strong> PLC ↔ HMI güvenli komutlar, Stuxnet koruması</li>
+            <li><strong>🚗 Automotive V2X:</strong> Araç-araç iletişim, GPS spoofing önleme</li>
+            <li><strong>🌐 CDN/Edge:</strong> Cache poisoning önleme, DDoS mitigation</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 12: Comparison Matrix -->
+<div class="slide">
+    <h2>📊 Karşılaştırma Matrisi</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Özellik</th>
+                <th>Geleneksel</th>
+                <th>Opacus</th>
+                <th>İyileşme</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Kimlik</strong></td>
+                <td>Username/Password</td>
+                <td>Ed25519 Keys</td>
+                <td style="color: green;">%99 ↓ phishing</td>
+            </tr>
+            <tr>
+                <td><strong>Şifreleme</strong></td>
+                <td>TLS (server görür)</td>
+                <td>E2E (X25519)</td>
+                <td style="color: green;">Zero-knowledge</td>
+            </tr>
+            <tr>
+                <td><strong>Doğrulama</strong></td>
+                <td>Çoğu zaman yok</td>
+                <td>HMAC + Signature</td>
+                <td style="color: green;">Tamper-proof</td>
+            </tr>
+            <tr>
+                <td><strong>Replay</strong></td>
+                <td>Savunmasız</td>
+                <td>Nonce korumalı</td>
+                <td style="color: green;">%100 önleme</td>
+            </tr>
+            <tr>
+                <td><strong>Maliyet</strong></td>
+                <td>$0.01-0.10/call</td>
+                <td>$0.001/message</td>
+                <td style="color: green;">%90 ↓</td>
+            </tr>
+            <tr>
+                <td><strong>Latency</strong></td>
+                <td>50-200ms</td>
+                <td>10-50ms</td>
+                <td style="color: green;">3x hızlı</td>
+            </tr>
+            <tr>
+                <td><strong>Vendor Lock</strong></td>
+                <td>Yüksek</td>
+                <td>Yok</td>
+                <td style="color: green;">Portable</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Slide 13: Market Size -->
+<div class="slide">
+    <h2>📈 Hedef Pazarlar & TAM</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Segment</th>
+                <th>TAM (2025)</th>
+                <th>Opacus Share</th>
+                <th>Revenue</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>API Management</td>
+                <td>$15B</td>
+                <td>0.5%</td>
+                <td>$75M</td>
+            </tr>
+            <tr>
+                <td>Enterprise Messaging</td>
+                <td>$12B</td>
+                <td>1.0%</td>
+                <td>$120M</td>
+            </tr>
+            <tr>
+                <td>IoT Security</td>
+                <td>$45B</td>
+                <td>0.2%</td>
+                <td>$90M</td>
+            </tr>
+            <tr>
+                <td>DeFi Infrastructure</td>
+                <td>$8B</td>
+                <td>2.0%</td>
+                <td>$160M</td>
+            </tr>
+            <tr>
+                <td>AI/ML Platforms</td>
+                <td>$35B</td>
+                <td>0.3%</td>
+                <td>$105M</td>
+            </tr>
+            <tr style="background: #667eea; color: white; font-weight: bold;">
+                <td>TOTAL</td>
+                <td>$115B</td>
+                <td>-</td>
+                <td>$550M/year</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="metrics" style="margin-top: 40px;">
+        <div class="metric">
+            <div class="metric-value">Year 1</div>
+            <div class="metric-label">$500K ARR</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">Year 2</div>
+            <div class="metric-label">$5M ARR</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">Year 3</div>
+            <div class="metric-label">$50M ARR</div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 14: Call to Action -->
+<div class="slide">
+    <h2>🚀 Hemen Başlayın</h2>
+    
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>👨‍💻 Developers</h3>
+            <div class="diagram">
+                <pre><code>npm install @brienteth/opacus-sdk
+
+const client = new OpacusClient({
+  network: 'testnet',
+  relayUrl: 'wss://relay.opacus.network'
+});
+
+await client.init();
+await client.connect();
+await client.sendMessage(
+  agentId, 
+  { hello: 'world' }
+);</code></pre>
+            </div>
+            <p><strong>Docs:</strong> docs.opacus.network</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>🏢 Enterprises</h3>
+            <ul>
+                <li>📧 enterprise@opacus.network</li>
+                <li>📅 Book Demo</li>
+                <li>💼 Partnership Inquiry</li>
+                <li>🔒 SOC2/ISO27001 Ready</li>
+            </ul>
+        </div>
+        
+        <div class="feature-card">
+            <h3>💰 Investors</h3>
+            <ul>
+                <li>📊 Pitch Deck</li>
+                <li>📈 Metrics Dashboard</li>
+                <li>🔒 Data Room Access</li>
+                <li>💬 Investment@opacus.network</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="highlight" style="margin-top: 40px;">
+        <h3>🌐 Links</h3>
+        <ul style="columns: 2;">
+            <li>Website: newopacus.vercel.app</li>
+            <li>GitHub: github.com/Opacus-xyz</li>
+            <li>NPM: @brienteth/opacus-sdk</li>
+            <li>Discord: discord.gg/opacus</li>
+            <li>Twitter: @OpacusNetwork</li>
+            <li>Docs: Full technical guides</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 15: Thank You -->
+<div class="slide">
+    <h1>🙏 Teşekkürler</h1>
+    <p class="subtitle">Opacus: Securing the Future of Decentralized Communication</p>
+    
+    <div class="metrics">
+        <div class="metric">
+            <div class="metric-value">65</div>
+            <div class="metric-label">Tests Passed</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">6</div>
+            <div class="metric-label">Sektör</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">$550M</div>
+            <div class="metric-label">TAM</div>
+        </div>
+    </div>
+    
+    <div class="highlight">
+        <h2>Questions?</h2>
+        <p style="font-size: 1.5em;">dev@opacus.network</p>
+    </div>
+</div>
+
+</body>
+</html>

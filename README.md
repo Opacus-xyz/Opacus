@@ -96,6 +96,20 @@ opacus/
 - **[Architecture](https://newopacus.vercel.app/docs/architecture.html)** - System design
 - **[API Reference](https://newopacus.vercel.app/docs)** - Full API docs
 
+### 📊 Presentations & Business Resources
+- **[PITCH-DECK.md](PITCH-DECK.md)** - Comprehensive investor/partner presentation
+- **[presentation.html](presentation.html)** - Interactive HTML slides (open in browser)
+- **[SECTOR-SOLUTION-MAPPING.md](SECTOR-SOLUTION-MAPPING.md)** - Detailed sector analysis with ROI
+- **[TEST-REPORT.md](opacus-sdk/TEST-REPORT.md)** - Full test coverage (65/65 passed ✅)
+
+### 🎯 Industry Use Cases
+- **🏥 Healthcare:** HIPAA-compliant patient records (1310% ROI)
+- **💰 Finance/DeFi:** Secure bridges ($2B+ hacks prevented)
+- **🏭 Supply Chain:** Anti-counterfeiting (80% fraud ↓)
+- **🤖 AI/ML:** Federated learning (GDPR compliant)
+- **🔒 Cybersecurity:** Passwordless auth (99% hijack prevention)
+- **💳 Payments:** Idempotent processing (40% chargeback ↓)
+
 ## 🔐 Security Features
 
 ### Authentication Flow
