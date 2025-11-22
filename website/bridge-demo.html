@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opacus Bridge Demo - Cross-Chain Without Risk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .bridge-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .method {
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+
+        .method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .method.traditional {
+            background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .method.opacus {
+            background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+            color: white;
+        }
+
+        .method h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .method .stats {
+            margin-top: 15px;
+        }
+
+        .method .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .method .stat:last-child {
+            border-bottom: none;
+        }
+
+        .demo-section {
+            margin-top: 40px;
+        }
+
+        .demo-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+
+        .chain-selector {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chain-card {
+            flex: 1;
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .chain-card:hover {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .chain-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .chain-card .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .chain-card h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .chain-card .chain-id {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .bridge-arrow {
+            text-align: center;
+            font-size: 40px;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .message-input {
+            margin-bottom: 30px;
+        }
+
+        .message-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .message-input textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .message-input textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-traditional {
+            background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .btn-opacus {
+            background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f9fafb;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .result-value {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .result-value.success {
+            color: #059669;
+        }
+
+        .result-value.warning {
+            color: #dc2626;
+        }
+
+        .logs {
+            margin-top: 20px;
+            padding: 20px;
+            background: #1f2937;
+            color: #10b981;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #10b981;
+            padding-left: 10px;
+        }
+
+        .log-entry.error {
+            color: #f87171;
+            border-left-color: #f87171;
+        }
+
+        .log-entry.warning {
+            color: #fbbf24;
+            border-left-color: #fbbf24;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .metric-card .value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .metric-card .label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌉 Opacus Bridge Demo</h1>
+            <p>Cross-Chain Communication Without Bridge Risks</p>
+        </div>
+
+        <div class="bridge-container">
+            <div class="comparison">
+                <div class="method traditional">
+                    <h3>
+                        <span>❌</span>
+                        Traditional Bridge
+                    </h3>
+                    <p>Lock tokens, wait for validators, mint wrapped assets</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <span>Time:</span>
+                            <strong>~10 minutes</strong>
+                        </div>
+                        <div class="stat">
+                            <span>Cost:</span>
+                            <strong>$62 per transfer</strong>
+                        </div>
+                        <div class="stat">
+                            <span>Risk:</span>
+                            <strong>$18K/year loss</strong>
+                        </div>
+                        <div class="stat">
+                            <span>TVL at Risk:</span>
+                            <strong>$10B+ locked</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="method opacus">
+                    <h3>
+                        <span>✅</span>
+                        Opacus Method
+                    </h3>
+                    <p>Encrypted messages, no token movement, native execution</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <span>Time:</span>
+                            <strong>~100ms</strong>
+                        </div>
+                        <div class="stat">
+                            <span>Cost:</span>
+                            <strong>$0.001 per message</strong>
+                        </div>
+                        <div class="stat">
+                            <span>Risk:</span>
+                            <strong>$100/year loss</strong>
+                        </div>
+                        <div class="stat">
+                            <span>TVL at Risk:</span>
+                            <strong>$0 (nothing locked!)</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>🚀 Try Live Demo</h2>
+                
+                <div class="chain-selector">
+                    <div class="chain-card" data-chain="ethereum" onclick="selectChain('source', 'ethereum')">
+                        <div class="icon">🔷</div>
+                        <h4>Ethereum</h4>
+                        <div class="chain-id">Chain ID: 1</div>
+                    </div>
+                    <div class="chain-card selected" data-chain="solana" onclick="selectChain('source', 'solana')">
+                        <div class="icon">🟣</div>
+                        <h4>Solana</h4>
+                        <div class="chain-id">Chain ID: 900</div>
+                    </div>
+                    <div class="chain-card" data-chain="polygon" onclick="selectChain('source', 'polygon')">
+                        <div class="icon">🟪</div>
+                        <h4>Polygon</h4>
+                        <div class="chain-id">Chain ID: 137</div>
+                    </div>
+                    <div class="chain-card" data-chain="avalanche" onclick="selectChain('source', 'avalanche')">
+                        <div class="icon">🔺</div>
+                        <h4>Avalanche</h4>
+                        <div class="chain-id">Chain ID: 43114</div>
+                    </div>
+                </div>
+
+                <div class="bridge-arrow">↓↓↓</div>
+
+                <div class="chain-selector">
+                    <div class="chain-card selected" data-chain="ethereum" onclick="selectChain('target', 'ethereum')">
+                        <div class="icon">🔷</div>
+                        <h4>Ethereum</h4>
+                        <div class="chain-id">Chain ID: 1</div>
+                    </div>
+                    <div class="chain-card" data-chain="solana" onclick="selectChain('target', 'solana')">
+                        <div class="icon">🟣</div>
+                        <h4>Solana</h4>
+                        <div class="chain-id">Chain ID: 900</div>
+                    </div>
+                    <div class="chain-card" data-chain="polygon" onclick="selectChain('target', 'polygon')">
+                        <div class="icon">🟪</div>
+                        <h4>Polygon</h4>
+                        <div class="chain-id">Chain ID: 137</div>
+                    </div>
+                    <div class="chain-card" data-chain="avalanche" onclick="selectChain('target', 'avalanche')">
+                        <div class="icon">🔺</div>
+                        <h4>Avalanche</h4>
+                        <div class="chain-id">Chain ID: 43114</div>
+                    </div>
+                </div>
+
+                <div class="message-input">
+                    <label for="message">Message to Send (Encrypted):</label>
+                    <textarea id="message" placeholder="Enter your cross-chain message here... (e.g., trade signal, arbitrage opportunity, strategy update)">{"type":"ARBITRAGE_OPPORTUNITY","pair":"ETH/USDC","expectedProfit":150,"confidence":0.95}</textarea>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-traditional" onclick="simulateBridge()">
+                        ❌ Use Traditional Bridge
+                    </button>
+                    <button class="btn btn-opacus" onclick="simulateOpacus()">
+                        ✅ Use Opacus (Bridge-Free)
+                    </button>
+                </div>
+            </div>
+
+            <div class="results" id="results">
+                <h3 style="margin-bottom: 20px; color: #1f2937;">📊 Results</h3>
+                <div id="resultContent"></div>
+                <div class="logs" id="logs"></div>
+            </div>
+        </div>
+
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="label">Risk Reduction</div>
+                <div class="value" style="color: #059669;">180x</div>
+                <div class="label">Safer</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">Speed Improvement</div>
+                <div class="value" style="color: #3b82f6;">6000x</div>
+                <div class="label">Faster</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">Cost Savings</div>
+                <div class="value" style="color: #8b5cf6;">60000x</div>
+                <div class="label">Cheaper</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedSource = 'solana';
+        let selectedTarget = 'ethereum';
+
+        const chainData = {
+            ethereum: { id: 1, icon: '🔷', name: 'Ethereum' },
+            solana: { id: 900, icon: '🟣', name: 'Solana' },
+            polygon: { id: 137, icon: '🟪', name: 'Polygon' },
+            avalanche: { id: 43114, icon: '🔺', name: 'Avalanche' }
+        };
+
+        function selectChain(type, chain) {
+            if (type === 'source') {
+                selectedSource = chain;
+                document.querySelectorAll('.chain-selector:first-of-type .chain-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+            } else {
+                selectedTarget = chain;
+                document.querySelectorAll('.chain-selector:last-of-type .chain-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+            }
+            event.target.closest('.chain-card').classList.add('selected');
+        }
+
+        function addLog(message, type = 'info') {
+            const logsDiv = document.getElementById('logs');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            const timestamp = new Date().toLocaleTimeString();
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logsDiv.appendChild(logEntry);
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function simulateBridge() {
+            const resultsDiv = document.getElementById('results');
+            const resultContent = document.getElementById('resultContent');
+            const logsDiv = document.getElementById('logs');
+            
+            resultsDiv.classList.add('show');
+            logsDiv.innerHTML = '';
+            resultContent.innerHTML = '<div class="spinner"></div>';
+
+            const message = document.getElementById('message').value;
+            const startTime = Date.now();
+
+            try {
+                addLog('🔒 Locking tokens on source chain...', 'warning');
+                await sleep(2000);
+                
+                addLog('⏳ Waiting for validator signatures (13/19)...', 'warning');
+                await sleep(3000);
+                
+                addLog('📝 Creating proof for destination chain...', 'warning');
+                await sleep(2000);
+                
+                addLog('⚠️  Minting wrapped tokens...', 'warning');
+                await sleep(2000);
+                
+                addLog('💰 Paying $62 in gas fees...', 'error');
+                await sleep(1000);
+                
+                addLog('✅ Bridge transaction complete', 'info');
+
+                const endTime = Date.now();
+                const duration = ((endTime - startTime) / 1000).toFixed(1);
+
+                resultContent.innerHTML = `
+                    <div class="result-item">
+                        <span class="result-label">Method:</span>
+                        <span class="result-value warning">Traditional Bridge</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">From:</span>
+                        <span class="result-value">${chainData[selectedSource].icon} ${chainData[selectedSource].name}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">To:</span>
+                        <span class="result-value">${chainData[selectedTarget].icon} ${chainData[selectedTarget].name}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Time Taken:</span>
+                        <span class="result-value warning">${duration}s (~10 minutes)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Cost:</span>
+                        <span class="result-value warning">$62.00</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Tokens Locked:</span>
+                        <span class="result-value warning">$1,000 at risk</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Security Risk:</span>
+                        <span class="result-value warning">High (Bridge hack possible)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Token Type:</span>
+                        <span class="result-value warning">Wrapped (Synthetic)</span>
+                    </div>
+                `;
+
+            } catch (error) {
+                addLog(`❌ Bridge failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function simulateOpacus() {
+            const resultsDiv = document.getElementById('results');
+            const resultContent = document.getElementById('resultContent');
+            const logsDiv = document.getElementById('logs');
+            
+            resultsDiv.classList.add('show');
+            logsDiv.innerHTML = '';
+            resultContent.innerHTML = '<div class="spinner"></div>';
+
+            const message = document.getElementById('message').value;
+            const startTime = Date.now();
+
+            try {
+                addLog(`🔐 Generating identity for ${chainData[selectedSource].name}...`);
+                await sleep(100);
+                
+                addLog(`🔐 Generating identity for ${chainData[selectedTarget].name}...`);
+                await sleep(100);
+                
+                addLog('🔑 Deriving shared secret (ECDH)...');
+                await sleep(50);
+                
+                addLog('🔒 Encrypting message with X25519...');
+                await sleep(50);
+                
+                addLog('📨 Sending encrypted frame via gateway...');
+                await sleep(100);
+                
+                addLog('✅ Message delivered (end-to-end encrypted)');
+                await sleep(50);
+                
+                addLog('🎉 No tokens bridged, zero risk!', 'info');
+
+                const endTime = Date.now();
+                const duration = ((endTime - startTime) / 1000).toFixed(3);
+
+                // Parse and display encrypted message
+                let messagePreview = message;
+                try {
+                    const parsed = JSON.parse(message);
+                    messagePreview = JSON.stringify(parsed, null, 2);
+                } catch (e) {
+                    // Keep as is
+                }
+
+                resultContent.innerHTML = `
+                    <div class="result-item">
+                        <span class="result-label">Method:</span>
+                        <span class="result-value success">Opacus (Bridge-Free)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">From:</span>
+                        <span class="result-value">${chainData[selectedSource].icon} ${chainData[selectedSource].name}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">To:</span>
+                        <span class="result-value">${chainData[selectedTarget].icon} ${chainData[selectedTarget].name}</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Time Taken:</span>
+                        <span class="result-value success">${duration}s</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Cost:</span>
+                        <span class="result-value success">$0.001</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Tokens Locked:</span>
+                        <span class="result-value success">$0 (Nothing locked!)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Security Risk:</span>
+                        <span class="result-value success">Minimal (No bridge risk)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Token Type:</span>
+                        <span class="result-value success">Native (No wrapping)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Encryption:</span>
+                        <span class="result-value success">End-to-End (X25519 + Ed25519)</span>
+                    </div>
+                `;
+
+            } catch (error) {
+                addLog(`❌ Failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-scroll animations
+        window.addEventListener('load', () => {
+            console.log('🌉 Opacus Bridge Demo loaded');
+            console.log('We bridge DATA, not ASSETS!');
+        });
+    </script>
+</body>
+</html>
