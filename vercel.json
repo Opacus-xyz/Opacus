@@ -7,13 +7,40 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    {
-      "source": "/docs",
-      "destination": "/docs/index.html"
-    },
-    {
-      "source": "/docs/:path*",
-      "destination": "/docs/:path*.html"
-    }
+    { "source": "/docs", "destination": "/docs/index.html" },
+    { "source": "/docs/getting-started", "destination": "/docs/getting-started.html" },
+    { "source": "/docs/installation", "destination": "/docs/installation.html" },
+    { "source": "/docs/architecture", "destination": "/docs/architecture.html" },
+    { "source": "/docs/identity", "destination": "/docs/identity.html" },
+    { "source": "/docs/encryption", "destination": "/docs/encryption.html" },
+    { "source": "/docs/verification", "destination": "/docs/verification.html" },
+    { "source": "/docs/typescript", "destination": "/docs/typescript.html" },
+    { "source": "/docs/rust", "destination": "/docs/rust.html" },
+    { "source": "/docs/examples", "destination": "/docs/examples.html" },
+    { "source": "/docs/contracts-overview", "destination": "/docs/contracts-overview.html" },
+    { "source": "/docs/opacus-core", "destination": "/docs/opacus-core.html" },
+    { "source": "/docs/agent-registry", "destination": "/docs/agent-registry.html" },
+    { "source": "/docs/dac-registry", "destination": "/docs/dac-registry.html" },
+    { "source": "/docs/deployment", "destination": "/docs/deployment.html" },
+    { "source": "/docs/security", "destination": "/docs/security.html" },
+    { "source": "/docs/performance", "destination": "/docs/performance.html" },
+    { "source": "/docs/troubleshooting", "destination": "/docs/troubleshooting.html" },
+    { "source": "/getting-started", "destination": "/docs/getting-started.html" },
+    { "source": "/installation", "destination": "/docs/installation.html" },
+    { "source": "/architecture", "destination": "/docs/architecture.html" },
+    { "source": "/identity", "destination": "/docs/identity.html" },
+    { "source": "/encryption", "destination": "/docs/encryption.html" },
+    { "source": "/verification", "destination": "/docs/verification.html" },
+    { "source": "/typescript", "destination": "/docs/typescript.html" },
+    { "source": "/rust", "destination": "/docs/rust.html" },
+    { "source": "/examples", "destination": "/docs/examples.html" },
+    { "source": "/contracts-overview", "destination": "/docs/contracts-overview.html" },
+    { "source": "/opacus-core", "destination": "/docs/opacus-core.html" },
+    { "source": "/agent-registry", "destination": "/docs/agent-registry.html" },
+    { "source": "/dac-registry", "destination": "/docs/dac-registry.html" },
+    { "source": "/deployment", "destination": "/docs/deployment.html" },
+    { "source": "/security", "destination": "/docs/security.html" },
+    { "source": "/performance", "destination": "/docs/performance.html" },
+    { "source": "/troubleshooting", "destination": "/docs/troubleshooting.html" }
   ]
 }
