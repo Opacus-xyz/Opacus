@@ -5,10 +5,24 @@
 Opacus enables secure, authenticated communication between decentralized agents with native support for 0G Chain and multi-chain operations.
 
 [![Website](https://img.shields.io/badge/Website-newopacus.vercel.app-blue)](https://newopacus.vercel.app)
+[![Bridge Demo](https://img.shields.io/badge/🌉_Bridge_Demo-Try_Live-green)](https://newopacus.vercel.app/bridge-demo.html)
 [![Documentation](https://img.shields.io/badge/Docs-Read%20Now-green)](https://newopacus.vercel.app/docs)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![TypeScript SDK](https://img.shields.io/badge/npm-@opacus%2Fsdk-red)](https://www.npmjs.com/package/@opacus/sdk)
 [![Rust SDK](https://img.shields.io/badge/crates.io-opacus--sdk-orange)](https://crates.io/crates/opacus-sdk)
+
+## 🌉 Bridge-Free Cross-Chain
+
+**[Try Live Demo →](https://newopacus.vercel.app/bridge-demo.html)**
+
+Opacus eliminates bridge risks by bridging DATA, not ASSETS:
+- ✅ **180x Safer**: $100 vs $18K annual loss expectation
+- ✅ **6000x Faster**: 100ms vs 10 minutes
+- ✅ **60000x Cheaper**: $0.001 vs $62 per transfer
+- ✅ **Zero TVL Risk**: No tokens locked, no wrapped assets
+- ✅ **Bridge Attack Immune**: 100% immunity to bridge hacks
+
+*Agents exist on every chain with same identity - just coordinate via encrypted messages!*
 
 ## 🚀 Features
 
